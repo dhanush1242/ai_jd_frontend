@@ -7,45 +7,35 @@ part 'jd_provider.g.dart';
 @riverpod
 class JdHistory extends _$JdHistory {
   @override
-  FutureOr<List<GeneratedJD>> build() async {
-    // FAKE HISTORY
-    return [];
+  FutureOr<List<JobParameterResponse>> build() async {
+    return ref.read(jdRepositoryProvider).getJobs();
   }
 
   Future<void> refreshHistory() async {
     state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() async => []);
+    state = await AsyncValue.guard(() => ref.read(jdRepositoryProvider).getJobs());
   }
 }
 
 @riverpod
 class JdGenerator extends _$JdGenerator {
   @override
-  FutureOr<GeneratedJD?> build() {
+  FutureOr<JobDescriptionResponse?> build() {
     return null;
   }
 
-  Future<void> generate(JobDescriptionCreate createParams) async {
+  Future<void> generate(JobParameterCreate createParams) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
-      await Future.delayed(const Duration(seconds: 2));
-      final fakeJD = GeneratedJD(
-        id: 'fake_123',
-        jobTitle: createParams.jobTitle,
-        generatedContent: GeneratedContent(
-          jobSummary: 'This is a mocked job summary for ${createParams.jobTitle}.',
-          responsibilities: ['Responsibility 1', 'Responsibility 2'],
-          requiredSkills: createParams.skills,
-          requiredQualifications: [createParams.educationQualifications],
-          preferredQualifications: ['Extra cool skill'],
-          experience: createParams.experienceRequired,
-          salary: createParams.salary,
-          workMode: createParams.workMode,
-          jobType: createParams.jobType,
-          location: createParams.location,
-        )
-      );
-      return fakeJD;
+      final job = await ref.read(jdRepositoryProvider).createJob(createParams);
+      return await ref.read(jdRepositoryProvider).generateJd(job.jobId);
+    });
+  }
+
+  Future<void> regenerate(int jobId) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      return await ref.read(jdRepositoryProvider).regenerateJd(jobId);
     });
   }
   

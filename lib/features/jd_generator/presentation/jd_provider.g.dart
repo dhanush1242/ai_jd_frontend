@@ -6,12 +6,15 @@ part of 'jd_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$jdHistoryHash() => r'e589354492d803746f592c6ed136bc65da06b12f';
+String _$jdHistoryHash() => r'04377f47ad87a3c8faa85ed910ba236884376ebc';
 
 /// See also [JdHistory].
 @ProviderFor(JdHistory)
 final jdHistoryProvider =
-    AutoDisposeAsyncNotifierProvider<JdHistory, List<GeneratedJD>>.internal(
+    AutoDisposeAsyncNotifierProvider<
+      JdHistory,
+      List<JobParameterResponse>
+    >.internal(
       JdHistory.new,
       name: r'jdHistoryProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -21,13 +24,16 @@ final jdHistoryProvider =
       allTransitiveDependencies: null,
     );
 
-typedef _$JdHistory = AutoDisposeAsyncNotifier<List<GeneratedJD>>;
-String _$jdGeneratorHash() => r'621fd2dab80cfac44129ff55c4ce1730dfb51a17';
+typedef _$JdHistory = AutoDisposeAsyncNotifier<List<JobParameterResponse>>;
+String _$jdGeneratorHash() => r'1cca788a3b12283341b89938b5fe1faa459e1c71';
 
 /// See also [JdGenerator].
 @ProviderFor(JdGenerator)
 final jdGeneratorProvider =
-    AutoDisposeAsyncNotifierProvider<JdGenerator, GeneratedJD?>.internal(
+    AutoDisposeAsyncNotifierProvider<
+      JdGenerator,
+      JobDescriptionResponse?
+    >.internal(
       JdGenerator.new,
       name: r'jdGeneratorProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -37,6 +43,6 @@ final jdGeneratorProvider =
       allTransitiveDependencies: null,
     );
 
-typedef _$JdGenerator = AutoDisposeAsyncNotifier<GeneratedJD?>;
+typedef _$JdGenerator = AutoDisposeAsyncNotifier<JobDescriptionResponse?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

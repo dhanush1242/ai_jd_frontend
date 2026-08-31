@@ -16,52 +16,46 @@ class AuthRepository {
   AuthRepository(this._dio);
 
   Future<LoginResponse> login(String email, String password, String role) async {
-    final response = await _dio.post('/auth/$role/login', data: {
-      'email': email,
-      'password': password,
-    });
+    final path = role == 'recruiter' ? '/recruiters/login' : '/candidates/login';
+    final requestData = role == 'recruiter' 
+        ? {'organisation_email': email, 'password': password}
+        : {'email': email, 'password': password};
+
+    final response = await _dio.post(path, data: requestData);
     
-    final apiResponse = ApiResponse<LoginResponse>.fromJson(
-      response.data, 
-      (json) => LoginResponse.fromJson(json as Map<String, dynamic>)
-    );
-    
-    if (apiResponse.success && apiResponse.data != null) {
-      return apiResponse.data!;
-    } else {
-      throw Exception(apiResponse.message);
-    }
+    final data = Map<String, dynamic>.from(response.data);
+    data['expires_in'] = data['expires_in'] ?? 3600; // Mock expires_in as it is missing from OpenAPI spec
+    return LoginResponse.fromJson(data);
   }
 
   Future<void> register(String name, String email, String password, String role) async {
-    final response = await _dio.post('/auth/$role/register', data: {
-      'name': name,
-      'email': email,
-      'password': password,
-    });
+    final path = role == 'recruiter' ? '/recruiters/register' : '/candidates/register';
+    final requestData = role == 'recruiter'
+        ? {'name': name, 'organisation_email': email, 'password': password, 'mobile_number': '1234567890'} // Dummy mobile
+        : {'name': name, 'email': email, 'password': password, 'mobile_number': '1234567890'};
 
-    final apiResponse = ApiResponse<dynamic>.fromJson(
-      response.data, 
-      (json) => null
-    );
-
-    if (!apiResponse.success) {
-      throw Exception(apiResponse.message);
-    }
+    await _dio.post(path, data: requestData);
   }
 
-  Future<User> getCurrentUser() async {
-    final response = await _dio.get('/users/me');
+  Future<User> getCurrentUser(String role) async {
+    final path = role == 'recruiter' ? '/recruiters/me' : '/candidates/me';
+    final response = await _dio.get(path);
     
-    final apiResponse = ApiResponse<User>.fromJson(
-      response.data, 
-      (json) => User.fromJson(json as Map<String, dynamic>)
-    );
-
-    if (apiResponse.success && apiResponse.data != null) {
-      return apiResponse.data!;
+    final data = response.data as Map<String, dynamic>;
+    if (role == 'recruiter') {
+      return User(
+        id: data['recruiter_id'].toString(),
+        email: data['organisation_email'] ?? '',
+        name: data['name'] ?? '',
+        role: role,
+      );
     } else {
-      throw Exception(apiResponse.message);
+      return User(
+        id: data['candidate_id'].toString(),
+        email: data['email'] ?? '',
+        name: data['name'] ?? '',
+        role: role,
+      );
     }
   }
 }

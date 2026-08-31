@@ -15,92 +15,82 @@ final _privateConstructorUsedError = UnsupportedError(
   'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
 );
 
-JobDescriptionCreate _$JobDescriptionCreateFromJson(Map<String, dynamic> json) {
-  return _JobDescriptionCreate.fromJson(json);
+JobParameterCreate _$JobParameterCreateFromJson(Map<String, dynamic> json) {
+  return _JobParameterCreate.fromJson(json);
 }
 
 /// @nodoc
-mixin _$JobDescriptionCreate {
+mixin _$JobParameterCreate {
   @JsonKey(name: 'job_title')
   String get jobTitle => throw _privateConstructorUsedError;
-  List<String> get skills => throw _privateConstructorUsedError;
-  @JsonKey(name: 'experience_required')
-  String get experienceRequired => throw _privateConstructorUsedError;
-  @JsonKey(name: 'education_qualifications')
-  String get educationQualifications => throw _privateConstructorUsedError;
-  String get salary => throw _privateConstructorUsedError;
+  @JsonKey(name: 'required_skills')
+  String get requiredSkills => throw _privateConstructorUsedError;
+  @JsonKey(name: 'education_qualification')
+  String get educationQualification => throw _privateConstructorUsedError;
+  String get experience => throw _privateConstructorUsedError;
+  String get location => throw _privateConstructorUsedError;
+  @JsonKey(name: 'passedout_year')
+  int? get passedoutYear => throw _privateConstructorUsedError;
   @JsonKey(name: 'work_mode')
   String get workMode => throw _privateConstructorUsedError;
   @JsonKey(name: 'job_type')
   String get jobType => throw _privateConstructorUsedError;
-  String get location => throw _privateConstructorUsedError;
-  @JsonKey(name: 'number_of_openings')
-  int? get numberOfOpenings => throw _privateConstructorUsedError;
-  String? get department => throw _privateConstructorUsedError;
-  @JsonKey(name: 'additional_instructions')
-  String? get additionalInstructions => throw _privateConstructorUsedError;
+  String? get package => throw _privateConstructorUsedError;
 
-  /// Serializes this JobDescriptionCreate to a JSON map.
+  /// Serializes this JobParameterCreate to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of JobDescriptionCreate
+  /// Create a copy of JobParameterCreate
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $JobDescriptionCreateCopyWith<JobDescriptionCreate> get copyWith =>
+  $JobParameterCreateCopyWith<JobParameterCreate> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $JobDescriptionCreateCopyWith<$Res> {
-  factory $JobDescriptionCreateCopyWith(
-    JobDescriptionCreate value,
-    $Res Function(JobDescriptionCreate) then,
-  ) = _$JobDescriptionCreateCopyWithImpl<$Res, JobDescriptionCreate>;
+abstract class $JobParameterCreateCopyWith<$Res> {
+  factory $JobParameterCreateCopyWith(
+    JobParameterCreate value,
+    $Res Function(JobParameterCreate) then,
+  ) = _$JobParameterCreateCopyWithImpl<$Res, JobParameterCreate>;
   @useResult
   $Res call({
     @JsonKey(name: 'job_title') String jobTitle,
-    List<String> skills,
-    @JsonKey(name: 'experience_required') String experienceRequired,
-    @JsonKey(name: 'education_qualifications') String educationQualifications,
-    String salary,
+    @JsonKey(name: 'required_skills') String requiredSkills,
+    @JsonKey(name: 'education_qualification') String educationQualification,
+    String experience,
+    String location,
+    @JsonKey(name: 'passedout_year') int? passedoutYear,
     @JsonKey(name: 'work_mode') String workMode,
     @JsonKey(name: 'job_type') String jobType,
-    String location,
-    @JsonKey(name: 'number_of_openings') int? numberOfOpenings,
-    String? department,
-    @JsonKey(name: 'additional_instructions') String? additionalInstructions,
+    String? package,
   });
 }
 
 /// @nodoc
-class _$JobDescriptionCreateCopyWithImpl<
-  $Res,
-  $Val extends JobDescriptionCreate
->
-    implements $JobDescriptionCreateCopyWith<$Res> {
-  _$JobDescriptionCreateCopyWithImpl(this._value, this._then);
+class _$JobParameterCreateCopyWithImpl<$Res, $Val extends JobParameterCreate>
+    implements $JobParameterCreateCopyWith<$Res> {
+  _$JobParameterCreateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of JobDescriptionCreate
+  /// Create a copy of JobParameterCreate
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? jobTitle = null,
-    Object? skills = null,
-    Object? experienceRequired = null,
-    Object? educationQualifications = null,
-    Object? salary = null,
+    Object? requiredSkills = null,
+    Object? educationQualification = null,
+    Object? experience = null,
+    Object? location = null,
+    Object? passedoutYear = freezed,
     Object? workMode = null,
     Object? jobType = null,
-    Object? location = null,
-    Object? numberOfOpenings = freezed,
-    Object? department = freezed,
-    Object? additionalInstructions = freezed,
+    Object? package = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -108,22 +98,26 @@ class _$JobDescriptionCreateCopyWithImpl<
                 ? _value.jobTitle
                 : jobTitle // ignore: cast_nullable_to_non_nullable
                       as String,
-            skills: null == skills
-                ? _value.skills
-                : skills // ignore: cast_nullable_to_non_nullable
-                      as List<String>,
-            experienceRequired: null == experienceRequired
-                ? _value.experienceRequired
-                : experienceRequired // ignore: cast_nullable_to_non_nullable
+            requiredSkills: null == requiredSkills
+                ? _value.requiredSkills
+                : requiredSkills // ignore: cast_nullable_to_non_nullable
                       as String,
-            educationQualifications: null == educationQualifications
-                ? _value.educationQualifications
-                : educationQualifications // ignore: cast_nullable_to_non_nullable
+            educationQualification: null == educationQualification
+                ? _value.educationQualification
+                : educationQualification // ignore: cast_nullable_to_non_nullable
                       as String,
-            salary: null == salary
-                ? _value.salary
-                : salary // ignore: cast_nullable_to_non_nullable
+            experience: null == experience
+                ? _value.experience
+                : experience // ignore: cast_nullable_to_non_nullable
                       as String,
+            location: null == location
+                ? _value.location
+                : location // ignore: cast_nullable_to_non_nullable
+                      as String,
+            passedoutYear: freezed == passedoutYear
+                ? _value.passedoutYear
+                : passedoutYear // ignore: cast_nullable_to_non_nullable
+                      as int?,
             workMode: null == workMode
                 ? _value.workMode
                 : workMode // ignore: cast_nullable_to_non_nullable
@@ -132,21 +126,9 @@ class _$JobDescriptionCreateCopyWithImpl<
                 ? _value.jobType
                 : jobType // ignore: cast_nullable_to_non_nullable
                       as String,
-            location: null == location
-                ? _value.location
-                : location // ignore: cast_nullable_to_non_nullable
-                      as String,
-            numberOfOpenings: freezed == numberOfOpenings
-                ? _value.numberOfOpenings
-                : numberOfOpenings // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            department: freezed == department
-                ? _value.department
-                : department // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            additionalInstructions: freezed == additionalInstructions
-                ? _value.additionalInstructions
-                : additionalInstructions // ignore: cast_nullable_to_non_nullable
+            package: freezed == package
+                ? _value.package
+                : package // ignore: cast_nullable_to_non_nullable
                       as String?,
           )
           as $Val,
@@ -155,77 +137,77 @@ class _$JobDescriptionCreateCopyWithImpl<
 }
 
 /// @nodoc
-abstract class _$$JobDescriptionCreateImplCopyWith<$Res>
-    implements $JobDescriptionCreateCopyWith<$Res> {
-  factory _$$JobDescriptionCreateImplCopyWith(
-    _$JobDescriptionCreateImpl value,
-    $Res Function(_$JobDescriptionCreateImpl) then,
-  ) = __$$JobDescriptionCreateImplCopyWithImpl<$Res>;
+abstract class _$$JobParameterCreateImplCopyWith<$Res>
+    implements $JobParameterCreateCopyWith<$Res> {
+  factory _$$JobParameterCreateImplCopyWith(
+    _$JobParameterCreateImpl value,
+    $Res Function(_$JobParameterCreateImpl) then,
+  ) = __$$JobParameterCreateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({
     @JsonKey(name: 'job_title') String jobTitle,
-    List<String> skills,
-    @JsonKey(name: 'experience_required') String experienceRequired,
-    @JsonKey(name: 'education_qualifications') String educationQualifications,
-    String salary,
+    @JsonKey(name: 'required_skills') String requiredSkills,
+    @JsonKey(name: 'education_qualification') String educationQualification,
+    String experience,
+    String location,
+    @JsonKey(name: 'passedout_year') int? passedoutYear,
     @JsonKey(name: 'work_mode') String workMode,
     @JsonKey(name: 'job_type') String jobType,
-    String location,
-    @JsonKey(name: 'number_of_openings') int? numberOfOpenings,
-    String? department,
-    @JsonKey(name: 'additional_instructions') String? additionalInstructions,
+    String? package,
   });
 }
 
 /// @nodoc
-class __$$JobDescriptionCreateImplCopyWithImpl<$Res>
-    extends _$JobDescriptionCreateCopyWithImpl<$Res, _$JobDescriptionCreateImpl>
-    implements _$$JobDescriptionCreateImplCopyWith<$Res> {
-  __$$JobDescriptionCreateImplCopyWithImpl(
-    _$JobDescriptionCreateImpl _value,
-    $Res Function(_$JobDescriptionCreateImpl) _then,
+class __$$JobParameterCreateImplCopyWithImpl<$Res>
+    extends _$JobParameterCreateCopyWithImpl<$Res, _$JobParameterCreateImpl>
+    implements _$$JobParameterCreateImplCopyWith<$Res> {
+  __$$JobParameterCreateImplCopyWithImpl(
+    _$JobParameterCreateImpl _value,
+    $Res Function(_$JobParameterCreateImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of JobDescriptionCreate
+  /// Create a copy of JobParameterCreate
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? jobTitle = null,
-    Object? skills = null,
-    Object? experienceRequired = null,
-    Object? educationQualifications = null,
-    Object? salary = null,
+    Object? requiredSkills = null,
+    Object? educationQualification = null,
+    Object? experience = null,
+    Object? location = null,
+    Object? passedoutYear = freezed,
     Object? workMode = null,
     Object? jobType = null,
-    Object? location = null,
-    Object? numberOfOpenings = freezed,
-    Object? department = freezed,
-    Object? additionalInstructions = freezed,
+    Object? package = freezed,
   }) {
     return _then(
-      _$JobDescriptionCreateImpl(
+      _$JobParameterCreateImpl(
         jobTitle: null == jobTitle
             ? _value.jobTitle
             : jobTitle // ignore: cast_nullable_to_non_nullable
                   as String,
-        skills: null == skills
-            ? _value._skills
-            : skills // ignore: cast_nullable_to_non_nullable
-                  as List<String>,
-        experienceRequired: null == experienceRequired
-            ? _value.experienceRequired
-            : experienceRequired // ignore: cast_nullable_to_non_nullable
+        requiredSkills: null == requiredSkills
+            ? _value.requiredSkills
+            : requiredSkills // ignore: cast_nullable_to_non_nullable
                   as String,
-        educationQualifications: null == educationQualifications
-            ? _value.educationQualifications
-            : educationQualifications // ignore: cast_nullable_to_non_nullable
+        educationQualification: null == educationQualification
+            ? _value.educationQualification
+            : educationQualification // ignore: cast_nullable_to_non_nullable
                   as String,
-        salary: null == salary
-            ? _value.salary
-            : salary // ignore: cast_nullable_to_non_nullable
+        experience: null == experience
+            ? _value.experience
+            : experience // ignore: cast_nullable_to_non_nullable
                   as String,
+        location: null == location
+            ? _value.location
+            : location // ignore: cast_nullable_to_non_nullable
+                  as String,
+        passedoutYear: freezed == passedoutYear
+            ? _value.passedoutYear
+            : passedoutYear // ignore: cast_nullable_to_non_nullable
+                  as int?,
         workMode: null == workMode
             ? _value.workMode
             : workMode // ignore: cast_nullable_to_non_nullable
@@ -234,21 +216,9 @@ class __$$JobDescriptionCreateImplCopyWithImpl<$Res>
             ? _value.jobType
             : jobType // ignore: cast_nullable_to_non_nullable
                   as String,
-        location: null == location
-            ? _value.location
-            : location // ignore: cast_nullable_to_non_nullable
-                  as String,
-        numberOfOpenings: freezed == numberOfOpenings
-            ? _value.numberOfOpenings
-            : numberOfOpenings // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        department: freezed == department
-            ? _value.department
-            : department // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        additionalInstructions: freezed == additionalInstructions
-            ? _value.additionalInstructions
-            : additionalInstructions // ignore: cast_nullable_to_non_nullable
+        package: freezed == package
+            ? _value.package
+            : package // ignore: cast_nullable_to_non_nullable
                   as String?,
       ),
     );
@@ -257,44 +227,39 @@ class __$$JobDescriptionCreateImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$JobDescriptionCreateImpl implements _JobDescriptionCreate {
-  const _$JobDescriptionCreateImpl({
+class _$JobParameterCreateImpl implements _JobParameterCreate {
+  const _$JobParameterCreateImpl({
     @JsonKey(name: 'job_title') required this.jobTitle,
-    required final List<String> skills,
-    @JsonKey(name: 'experience_required') required this.experienceRequired,
-    @JsonKey(name: 'education_qualifications')
-    required this.educationQualifications,
-    required this.salary,
+    @JsonKey(name: 'required_skills') required this.requiredSkills,
+    @JsonKey(name: 'education_qualification')
+    required this.educationQualification,
+    required this.experience,
+    required this.location,
+    @JsonKey(name: 'passedout_year') this.passedoutYear,
     @JsonKey(name: 'work_mode') required this.workMode,
     @JsonKey(name: 'job_type') required this.jobType,
-    required this.location,
-    @JsonKey(name: 'number_of_openings') this.numberOfOpenings,
-    this.department,
-    @JsonKey(name: 'additional_instructions') this.additionalInstructions,
-  }) : _skills = skills;
+    this.package,
+  });
 
-  factory _$JobDescriptionCreateImpl.fromJson(Map<String, dynamic> json) =>
-      _$$JobDescriptionCreateImplFromJson(json);
+  factory _$JobParameterCreateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$JobParameterCreateImplFromJson(json);
 
   @override
   @JsonKey(name: 'job_title')
   final String jobTitle;
-  final List<String> _skills;
   @override
-  List<String> get skills {
-    if (_skills is EqualUnmodifiableListView) return _skills;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_skills);
-  }
-
+  @JsonKey(name: 'required_skills')
+  final String requiredSkills;
   @override
-  @JsonKey(name: 'experience_required')
-  final String experienceRequired;
+  @JsonKey(name: 'education_qualification')
+  final String educationQualification;
   @override
-  @JsonKey(name: 'education_qualifications')
-  final String educationQualifications;
+  final String experience;
   @override
-  final String salary;
+  final String location;
+  @override
+  @JsonKey(name: 'passedout_year')
+  final int? passedoutYear;
   @override
   @JsonKey(name: 'work_mode')
   final String workMode;
@@ -302,48 +267,34 @@ class _$JobDescriptionCreateImpl implements _JobDescriptionCreate {
   @JsonKey(name: 'job_type')
   final String jobType;
   @override
-  final String location;
-  @override
-  @JsonKey(name: 'number_of_openings')
-  final int? numberOfOpenings;
-  @override
-  final String? department;
-  @override
-  @JsonKey(name: 'additional_instructions')
-  final String? additionalInstructions;
+  final String? package;
 
   @override
   String toString() {
-    return 'JobDescriptionCreate(jobTitle: $jobTitle, skills: $skills, experienceRequired: $experienceRequired, educationQualifications: $educationQualifications, salary: $salary, workMode: $workMode, jobType: $jobType, location: $location, numberOfOpenings: $numberOfOpenings, department: $department, additionalInstructions: $additionalInstructions)';
+    return 'JobParameterCreate(jobTitle: $jobTitle, requiredSkills: $requiredSkills, educationQualification: $educationQualification, experience: $experience, location: $location, passedoutYear: $passedoutYear, workMode: $workMode, jobType: $jobType, package: $package)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$JobDescriptionCreateImpl &&
+            other is _$JobParameterCreateImpl &&
             (identical(other.jobTitle, jobTitle) ||
                 other.jobTitle == jobTitle) &&
-            const DeepCollectionEquality().equals(other._skills, _skills) &&
-            (identical(other.experienceRequired, experienceRequired) ||
-                other.experienceRequired == experienceRequired) &&
-            (identical(
-                  other.educationQualifications,
-                  educationQualifications,
-                ) ||
-                other.educationQualifications == educationQualifications) &&
-            (identical(other.salary, salary) || other.salary == salary) &&
+            (identical(other.requiredSkills, requiredSkills) ||
+                other.requiredSkills == requiredSkills) &&
+            (identical(other.educationQualification, educationQualification) ||
+                other.educationQualification == educationQualification) &&
+            (identical(other.experience, experience) ||
+                other.experience == experience) &&
+            (identical(other.location, location) ||
+                other.location == location) &&
+            (identical(other.passedoutYear, passedoutYear) ||
+                other.passedoutYear == passedoutYear) &&
             (identical(other.workMode, workMode) ||
                 other.workMode == workMode) &&
             (identical(other.jobType, jobType) || other.jobType == jobType) &&
-            (identical(other.location, location) ||
-                other.location == location) &&
-            (identical(other.numberOfOpenings, numberOfOpenings) ||
-                other.numberOfOpenings == numberOfOpenings) &&
-            (identical(other.department, department) ||
-                other.department == department) &&
-            (identical(other.additionalInstructions, additionalInstructions) ||
-                other.additionalInstructions == additionalInstructions));
+            (identical(other.package, package) || other.package == package));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -351,70 +302,66 @@ class _$JobDescriptionCreateImpl implements _JobDescriptionCreate {
   int get hashCode => Object.hash(
     runtimeType,
     jobTitle,
-    const DeepCollectionEquality().hash(_skills),
-    experienceRequired,
-    educationQualifications,
-    salary,
+    requiredSkills,
+    educationQualification,
+    experience,
+    location,
+    passedoutYear,
     workMode,
     jobType,
-    location,
-    numberOfOpenings,
-    department,
-    additionalInstructions,
+    package,
   );
 
-  /// Create a copy of JobDescriptionCreate
+  /// Create a copy of JobParameterCreate
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$JobDescriptionCreateImplCopyWith<_$JobDescriptionCreateImpl>
-  get copyWith =>
-      __$$JobDescriptionCreateImplCopyWithImpl<_$JobDescriptionCreateImpl>(
+  _$$JobParameterCreateImplCopyWith<_$JobParameterCreateImpl> get copyWith =>
+      __$$JobParameterCreateImplCopyWithImpl<_$JobParameterCreateImpl>(
         this,
         _$identity,
       );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$JobDescriptionCreateImplToJson(this);
+    return _$$JobParameterCreateImplToJson(this);
   }
 }
 
-abstract class _JobDescriptionCreate implements JobDescriptionCreate {
-  const factory _JobDescriptionCreate({
+abstract class _JobParameterCreate implements JobParameterCreate {
+  const factory _JobParameterCreate({
     @JsonKey(name: 'job_title') required final String jobTitle,
-    required final List<String> skills,
-    @JsonKey(name: 'experience_required')
-    required final String experienceRequired,
-    @JsonKey(name: 'education_qualifications')
-    required final String educationQualifications,
-    required final String salary,
+    @JsonKey(name: 'required_skills') required final String requiredSkills,
+    @JsonKey(name: 'education_qualification')
+    required final String educationQualification,
+    required final String experience,
+    required final String location,
+    @JsonKey(name: 'passedout_year') final int? passedoutYear,
     @JsonKey(name: 'work_mode') required final String workMode,
     @JsonKey(name: 'job_type') required final String jobType,
-    required final String location,
-    @JsonKey(name: 'number_of_openings') final int? numberOfOpenings,
-    final String? department,
-    @JsonKey(name: 'additional_instructions')
-    final String? additionalInstructions,
-  }) = _$JobDescriptionCreateImpl;
+    final String? package,
+  }) = _$JobParameterCreateImpl;
 
-  factory _JobDescriptionCreate.fromJson(Map<String, dynamic> json) =
-      _$JobDescriptionCreateImpl.fromJson;
+  factory _JobParameterCreate.fromJson(Map<String, dynamic> json) =
+      _$JobParameterCreateImpl.fromJson;
 
   @override
   @JsonKey(name: 'job_title')
   String get jobTitle;
   @override
-  List<String> get skills;
+  @JsonKey(name: 'required_skills')
+  String get requiredSkills;
   @override
-  @JsonKey(name: 'experience_required')
-  String get experienceRequired;
+  @JsonKey(name: 'education_qualification')
+  String get educationQualification;
   @override
-  @JsonKey(name: 'education_qualifications')
-  String get educationQualifications;
+  String get experience;
   @override
-  String get salary;
+  String get location;
+  @override
+  @JsonKey(name: 'passedout_year')
+  int? get passedoutYear;
   @override
   @JsonKey(name: 'work_mode')
   String get workMode;
@@ -422,162 +369,221 @@ abstract class _JobDescriptionCreate implements JobDescriptionCreate {
   @JsonKey(name: 'job_type')
   String get jobType;
   @override
-  String get location;
-  @override
-  @JsonKey(name: 'number_of_openings')
-  int? get numberOfOpenings;
-  @override
-  String? get department;
-  @override
-  @JsonKey(name: 'additional_instructions')
-  String? get additionalInstructions;
+  String? get package;
 
-  /// Create a copy of JobDescriptionCreate
+  /// Create a copy of JobParameterCreate
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$JobDescriptionCreateImplCopyWith<_$JobDescriptionCreateImpl>
-  get copyWith => throw _privateConstructorUsedError;
+  _$$JobParameterCreateImplCopyWith<_$JobParameterCreateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
-GeneratedJD _$GeneratedJDFromJson(Map<String, dynamic> json) {
-  return _GeneratedJD.fromJson(json);
+JobParameterUpdate _$JobParameterUpdateFromJson(Map<String, dynamic> json) {
+  return _JobParameterUpdate.fromJson(json);
 }
 
 /// @nodoc
-mixin _$GeneratedJD {
-  String get id => throw _privateConstructorUsedError;
+mixin _$JobParameterUpdate {
   @JsonKey(name: 'job_title')
-  String get jobTitle => throw _privateConstructorUsedError;
-  @JsonKey(name: 'generated_content')
-  GeneratedContent get generatedContent => throw _privateConstructorUsedError;
+  String? get jobTitle => throw _privateConstructorUsedError;
+  @JsonKey(name: 'required_skills')
+  String? get requiredSkills => throw _privateConstructorUsedError;
+  @JsonKey(name: 'education_qualification')
+  String? get educationQualification => throw _privateConstructorUsedError;
+  String? get experience => throw _privateConstructorUsedError;
+  String? get location => throw _privateConstructorUsedError;
+  @JsonKey(name: 'passedout_year')
+  int? get passedoutYear => throw _privateConstructorUsedError;
+  @JsonKey(name: 'work_mode')
+  String? get workMode => throw _privateConstructorUsedError;
+  @JsonKey(name: 'job_type')
+  String? get jobType => throw _privateConstructorUsedError;
+  String? get package => throw _privateConstructorUsedError;
 
-  /// Serializes this GeneratedJD to a JSON map.
+  /// Serializes this JobParameterUpdate to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of GeneratedJD
+  /// Create a copy of JobParameterUpdate
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $GeneratedJDCopyWith<GeneratedJD> get copyWith =>
+  $JobParameterUpdateCopyWith<JobParameterUpdate> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $GeneratedJDCopyWith<$Res> {
-  factory $GeneratedJDCopyWith(
-    GeneratedJD value,
-    $Res Function(GeneratedJD) then,
-  ) = _$GeneratedJDCopyWithImpl<$Res, GeneratedJD>;
+abstract class $JobParameterUpdateCopyWith<$Res> {
+  factory $JobParameterUpdateCopyWith(
+    JobParameterUpdate value,
+    $Res Function(JobParameterUpdate) then,
+  ) = _$JobParameterUpdateCopyWithImpl<$Res, JobParameterUpdate>;
   @useResult
   $Res call({
-    String id,
-    @JsonKey(name: 'job_title') String jobTitle,
-    @JsonKey(name: 'generated_content') GeneratedContent generatedContent,
+    @JsonKey(name: 'job_title') String? jobTitle,
+    @JsonKey(name: 'required_skills') String? requiredSkills,
+    @JsonKey(name: 'education_qualification') String? educationQualification,
+    String? experience,
+    String? location,
+    @JsonKey(name: 'passedout_year') int? passedoutYear,
+    @JsonKey(name: 'work_mode') String? workMode,
+    @JsonKey(name: 'job_type') String? jobType,
+    String? package,
   });
-
-  $GeneratedContentCopyWith<$Res> get generatedContent;
 }
 
 /// @nodoc
-class _$GeneratedJDCopyWithImpl<$Res, $Val extends GeneratedJD>
-    implements $GeneratedJDCopyWith<$Res> {
-  _$GeneratedJDCopyWithImpl(this._value, this._then);
+class _$JobParameterUpdateCopyWithImpl<$Res, $Val extends JobParameterUpdate>
+    implements $JobParameterUpdateCopyWith<$Res> {
+  _$JobParameterUpdateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GeneratedJD
+  /// Create a copy of JobParameterUpdate
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? jobTitle = null,
-    Object? generatedContent = null,
+    Object? jobTitle = freezed,
+    Object? requiredSkills = freezed,
+    Object? educationQualification = freezed,
+    Object? experience = freezed,
+    Object? location = freezed,
+    Object? passedoutYear = freezed,
+    Object? workMode = freezed,
+    Object? jobType = freezed,
+    Object? package = freezed,
   }) {
     return _then(
       _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as String,
-            jobTitle: null == jobTitle
+            jobTitle: freezed == jobTitle
                 ? _value.jobTitle
                 : jobTitle // ignore: cast_nullable_to_non_nullable
-                      as String,
-            generatedContent: null == generatedContent
-                ? _value.generatedContent
-                : generatedContent // ignore: cast_nullable_to_non_nullable
-                      as GeneratedContent,
+                      as String?,
+            requiredSkills: freezed == requiredSkills
+                ? _value.requiredSkills
+                : requiredSkills // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            educationQualification: freezed == educationQualification
+                ? _value.educationQualification
+                : educationQualification // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            experience: freezed == experience
+                ? _value.experience
+                : experience // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            location: freezed == location
+                ? _value.location
+                : location // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            passedoutYear: freezed == passedoutYear
+                ? _value.passedoutYear
+                : passedoutYear // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            workMode: freezed == workMode
+                ? _value.workMode
+                : workMode // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            jobType: freezed == jobType
+                ? _value.jobType
+                : jobType // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            package: freezed == package
+                ? _value.package
+                : package // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
   }
-
-  /// Create a copy of GeneratedJD
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $GeneratedContentCopyWith<$Res> get generatedContent {
-    return $GeneratedContentCopyWith<$Res>(_value.generatedContent, (value) {
-      return _then(_value.copyWith(generatedContent: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$GeneratedJDImplCopyWith<$Res>
-    implements $GeneratedJDCopyWith<$Res> {
-  factory _$$GeneratedJDImplCopyWith(
-    _$GeneratedJDImpl value,
-    $Res Function(_$GeneratedJDImpl) then,
-  ) = __$$GeneratedJDImplCopyWithImpl<$Res>;
+abstract class _$$JobParameterUpdateImplCopyWith<$Res>
+    implements $JobParameterUpdateCopyWith<$Res> {
+  factory _$$JobParameterUpdateImplCopyWith(
+    _$JobParameterUpdateImpl value,
+    $Res Function(_$JobParameterUpdateImpl) then,
+  ) = __$$JobParameterUpdateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({
-    String id,
-    @JsonKey(name: 'job_title') String jobTitle,
-    @JsonKey(name: 'generated_content') GeneratedContent generatedContent,
+    @JsonKey(name: 'job_title') String? jobTitle,
+    @JsonKey(name: 'required_skills') String? requiredSkills,
+    @JsonKey(name: 'education_qualification') String? educationQualification,
+    String? experience,
+    String? location,
+    @JsonKey(name: 'passedout_year') int? passedoutYear,
+    @JsonKey(name: 'work_mode') String? workMode,
+    @JsonKey(name: 'job_type') String? jobType,
+    String? package,
   });
-
-  @override
-  $GeneratedContentCopyWith<$Res> get generatedContent;
 }
 
 /// @nodoc
-class __$$GeneratedJDImplCopyWithImpl<$Res>
-    extends _$GeneratedJDCopyWithImpl<$Res, _$GeneratedJDImpl>
-    implements _$$GeneratedJDImplCopyWith<$Res> {
-  __$$GeneratedJDImplCopyWithImpl(
-    _$GeneratedJDImpl _value,
-    $Res Function(_$GeneratedJDImpl) _then,
+class __$$JobParameterUpdateImplCopyWithImpl<$Res>
+    extends _$JobParameterUpdateCopyWithImpl<$Res, _$JobParameterUpdateImpl>
+    implements _$$JobParameterUpdateImplCopyWith<$Res> {
+  __$$JobParameterUpdateImplCopyWithImpl(
+    _$JobParameterUpdateImpl _value,
+    $Res Function(_$JobParameterUpdateImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of GeneratedJD
+  /// Create a copy of JobParameterUpdate
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? jobTitle = null,
-    Object? generatedContent = null,
+    Object? jobTitle = freezed,
+    Object? requiredSkills = freezed,
+    Object? educationQualification = freezed,
+    Object? experience = freezed,
+    Object? location = freezed,
+    Object? passedoutYear = freezed,
+    Object? workMode = freezed,
+    Object? jobType = freezed,
+    Object? package = freezed,
   }) {
     return _then(
-      _$GeneratedJDImpl(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as String,
-        jobTitle: null == jobTitle
+      _$JobParameterUpdateImpl(
+        jobTitle: freezed == jobTitle
             ? _value.jobTitle
             : jobTitle // ignore: cast_nullable_to_non_nullable
-                  as String,
-        generatedContent: null == generatedContent
-            ? _value.generatedContent
-            : generatedContent // ignore: cast_nullable_to_non_nullable
-                  as GeneratedContent,
+                  as String?,
+        requiredSkills: freezed == requiredSkills
+            ? _value.requiredSkills
+            : requiredSkills // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        educationQualification: freezed == educationQualification
+            ? _value.educationQualification
+            : educationQualification // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        experience: freezed == experience
+            ? _value.experience
+            : experience // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        location: freezed == location
+            ? _value.location
+            : location // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        passedoutYear: freezed == passedoutYear
+            ? _value.passedoutYear
+            : passedoutYear // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        workMode: freezed == workMode
+            ? _value.workMode
+            : workMode // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        jobType: freezed == jobType
+            ? _value.jobType
+            : jobType // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        package: freezed == package
+            ? _value.package
+            : package // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -585,209 +591,279 @@ class __$$GeneratedJDImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$GeneratedJDImpl implements _GeneratedJD {
-  const _$GeneratedJDImpl({
-    required this.id,
-    @JsonKey(name: 'job_title') required this.jobTitle,
-    @JsonKey(name: 'generated_content') required this.generatedContent,
+class _$JobParameterUpdateImpl implements _JobParameterUpdate {
+  const _$JobParameterUpdateImpl({
+    @JsonKey(name: 'job_title') this.jobTitle,
+    @JsonKey(name: 'required_skills') this.requiredSkills,
+    @JsonKey(name: 'education_qualification') this.educationQualification,
+    this.experience,
+    this.location,
+    @JsonKey(name: 'passedout_year') this.passedoutYear,
+    @JsonKey(name: 'work_mode') this.workMode,
+    @JsonKey(name: 'job_type') this.jobType,
+    this.package,
   });
 
-  factory _$GeneratedJDImpl.fromJson(Map<String, dynamic> json) =>
-      _$$GeneratedJDImplFromJson(json);
+  factory _$JobParameterUpdateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$JobParameterUpdateImplFromJson(json);
 
   @override
-  final String id;
-  @override
   @JsonKey(name: 'job_title')
-  final String jobTitle;
+  final String? jobTitle;
   @override
-  @JsonKey(name: 'generated_content')
-  final GeneratedContent generatedContent;
+  @JsonKey(name: 'required_skills')
+  final String? requiredSkills;
+  @override
+  @JsonKey(name: 'education_qualification')
+  final String? educationQualification;
+  @override
+  final String? experience;
+  @override
+  final String? location;
+  @override
+  @JsonKey(name: 'passedout_year')
+  final int? passedoutYear;
+  @override
+  @JsonKey(name: 'work_mode')
+  final String? workMode;
+  @override
+  @JsonKey(name: 'job_type')
+  final String? jobType;
+  @override
+  final String? package;
 
   @override
   String toString() {
-    return 'GeneratedJD(id: $id, jobTitle: $jobTitle, generatedContent: $generatedContent)';
+    return 'JobParameterUpdate(jobTitle: $jobTitle, requiredSkills: $requiredSkills, educationQualification: $educationQualification, experience: $experience, location: $location, passedoutYear: $passedoutYear, workMode: $workMode, jobType: $jobType, package: $package)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GeneratedJDImpl &&
-            (identical(other.id, id) || other.id == id) &&
+            other is _$JobParameterUpdateImpl &&
             (identical(other.jobTitle, jobTitle) ||
                 other.jobTitle == jobTitle) &&
-            (identical(other.generatedContent, generatedContent) ||
-                other.generatedContent == generatedContent));
+            (identical(other.requiredSkills, requiredSkills) ||
+                other.requiredSkills == requiredSkills) &&
+            (identical(other.educationQualification, educationQualification) ||
+                other.educationQualification == educationQualification) &&
+            (identical(other.experience, experience) ||
+                other.experience == experience) &&
+            (identical(other.location, location) ||
+                other.location == location) &&
+            (identical(other.passedoutYear, passedoutYear) ||
+                other.passedoutYear == passedoutYear) &&
+            (identical(other.workMode, workMode) ||
+                other.workMode == workMode) &&
+            (identical(other.jobType, jobType) || other.jobType == jobType) &&
+            (identical(other.package, package) || other.package == package));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, jobTitle, generatedContent);
+  int get hashCode => Object.hash(
+    runtimeType,
+    jobTitle,
+    requiredSkills,
+    educationQualification,
+    experience,
+    location,
+    passedoutYear,
+    workMode,
+    jobType,
+    package,
+  );
 
-  /// Create a copy of GeneratedJD
+  /// Create a copy of JobParameterUpdate
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$GeneratedJDImplCopyWith<_$GeneratedJDImpl> get copyWith =>
-      __$$GeneratedJDImplCopyWithImpl<_$GeneratedJDImpl>(this, _$identity);
+  _$$JobParameterUpdateImplCopyWith<_$JobParameterUpdateImpl> get copyWith =>
+      __$$JobParameterUpdateImplCopyWithImpl<_$JobParameterUpdateImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$GeneratedJDImplToJson(this);
+    return _$$JobParameterUpdateImplToJson(this);
   }
 }
 
-abstract class _GeneratedJD implements GeneratedJD {
-  const factory _GeneratedJD({
-    required final String id,
-    @JsonKey(name: 'job_title') required final String jobTitle,
-    @JsonKey(name: 'generated_content')
-    required final GeneratedContent generatedContent,
-  }) = _$GeneratedJDImpl;
+abstract class _JobParameterUpdate implements JobParameterUpdate {
+  const factory _JobParameterUpdate({
+    @JsonKey(name: 'job_title') final String? jobTitle,
+    @JsonKey(name: 'required_skills') final String? requiredSkills,
+    @JsonKey(name: 'education_qualification')
+    final String? educationQualification,
+    final String? experience,
+    final String? location,
+    @JsonKey(name: 'passedout_year') final int? passedoutYear,
+    @JsonKey(name: 'work_mode') final String? workMode,
+    @JsonKey(name: 'job_type') final String? jobType,
+    final String? package,
+  }) = _$JobParameterUpdateImpl;
 
-  factory _GeneratedJD.fromJson(Map<String, dynamic> json) =
-      _$GeneratedJDImpl.fromJson;
+  factory _JobParameterUpdate.fromJson(Map<String, dynamic> json) =
+      _$JobParameterUpdateImpl.fromJson;
 
-  @override
-  String get id;
   @override
   @JsonKey(name: 'job_title')
-  String get jobTitle;
+  String? get jobTitle;
   @override
-  @JsonKey(name: 'generated_content')
-  GeneratedContent get generatedContent;
+  @JsonKey(name: 'required_skills')
+  String? get requiredSkills;
+  @override
+  @JsonKey(name: 'education_qualification')
+  String? get educationQualification;
+  @override
+  String? get experience;
+  @override
+  String? get location;
+  @override
+  @JsonKey(name: 'passedout_year')
+  int? get passedoutYear;
+  @override
+  @JsonKey(name: 'work_mode')
+  String? get workMode;
+  @override
+  @JsonKey(name: 'job_type')
+  String? get jobType;
+  @override
+  String? get package;
 
-  /// Create a copy of GeneratedJD
+  /// Create a copy of JobParameterUpdate
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$GeneratedJDImplCopyWith<_$GeneratedJDImpl> get copyWith =>
+  _$$JobParameterUpdateImplCopyWith<_$JobParameterUpdateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-GeneratedContent _$GeneratedContentFromJson(Map<String, dynamic> json) {
-  return _GeneratedContent.fromJson(json);
+JobParameterResponse _$JobParameterResponseFromJson(Map<String, dynamic> json) {
+  return _JobParameterResponse.fromJson(json);
 }
 
 /// @nodoc
-mixin _$GeneratedContent {
-  @JsonKey(name: 'job_summary')
-  String get jobSummary => throw _privateConstructorUsedError;
-  List<String> get responsibilities => throw _privateConstructorUsedError;
+mixin _$JobParameterResponse {
+  @JsonKey(name: 'job_id')
+  int get jobId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'recruiter_id')
+  int get recruiterId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'job_title')
+  String get jobTitle => throw _privateConstructorUsedError;
   @JsonKey(name: 'required_skills')
-  List<String> get requiredSkills => throw _privateConstructorUsedError;
-  @JsonKey(name: 'required_qualifications')
-  List<String> get requiredQualifications => throw _privateConstructorUsedError;
-  @JsonKey(name: 'preferred_qualifications')
-  List<String> get preferredQualifications =>
-      throw _privateConstructorUsedError;
+  String get requiredSkills => throw _privateConstructorUsedError;
+  @JsonKey(name: 'education_qualification')
+  String get educationQualification => throw _privateConstructorUsedError;
   String get experience => throw _privateConstructorUsedError;
-  String get salary => throw _privateConstructorUsedError;
+  String get location => throw _privateConstructorUsedError;
+  @JsonKey(name: 'passedout_year')
+  int? get passedoutYear => throw _privateConstructorUsedError;
   @JsonKey(name: 'work_mode')
   String get workMode => throw _privateConstructorUsedError;
   @JsonKey(name: 'job_type')
   String get jobType => throw _privateConstructorUsedError;
-  String get location => throw _privateConstructorUsedError;
-  List<String> get benefits => throw _privateConstructorUsedError;
-  @JsonKey(name: 'equal_opportunity_statement')
-  String get equalOpportunityStatement => throw _privateConstructorUsedError;
+  String? get package => throw _privateConstructorUsedError;
 
-  /// Serializes this GeneratedContent to a JSON map.
+  /// Serializes this JobParameterResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of GeneratedContent
+  /// Create a copy of JobParameterResponse
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $GeneratedContentCopyWith<GeneratedContent> get copyWith =>
+  $JobParameterResponseCopyWith<JobParameterResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $GeneratedContentCopyWith<$Res> {
-  factory $GeneratedContentCopyWith(
-    GeneratedContent value,
-    $Res Function(GeneratedContent) then,
-  ) = _$GeneratedContentCopyWithImpl<$Res, GeneratedContent>;
+abstract class $JobParameterResponseCopyWith<$Res> {
+  factory $JobParameterResponseCopyWith(
+    JobParameterResponse value,
+    $Res Function(JobParameterResponse) then,
+  ) = _$JobParameterResponseCopyWithImpl<$Res, JobParameterResponse>;
   @useResult
   $Res call({
-    @JsonKey(name: 'job_summary') String jobSummary,
-    List<String> responsibilities,
-    @JsonKey(name: 'required_skills') List<String> requiredSkills,
-    @JsonKey(name: 'required_qualifications')
-    List<String> requiredQualifications,
-    @JsonKey(name: 'preferred_qualifications')
-    List<String> preferredQualifications,
+    @JsonKey(name: 'job_id') int jobId,
+    @JsonKey(name: 'recruiter_id') int recruiterId,
+    @JsonKey(name: 'job_title') String jobTitle,
+    @JsonKey(name: 'required_skills') String requiredSkills,
+    @JsonKey(name: 'education_qualification') String educationQualification,
     String experience,
-    String salary,
+    String location,
+    @JsonKey(name: 'passedout_year') int? passedoutYear,
     @JsonKey(name: 'work_mode') String workMode,
     @JsonKey(name: 'job_type') String jobType,
-    String location,
-    List<String> benefits,
-    @JsonKey(name: 'equal_opportunity_statement')
-    String equalOpportunityStatement,
+    String? package,
   });
 }
 
 /// @nodoc
-class _$GeneratedContentCopyWithImpl<$Res, $Val extends GeneratedContent>
-    implements $GeneratedContentCopyWith<$Res> {
-  _$GeneratedContentCopyWithImpl(this._value, this._then);
+class _$JobParameterResponseCopyWithImpl<
+  $Res,
+  $Val extends JobParameterResponse
+>
+    implements $JobParameterResponseCopyWith<$Res> {
+  _$JobParameterResponseCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GeneratedContent
+  /// Create a copy of JobParameterResponse
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? jobSummary = null,
-    Object? responsibilities = null,
+    Object? jobId = null,
+    Object? recruiterId = null,
+    Object? jobTitle = null,
     Object? requiredSkills = null,
-    Object? requiredQualifications = null,
-    Object? preferredQualifications = null,
+    Object? educationQualification = null,
     Object? experience = null,
-    Object? salary = null,
+    Object? location = null,
+    Object? passedoutYear = freezed,
     Object? workMode = null,
     Object? jobType = null,
-    Object? location = null,
-    Object? benefits = null,
-    Object? equalOpportunityStatement = null,
+    Object? package = freezed,
   }) {
     return _then(
       _value.copyWith(
-            jobSummary: null == jobSummary
-                ? _value.jobSummary
-                : jobSummary // ignore: cast_nullable_to_non_nullable
+            jobId: null == jobId
+                ? _value.jobId
+                : jobId // ignore: cast_nullable_to_non_nullable
+                      as int,
+            recruiterId: null == recruiterId
+                ? _value.recruiterId
+                : recruiterId // ignore: cast_nullable_to_non_nullable
+                      as int,
+            jobTitle: null == jobTitle
+                ? _value.jobTitle
+                : jobTitle // ignore: cast_nullable_to_non_nullable
                       as String,
-            responsibilities: null == responsibilities
-                ? _value.responsibilities
-                : responsibilities // ignore: cast_nullable_to_non_nullable
-                      as List<String>,
             requiredSkills: null == requiredSkills
                 ? _value.requiredSkills
                 : requiredSkills // ignore: cast_nullable_to_non_nullable
-                      as List<String>,
-            requiredQualifications: null == requiredQualifications
-                ? _value.requiredQualifications
-                : requiredQualifications // ignore: cast_nullable_to_non_nullable
-                      as List<String>,
-            preferredQualifications: null == preferredQualifications
-                ? _value.preferredQualifications
-                : preferredQualifications // ignore: cast_nullable_to_non_nullable
-                      as List<String>,
+                      as String,
+            educationQualification: null == educationQualification
+                ? _value.educationQualification
+                : educationQualification // ignore: cast_nullable_to_non_nullable
+                      as String,
             experience: null == experience
                 ? _value.experience
                 : experience // ignore: cast_nullable_to_non_nullable
                       as String,
-            salary: null == salary
-                ? _value.salary
-                : salary // ignore: cast_nullable_to_non_nullable
+            location: null == location
+                ? _value.location
+                : location // ignore: cast_nullable_to_non_nullable
                       as String,
+            passedoutYear: freezed == passedoutYear
+                ? _value.passedoutYear
+                : passedoutYear // ignore: cast_nullable_to_non_nullable
+                      as int?,
             workMode: null == workMode
                 ? _value.workMode
                 : workMode // ignore: cast_nullable_to_non_nullable
@@ -796,18 +872,10 @@ class _$GeneratedContentCopyWithImpl<$Res, $Val extends GeneratedContent>
                 ? _value.jobType
                 : jobType // ignore: cast_nullable_to_non_nullable
                       as String,
-            location: null == location
-                ? _value.location
-                : location // ignore: cast_nullable_to_non_nullable
-                      as String,
-            benefits: null == benefits
-                ? _value.benefits
-                : benefits // ignore: cast_nullable_to_non_nullable
-                      as List<String>,
-            equalOpportunityStatement: null == equalOpportunityStatement
-                ? _value.equalOpportunityStatement
-                : equalOpportunityStatement // ignore: cast_nullable_to_non_nullable
-                      as String,
+            package: freezed == package
+                ? _value.package
+                : package // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
@@ -815,90 +883,89 @@ class _$GeneratedContentCopyWithImpl<$Res, $Val extends GeneratedContent>
 }
 
 /// @nodoc
-abstract class _$$GeneratedContentImplCopyWith<$Res>
-    implements $GeneratedContentCopyWith<$Res> {
-  factory _$$GeneratedContentImplCopyWith(
-    _$GeneratedContentImpl value,
-    $Res Function(_$GeneratedContentImpl) then,
-  ) = __$$GeneratedContentImplCopyWithImpl<$Res>;
+abstract class _$$JobParameterResponseImplCopyWith<$Res>
+    implements $JobParameterResponseCopyWith<$Res> {
+  factory _$$JobParameterResponseImplCopyWith(
+    _$JobParameterResponseImpl value,
+    $Res Function(_$JobParameterResponseImpl) then,
+  ) = __$$JobParameterResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({
-    @JsonKey(name: 'job_summary') String jobSummary,
-    List<String> responsibilities,
-    @JsonKey(name: 'required_skills') List<String> requiredSkills,
-    @JsonKey(name: 'required_qualifications')
-    List<String> requiredQualifications,
-    @JsonKey(name: 'preferred_qualifications')
-    List<String> preferredQualifications,
+    @JsonKey(name: 'job_id') int jobId,
+    @JsonKey(name: 'recruiter_id') int recruiterId,
+    @JsonKey(name: 'job_title') String jobTitle,
+    @JsonKey(name: 'required_skills') String requiredSkills,
+    @JsonKey(name: 'education_qualification') String educationQualification,
     String experience,
-    String salary,
+    String location,
+    @JsonKey(name: 'passedout_year') int? passedoutYear,
     @JsonKey(name: 'work_mode') String workMode,
     @JsonKey(name: 'job_type') String jobType,
-    String location,
-    List<String> benefits,
-    @JsonKey(name: 'equal_opportunity_statement')
-    String equalOpportunityStatement,
+    String? package,
   });
 }
 
 /// @nodoc
-class __$$GeneratedContentImplCopyWithImpl<$Res>
-    extends _$GeneratedContentCopyWithImpl<$Res, _$GeneratedContentImpl>
-    implements _$$GeneratedContentImplCopyWith<$Res> {
-  __$$GeneratedContentImplCopyWithImpl(
-    _$GeneratedContentImpl _value,
-    $Res Function(_$GeneratedContentImpl) _then,
+class __$$JobParameterResponseImplCopyWithImpl<$Res>
+    extends _$JobParameterResponseCopyWithImpl<$Res, _$JobParameterResponseImpl>
+    implements _$$JobParameterResponseImplCopyWith<$Res> {
+  __$$JobParameterResponseImplCopyWithImpl(
+    _$JobParameterResponseImpl _value,
+    $Res Function(_$JobParameterResponseImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of GeneratedContent
+  /// Create a copy of JobParameterResponse
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? jobSummary = null,
-    Object? responsibilities = null,
+    Object? jobId = null,
+    Object? recruiterId = null,
+    Object? jobTitle = null,
     Object? requiredSkills = null,
-    Object? requiredQualifications = null,
-    Object? preferredQualifications = null,
+    Object? educationQualification = null,
     Object? experience = null,
-    Object? salary = null,
+    Object? location = null,
+    Object? passedoutYear = freezed,
     Object? workMode = null,
     Object? jobType = null,
-    Object? location = null,
-    Object? benefits = null,
-    Object? equalOpportunityStatement = null,
+    Object? package = freezed,
   }) {
     return _then(
-      _$GeneratedContentImpl(
-        jobSummary: null == jobSummary
-            ? _value.jobSummary
-            : jobSummary // ignore: cast_nullable_to_non_nullable
+      _$JobParameterResponseImpl(
+        jobId: null == jobId
+            ? _value.jobId
+            : jobId // ignore: cast_nullable_to_non_nullable
+                  as int,
+        recruiterId: null == recruiterId
+            ? _value.recruiterId
+            : recruiterId // ignore: cast_nullable_to_non_nullable
+                  as int,
+        jobTitle: null == jobTitle
+            ? _value.jobTitle
+            : jobTitle // ignore: cast_nullable_to_non_nullable
                   as String,
-        responsibilities: null == responsibilities
-            ? _value._responsibilities
-            : responsibilities // ignore: cast_nullable_to_non_nullable
-                  as List<String>,
         requiredSkills: null == requiredSkills
-            ? _value._requiredSkills
+            ? _value.requiredSkills
             : requiredSkills // ignore: cast_nullable_to_non_nullable
-                  as List<String>,
-        requiredQualifications: null == requiredQualifications
-            ? _value._requiredQualifications
-            : requiredQualifications // ignore: cast_nullable_to_non_nullable
-                  as List<String>,
-        preferredQualifications: null == preferredQualifications
-            ? _value._preferredQualifications
-            : preferredQualifications // ignore: cast_nullable_to_non_nullable
-                  as List<String>,
+                  as String,
+        educationQualification: null == educationQualification
+            ? _value.educationQualification
+            : educationQualification // ignore: cast_nullable_to_non_nullable
+                  as String,
         experience: null == experience
             ? _value.experience
             : experience // ignore: cast_nullable_to_non_nullable
                   as String,
-        salary: null == salary
-            ? _value.salary
-            : salary // ignore: cast_nullable_to_non_nullable
+        location: null == location
+            ? _value.location
+            : location // ignore: cast_nullable_to_non_nullable
                   as String,
+        passedoutYear: freezed == passedoutYear
+            ? _value.passedoutYear
+            : passedoutYear // ignore: cast_nullable_to_non_nullable
+                  as int?,
         workMode: null == workMode
             ? _value.workMode
             : workMode // ignore: cast_nullable_to_non_nullable
@@ -907,17 +974,659 @@ class __$$GeneratedContentImplCopyWithImpl<$Res>
             ? _value.jobType
             : jobType // ignore: cast_nullable_to_non_nullable
                   as String,
-        location: null == location
-            ? _value.location
-            : location // ignore: cast_nullable_to_non_nullable
+        package: freezed == package
+            ? _value.package
+            : package // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$JobParameterResponseImpl implements _JobParameterResponse {
+  const _$JobParameterResponseImpl({
+    @JsonKey(name: 'job_id') required this.jobId,
+    @JsonKey(name: 'recruiter_id') required this.recruiterId,
+    @JsonKey(name: 'job_title') required this.jobTitle,
+    @JsonKey(name: 'required_skills') required this.requiredSkills,
+    @JsonKey(name: 'education_qualification')
+    required this.educationQualification,
+    required this.experience,
+    required this.location,
+    @JsonKey(name: 'passedout_year') this.passedoutYear,
+    @JsonKey(name: 'work_mode') required this.workMode,
+    @JsonKey(name: 'job_type') required this.jobType,
+    this.package,
+  });
+
+  factory _$JobParameterResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$JobParameterResponseImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'job_id')
+  final int jobId;
+  @override
+  @JsonKey(name: 'recruiter_id')
+  final int recruiterId;
+  @override
+  @JsonKey(name: 'job_title')
+  final String jobTitle;
+  @override
+  @JsonKey(name: 'required_skills')
+  final String requiredSkills;
+  @override
+  @JsonKey(name: 'education_qualification')
+  final String educationQualification;
+  @override
+  final String experience;
+  @override
+  final String location;
+  @override
+  @JsonKey(name: 'passedout_year')
+  final int? passedoutYear;
+  @override
+  @JsonKey(name: 'work_mode')
+  final String workMode;
+  @override
+  @JsonKey(name: 'job_type')
+  final String jobType;
+  @override
+  final String? package;
+
+  @override
+  String toString() {
+    return 'JobParameterResponse(jobId: $jobId, recruiterId: $recruiterId, jobTitle: $jobTitle, requiredSkills: $requiredSkills, educationQualification: $educationQualification, experience: $experience, location: $location, passedoutYear: $passedoutYear, workMode: $workMode, jobType: $jobType, package: $package)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$JobParameterResponseImpl &&
+            (identical(other.jobId, jobId) || other.jobId == jobId) &&
+            (identical(other.recruiterId, recruiterId) ||
+                other.recruiterId == recruiterId) &&
+            (identical(other.jobTitle, jobTitle) ||
+                other.jobTitle == jobTitle) &&
+            (identical(other.requiredSkills, requiredSkills) ||
+                other.requiredSkills == requiredSkills) &&
+            (identical(other.educationQualification, educationQualification) ||
+                other.educationQualification == educationQualification) &&
+            (identical(other.experience, experience) ||
+                other.experience == experience) &&
+            (identical(other.location, location) ||
+                other.location == location) &&
+            (identical(other.passedoutYear, passedoutYear) ||
+                other.passedoutYear == passedoutYear) &&
+            (identical(other.workMode, workMode) ||
+                other.workMode == workMode) &&
+            (identical(other.jobType, jobType) || other.jobType == jobType) &&
+            (identical(other.package, package) || other.package == package));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    jobId,
+    recruiterId,
+    jobTitle,
+    requiredSkills,
+    educationQualification,
+    experience,
+    location,
+    passedoutYear,
+    workMode,
+    jobType,
+    package,
+  );
+
+  /// Create a copy of JobParameterResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$JobParameterResponseImplCopyWith<_$JobParameterResponseImpl>
+  get copyWith =>
+      __$$JobParameterResponseImplCopyWithImpl<_$JobParameterResponseImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$JobParameterResponseImplToJson(this);
+  }
+}
+
+abstract class _JobParameterResponse implements JobParameterResponse {
+  const factory _JobParameterResponse({
+    @JsonKey(name: 'job_id') required final int jobId,
+    @JsonKey(name: 'recruiter_id') required final int recruiterId,
+    @JsonKey(name: 'job_title') required final String jobTitle,
+    @JsonKey(name: 'required_skills') required final String requiredSkills,
+    @JsonKey(name: 'education_qualification')
+    required final String educationQualification,
+    required final String experience,
+    required final String location,
+    @JsonKey(name: 'passedout_year') final int? passedoutYear,
+    @JsonKey(name: 'work_mode') required final String workMode,
+    @JsonKey(name: 'job_type') required final String jobType,
+    final String? package,
+  }) = _$JobParameterResponseImpl;
+
+  factory _JobParameterResponse.fromJson(Map<String, dynamic> json) =
+      _$JobParameterResponseImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'job_id')
+  int get jobId;
+  @override
+  @JsonKey(name: 'recruiter_id')
+  int get recruiterId;
+  @override
+  @JsonKey(name: 'job_title')
+  String get jobTitle;
+  @override
+  @JsonKey(name: 'required_skills')
+  String get requiredSkills;
+  @override
+  @JsonKey(name: 'education_qualification')
+  String get educationQualification;
+  @override
+  String get experience;
+  @override
+  String get location;
+  @override
+  @JsonKey(name: 'passedout_year')
+  int? get passedoutYear;
+  @override
+  @JsonKey(name: 'work_mode')
+  String get workMode;
+  @override
+  @JsonKey(name: 'job_type')
+  String get jobType;
+  @override
+  String? get package;
+
+  /// Create a copy of JobParameterResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$JobParameterResponseImplCopyWith<_$JobParameterResponseImpl>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+JobDescriptionResponse _$JobDescriptionResponseFromJson(
+  Map<String, dynamic> json,
+) {
+  return _JobDescriptionResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$JobDescriptionResponse {
+  @JsonKey(name: 'jd_id')
+  int get jdId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'job_id')
+  int get jobId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'version_number')
+  int get versionNumber => throw _privateConstructorUsedError;
+  @JsonKey(name: 'generated_jd')
+  String get generatedJd => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_jd')
+  String? get updatedJd => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_published')
+  bool get isPublished => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_at')
+  DateTime get updatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'published_at')
+  DateTime? get publishedAt => throw _privateConstructorUsedError;
+
+  /// Serializes this JobDescriptionResponse to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of JobDescriptionResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $JobDescriptionResponseCopyWith<JobDescriptionResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $JobDescriptionResponseCopyWith<$Res> {
+  factory $JobDescriptionResponseCopyWith(
+    JobDescriptionResponse value,
+    $Res Function(JobDescriptionResponse) then,
+  ) = _$JobDescriptionResponseCopyWithImpl<$Res, JobDescriptionResponse>;
+  @useResult
+  $Res call({
+    @JsonKey(name: 'jd_id') int jdId,
+    @JsonKey(name: 'job_id') int jobId,
+    @JsonKey(name: 'version_number') int versionNumber,
+    @JsonKey(name: 'generated_jd') String generatedJd,
+    @JsonKey(name: 'updated_jd') String? updatedJd,
+    @JsonKey(name: 'is_published') bool isPublished,
+    @JsonKey(name: 'created_at') DateTime createdAt,
+    @JsonKey(name: 'updated_at') DateTime updatedAt,
+    @JsonKey(name: 'published_at') DateTime? publishedAt,
+  });
+}
+
+/// @nodoc
+class _$JobDescriptionResponseCopyWithImpl<
+  $Res,
+  $Val extends JobDescriptionResponse
+>
+    implements $JobDescriptionResponseCopyWith<$Res> {
+  _$JobDescriptionResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of JobDescriptionResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? jdId = null,
+    Object? jobId = null,
+    Object? versionNumber = null,
+    Object? generatedJd = null,
+    Object? updatedJd = freezed,
+    Object? isPublished = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+    Object? publishedAt = freezed,
+  }) {
+    return _then(
+      _value.copyWith(
+            jdId: null == jdId
+                ? _value.jdId
+                : jdId // ignore: cast_nullable_to_non_nullable
+                      as int,
+            jobId: null == jobId
+                ? _value.jobId
+                : jobId // ignore: cast_nullable_to_non_nullable
+                      as int,
+            versionNumber: null == versionNumber
+                ? _value.versionNumber
+                : versionNumber // ignore: cast_nullable_to_non_nullable
+                      as int,
+            generatedJd: null == generatedJd
+                ? _value.generatedJd
+                : generatedJd // ignore: cast_nullable_to_non_nullable
+                      as String,
+            updatedJd: freezed == updatedJd
+                ? _value.updatedJd
+                : updatedJd // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            isPublished: null == isPublished
+                ? _value.isPublished
+                : isPublished // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            createdAt: null == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            updatedAt: null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            publishedAt: freezed == publishedAt
+                ? _value.publishedAt
+                : publishedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$JobDescriptionResponseImplCopyWith<$Res>
+    implements $JobDescriptionResponseCopyWith<$Res> {
+  factory _$$JobDescriptionResponseImplCopyWith(
+    _$JobDescriptionResponseImpl value,
+    $Res Function(_$JobDescriptionResponseImpl) then,
+  ) = __$$JobDescriptionResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    @JsonKey(name: 'jd_id') int jdId,
+    @JsonKey(name: 'job_id') int jobId,
+    @JsonKey(name: 'version_number') int versionNumber,
+    @JsonKey(name: 'generated_jd') String generatedJd,
+    @JsonKey(name: 'updated_jd') String? updatedJd,
+    @JsonKey(name: 'is_published') bool isPublished,
+    @JsonKey(name: 'created_at') DateTime createdAt,
+    @JsonKey(name: 'updated_at') DateTime updatedAt,
+    @JsonKey(name: 'published_at') DateTime? publishedAt,
+  });
+}
+
+/// @nodoc
+class __$$JobDescriptionResponseImplCopyWithImpl<$Res>
+    extends
+        _$JobDescriptionResponseCopyWithImpl<$Res, _$JobDescriptionResponseImpl>
+    implements _$$JobDescriptionResponseImplCopyWith<$Res> {
+  __$$JobDescriptionResponseImplCopyWithImpl(
+    _$JobDescriptionResponseImpl _value,
+    $Res Function(_$JobDescriptionResponseImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of JobDescriptionResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? jdId = null,
+    Object? jobId = null,
+    Object? versionNumber = null,
+    Object? generatedJd = null,
+    Object? updatedJd = freezed,
+    Object? isPublished = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+    Object? publishedAt = freezed,
+  }) {
+    return _then(
+      _$JobDescriptionResponseImpl(
+        jdId: null == jdId
+            ? _value.jdId
+            : jdId // ignore: cast_nullable_to_non_nullable
+                  as int,
+        jobId: null == jobId
+            ? _value.jobId
+            : jobId // ignore: cast_nullable_to_non_nullable
+                  as int,
+        versionNumber: null == versionNumber
+            ? _value.versionNumber
+            : versionNumber // ignore: cast_nullable_to_non_nullable
+                  as int,
+        generatedJd: null == generatedJd
+            ? _value.generatedJd
+            : generatedJd // ignore: cast_nullable_to_non_nullable
                   as String,
-        benefits: null == benefits
-            ? _value._benefits
-            : benefits // ignore: cast_nullable_to_non_nullable
-                  as List<String>,
-        equalOpportunityStatement: null == equalOpportunityStatement
-            ? _value.equalOpportunityStatement
-            : equalOpportunityStatement // ignore: cast_nullable_to_non_nullable
+        updatedJd: freezed == updatedJd
+            ? _value.updatedJd
+            : updatedJd // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        isPublished: null == isPublished
+            ? _value.isPublished
+            : isPublished // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        createdAt: null == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        updatedAt: null == updatedAt
+            ? _value.updatedAt
+            : updatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        publishedAt: freezed == publishedAt
+            ? _value.publishedAt
+            : publishedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$JobDescriptionResponseImpl implements _JobDescriptionResponse {
+  const _$JobDescriptionResponseImpl({
+    @JsonKey(name: 'jd_id') required this.jdId,
+    @JsonKey(name: 'job_id') required this.jobId,
+    @JsonKey(name: 'version_number') required this.versionNumber,
+    @JsonKey(name: 'generated_jd') required this.generatedJd,
+    @JsonKey(name: 'updated_jd') this.updatedJd,
+    @JsonKey(name: 'is_published') required this.isPublished,
+    @JsonKey(name: 'created_at') required this.createdAt,
+    @JsonKey(name: 'updated_at') required this.updatedAt,
+    @JsonKey(name: 'published_at') this.publishedAt,
+  });
+
+  factory _$JobDescriptionResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$JobDescriptionResponseImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'jd_id')
+  final int jdId;
+  @override
+  @JsonKey(name: 'job_id')
+  final int jobId;
+  @override
+  @JsonKey(name: 'version_number')
+  final int versionNumber;
+  @override
+  @JsonKey(name: 'generated_jd')
+  final String generatedJd;
+  @override
+  @JsonKey(name: 'updated_jd')
+  final String? updatedJd;
+  @override
+  @JsonKey(name: 'is_published')
+  final bool isPublished;
+  @override
+  @JsonKey(name: 'created_at')
+  final DateTime createdAt;
+  @override
+  @JsonKey(name: 'updated_at')
+  final DateTime updatedAt;
+  @override
+  @JsonKey(name: 'published_at')
+  final DateTime? publishedAt;
+
+  @override
+  String toString() {
+    return 'JobDescriptionResponse(jdId: $jdId, jobId: $jobId, versionNumber: $versionNumber, generatedJd: $generatedJd, updatedJd: $updatedJd, isPublished: $isPublished, createdAt: $createdAt, updatedAt: $updatedAt, publishedAt: $publishedAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$JobDescriptionResponseImpl &&
+            (identical(other.jdId, jdId) || other.jdId == jdId) &&
+            (identical(other.jobId, jobId) || other.jobId == jobId) &&
+            (identical(other.versionNumber, versionNumber) ||
+                other.versionNumber == versionNumber) &&
+            (identical(other.generatedJd, generatedJd) ||
+                other.generatedJd == generatedJd) &&
+            (identical(other.updatedJd, updatedJd) ||
+                other.updatedJd == updatedJd) &&
+            (identical(other.isPublished, isPublished) ||
+                other.isPublished == isPublished) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.publishedAt, publishedAt) ||
+                other.publishedAt == publishedAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    jdId,
+    jobId,
+    versionNumber,
+    generatedJd,
+    updatedJd,
+    isPublished,
+    createdAt,
+    updatedAt,
+    publishedAt,
+  );
+
+  /// Create a copy of JobDescriptionResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$JobDescriptionResponseImplCopyWith<_$JobDescriptionResponseImpl>
+  get copyWith =>
+      __$$JobDescriptionResponseImplCopyWithImpl<_$JobDescriptionResponseImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$JobDescriptionResponseImplToJson(this);
+  }
+}
+
+abstract class _JobDescriptionResponse implements JobDescriptionResponse {
+  const factory _JobDescriptionResponse({
+    @JsonKey(name: 'jd_id') required final int jdId,
+    @JsonKey(name: 'job_id') required final int jobId,
+    @JsonKey(name: 'version_number') required final int versionNumber,
+    @JsonKey(name: 'generated_jd') required final String generatedJd,
+    @JsonKey(name: 'updated_jd') final String? updatedJd,
+    @JsonKey(name: 'is_published') required final bool isPublished,
+    @JsonKey(name: 'created_at') required final DateTime createdAt,
+    @JsonKey(name: 'updated_at') required final DateTime updatedAt,
+    @JsonKey(name: 'published_at') final DateTime? publishedAt,
+  }) = _$JobDescriptionResponseImpl;
+
+  factory _JobDescriptionResponse.fromJson(Map<String, dynamic> json) =
+      _$JobDescriptionResponseImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'jd_id')
+  int get jdId;
+  @override
+  @JsonKey(name: 'job_id')
+  int get jobId;
+  @override
+  @JsonKey(name: 'version_number')
+  int get versionNumber;
+  @override
+  @JsonKey(name: 'generated_jd')
+  String get generatedJd;
+  @override
+  @JsonKey(name: 'updated_jd')
+  String? get updatedJd;
+  @override
+  @JsonKey(name: 'is_published')
+  bool get isPublished;
+  @override
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt;
+  @override
+  @JsonKey(name: 'updated_at')
+  DateTime get updatedAt;
+  @override
+  @JsonKey(name: 'published_at')
+  DateTime? get publishedAt;
+
+  /// Create a copy of JobDescriptionResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$JobDescriptionResponseImplCopyWith<_$JobDescriptionResponseImpl>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+JobDescriptionUpdate _$JobDescriptionUpdateFromJson(Map<String, dynamic> json) {
+  return _JobDescriptionUpdate.fromJson(json);
+}
+
+/// @nodoc
+mixin _$JobDescriptionUpdate {
+  @JsonKey(name: 'updated_jd')
+  String get updatedJd => throw _privateConstructorUsedError;
+
+  /// Serializes this JobDescriptionUpdate to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of JobDescriptionUpdate
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $JobDescriptionUpdateCopyWith<JobDescriptionUpdate> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $JobDescriptionUpdateCopyWith<$Res> {
+  factory $JobDescriptionUpdateCopyWith(
+    JobDescriptionUpdate value,
+    $Res Function(JobDescriptionUpdate) then,
+  ) = _$JobDescriptionUpdateCopyWithImpl<$Res, JobDescriptionUpdate>;
+  @useResult
+  $Res call({@JsonKey(name: 'updated_jd') String updatedJd});
+}
+
+/// @nodoc
+class _$JobDescriptionUpdateCopyWithImpl<
+  $Res,
+  $Val extends JobDescriptionUpdate
+>
+    implements $JobDescriptionUpdateCopyWith<$Res> {
+  _$JobDescriptionUpdateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of JobDescriptionUpdate
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? updatedJd = null}) {
+    return _then(
+      _value.copyWith(
+            updatedJd: null == updatedJd
+                ? _value.updatedJd
+                : updatedJd // ignore: cast_nullable_to_non_nullable
+                      as String,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$JobDescriptionUpdateImplCopyWith<$Res>
+    implements $JobDescriptionUpdateCopyWith<$Res> {
+  factory _$$JobDescriptionUpdateImplCopyWith(
+    _$JobDescriptionUpdateImpl value,
+    $Res Function(_$JobDescriptionUpdateImpl) then,
+  ) = __$$JobDescriptionUpdateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'updated_jd') String updatedJd});
+}
+
+/// @nodoc
+class __$$JobDescriptionUpdateImplCopyWithImpl<$Res>
+    extends _$JobDescriptionUpdateCopyWithImpl<$Res, _$JobDescriptionUpdateImpl>
+    implements _$$JobDescriptionUpdateImplCopyWith<$Res> {
+  __$$JobDescriptionUpdateImplCopyWithImpl(
+    _$JobDescriptionUpdateImpl _value,
+    $Res Function(_$JobDescriptionUpdateImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of JobDescriptionUpdate
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? updatedJd = null}) {
+    return _then(
+      _$JobDescriptionUpdateImpl(
+        updatedJd: null == updatedJd
+            ? _value.updatedJd
+            : updatedJd // ignore: cast_nullable_to_non_nullable
                   as String,
       ),
     );
@@ -926,237 +1635,70 @@ class __$$GeneratedContentImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$GeneratedContentImpl implements _GeneratedContent {
-  const _$GeneratedContentImpl({
-    @JsonKey(name: 'job_summary') required this.jobSummary,
-    required final List<String> responsibilities,
-    @JsonKey(name: 'required_skills')
-    required final List<String> requiredSkills,
-    @JsonKey(name: 'required_qualifications')
-    required final List<String> requiredQualifications,
-    @JsonKey(name: 'preferred_qualifications')
-    required final List<String> preferredQualifications,
-    required this.experience,
-    required this.salary,
-    @JsonKey(name: 'work_mode') required this.workMode,
-    @JsonKey(name: 'job_type') required this.jobType,
-    required this.location,
-    final List<String> benefits = const [],
-    @JsonKey(name: 'equal_opportunity_statement')
-    this.equalOpportunityStatement = '',
-  }) : _responsibilities = responsibilities,
-       _requiredSkills = requiredSkills,
-       _requiredQualifications = requiredQualifications,
-       _preferredQualifications = preferredQualifications,
-       _benefits = benefits;
+class _$JobDescriptionUpdateImpl implements _JobDescriptionUpdate {
+  const _$JobDescriptionUpdateImpl({
+    @JsonKey(name: 'updated_jd') required this.updatedJd,
+  });
 
-  factory _$GeneratedContentImpl.fromJson(Map<String, dynamic> json) =>
-      _$$GeneratedContentImplFromJson(json);
+  factory _$JobDescriptionUpdateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$JobDescriptionUpdateImplFromJson(json);
 
   @override
-  @JsonKey(name: 'job_summary')
-  final String jobSummary;
-  final List<String> _responsibilities;
-  @override
-  List<String> get responsibilities {
-    if (_responsibilities is EqualUnmodifiableListView)
-      return _responsibilities;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_responsibilities);
-  }
-
-  final List<String> _requiredSkills;
-  @override
-  @JsonKey(name: 'required_skills')
-  List<String> get requiredSkills {
-    if (_requiredSkills is EqualUnmodifiableListView) return _requiredSkills;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_requiredSkills);
-  }
-
-  final List<String> _requiredQualifications;
-  @override
-  @JsonKey(name: 'required_qualifications')
-  List<String> get requiredQualifications {
-    if (_requiredQualifications is EqualUnmodifiableListView)
-      return _requiredQualifications;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_requiredQualifications);
-  }
-
-  final List<String> _preferredQualifications;
-  @override
-  @JsonKey(name: 'preferred_qualifications')
-  List<String> get preferredQualifications {
-    if (_preferredQualifications is EqualUnmodifiableListView)
-      return _preferredQualifications;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_preferredQualifications);
-  }
-
-  @override
-  final String experience;
-  @override
-  final String salary;
-  @override
-  @JsonKey(name: 'work_mode')
-  final String workMode;
-  @override
-  @JsonKey(name: 'job_type')
-  final String jobType;
-  @override
-  final String location;
-  final List<String> _benefits;
-  @override
-  @JsonKey()
-  List<String> get benefits {
-    if (_benefits is EqualUnmodifiableListView) return _benefits;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_benefits);
-  }
-
-  @override
-  @JsonKey(name: 'equal_opportunity_statement')
-  final String equalOpportunityStatement;
+  @JsonKey(name: 'updated_jd')
+  final String updatedJd;
 
   @override
   String toString() {
-    return 'GeneratedContent(jobSummary: $jobSummary, responsibilities: $responsibilities, requiredSkills: $requiredSkills, requiredQualifications: $requiredQualifications, preferredQualifications: $preferredQualifications, experience: $experience, salary: $salary, workMode: $workMode, jobType: $jobType, location: $location, benefits: $benefits, equalOpportunityStatement: $equalOpportunityStatement)';
+    return 'JobDescriptionUpdate(updatedJd: $updatedJd)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GeneratedContentImpl &&
-            (identical(other.jobSummary, jobSummary) ||
-                other.jobSummary == jobSummary) &&
-            const DeepCollectionEquality().equals(
-              other._responsibilities,
-              _responsibilities,
-            ) &&
-            const DeepCollectionEquality().equals(
-              other._requiredSkills,
-              _requiredSkills,
-            ) &&
-            const DeepCollectionEquality().equals(
-              other._requiredQualifications,
-              _requiredQualifications,
-            ) &&
-            const DeepCollectionEquality().equals(
-              other._preferredQualifications,
-              _preferredQualifications,
-            ) &&
-            (identical(other.experience, experience) ||
-                other.experience == experience) &&
-            (identical(other.salary, salary) || other.salary == salary) &&
-            (identical(other.workMode, workMode) ||
-                other.workMode == workMode) &&
-            (identical(other.jobType, jobType) || other.jobType == jobType) &&
-            (identical(other.location, location) ||
-                other.location == location) &&
-            const DeepCollectionEquality().equals(other._benefits, _benefits) &&
-            (identical(
-                  other.equalOpportunityStatement,
-                  equalOpportunityStatement,
-                ) ||
-                other.equalOpportunityStatement == equalOpportunityStatement));
+            other is _$JobDescriptionUpdateImpl &&
+            (identical(other.updatedJd, updatedJd) ||
+                other.updatedJd == updatedJd));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    jobSummary,
-    const DeepCollectionEquality().hash(_responsibilities),
-    const DeepCollectionEquality().hash(_requiredSkills),
-    const DeepCollectionEquality().hash(_requiredQualifications),
-    const DeepCollectionEquality().hash(_preferredQualifications),
-    experience,
-    salary,
-    workMode,
-    jobType,
-    location,
-    const DeepCollectionEquality().hash(_benefits),
-    equalOpportunityStatement,
-  );
+  int get hashCode => Object.hash(runtimeType, updatedJd);
 
-  /// Create a copy of GeneratedContent
+  /// Create a copy of JobDescriptionUpdate
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$GeneratedContentImplCopyWith<_$GeneratedContentImpl> get copyWith =>
-      __$$GeneratedContentImplCopyWithImpl<_$GeneratedContentImpl>(
+  _$$JobDescriptionUpdateImplCopyWith<_$JobDescriptionUpdateImpl>
+  get copyWith =>
+      __$$JobDescriptionUpdateImplCopyWithImpl<_$JobDescriptionUpdateImpl>(
         this,
         _$identity,
       );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$GeneratedContentImplToJson(this);
+    return _$$JobDescriptionUpdateImplToJson(this);
   }
 }
 
-abstract class _GeneratedContent implements GeneratedContent {
-  const factory _GeneratedContent({
-    @JsonKey(name: 'job_summary') required final String jobSummary,
-    required final List<String> responsibilities,
-    @JsonKey(name: 'required_skills')
-    required final List<String> requiredSkills,
-    @JsonKey(name: 'required_qualifications')
-    required final List<String> requiredQualifications,
-    @JsonKey(name: 'preferred_qualifications')
-    required final List<String> preferredQualifications,
-    required final String experience,
-    required final String salary,
-    @JsonKey(name: 'work_mode') required final String workMode,
-    @JsonKey(name: 'job_type') required final String jobType,
-    required final String location,
-    final List<String> benefits,
-    @JsonKey(name: 'equal_opportunity_statement')
-    final String equalOpportunityStatement,
-  }) = _$GeneratedContentImpl;
+abstract class _JobDescriptionUpdate implements JobDescriptionUpdate {
+  const factory _JobDescriptionUpdate({
+    @JsonKey(name: 'updated_jd') required final String updatedJd,
+  }) = _$JobDescriptionUpdateImpl;
 
-  factory _GeneratedContent.fromJson(Map<String, dynamic> json) =
-      _$GeneratedContentImpl.fromJson;
+  factory _JobDescriptionUpdate.fromJson(Map<String, dynamic> json) =
+      _$JobDescriptionUpdateImpl.fromJson;
 
   @override
-  @JsonKey(name: 'job_summary')
-  String get jobSummary;
-  @override
-  List<String> get responsibilities;
-  @override
-  @JsonKey(name: 'required_skills')
-  List<String> get requiredSkills;
-  @override
-  @JsonKey(name: 'required_qualifications')
-  List<String> get requiredQualifications;
-  @override
-  @JsonKey(name: 'preferred_qualifications')
-  List<String> get preferredQualifications;
-  @override
-  String get experience;
-  @override
-  String get salary;
-  @override
-  @JsonKey(name: 'work_mode')
-  String get workMode;
-  @override
-  @JsonKey(name: 'job_type')
-  String get jobType;
-  @override
-  String get location;
-  @override
-  List<String> get benefits;
-  @override
-  @JsonKey(name: 'equal_opportunity_statement')
-  String get equalOpportunityStatement;
+  @JsonKey(name: 'updated_jd')
+  String get updatedJd;
 
-  /// Create a copy of GeneratedContent
+  /// Create a copy of JobDescriptionUpdate
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$GeneratedContentImplCopyWith<_$GeneratedContentImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$JobDescriptionUpdateImplCopyWith<_$JobDescriptionUpdateImpl>
+  get copyWith => throw _privateConstructorUsedError;
 }

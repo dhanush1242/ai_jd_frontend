@@ -313,11 +313,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                             children: [
                                               const Icon(Icons.location_on, size: 16, color: Colors.grey),
                                               const SizedBox(width: 4),
-                                              Text(jd.generatedContent.location, style: const TextStyle(color: Colors.grey, fontSize: 14)),
+                                              Text(jd.location, style: const TextStyle(color: Colors.grey, fontSize: 14)),
                                               const SizedBox(width: 16),
                                               const Icon(Icons.work, size: 16, color: Colors.grey),
                                               const SizedBox(width: 4),
-                                              Text(jd.generatedContent.workMode, style: const TextStyle(color: Colors.grey, fontSize: 14)),
+                                              Text(jd.workMode, style: const TextStyle(color: Colors.grey, fontSize: 14)),
                                             ],
                                           ),
                                         ],

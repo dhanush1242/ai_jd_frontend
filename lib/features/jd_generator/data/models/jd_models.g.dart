@@ -6,95 +6,128 @@ part of 'jd_models.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$JobDescriptionCreateImpl _$$JobDescriptionCreateImplFromJson(
+_$JobParameterCreateImpl _$$JobParameterCreateImplFromJson(
   Map<String, dynamic> json,
-) => _$JobDescriptionCreateImpl(
+) => _$JobParameterCreateImpl(
   jobTitle: json['job_title'] as String,
-  skills: (json['skills'] as List<dynamic>).map((e) => e as String).toList(),
-  experienceRequired: json['experience_required'] as String,
-  educationQualifications: json['education_qualifications'] as String,
-  salary: json['salary'] as String,
+  requiredSkills: json['required_skills'] as String,
+  educationQualification: json['education_qualification'] as String,
+  experience: json['experience'] as String,
+  location: json['location'] as String,
+  passedoutYear: (json['passedout_year'] as num?)?.toInt(),
   workMode: json['work_mode'] as String,
   jobType: json['job_type'] as String,
-  location: json['location'] as String,
-  numberOfOpenings: (json['number_of_openings'] as num?)?.toInt(),
-  department: json['department'] as String?,
-  additionalInstructions: json['additional_instructions'] as String?,
+  package: json['package'] as String?,
 );
 
-Map<String, dynamic> _$$JobDescriptionCreateImplToJson(
-  _$JobDescriptionCreateImpl instance,
+Map<String, dynamic> _$$JobParameterCreateImplToJson(
+  _$JobParameterCreateImpl instance,
 ) => <String, dynamic>{
   'job_title': instance.jobTitle,
-  'skills': instance.skills,
-  'experience_required': instance.experienceRequired,
-  'education_qualifications': instance.educationQualifications,
-  'salary': instance.salary,
+  'required_skills': instance.requiredSkills,
+  'education_qualification': instance.educationQualification,
+  'experience': instance.experience,
+  'location': instance.location,
+  'passedout_year': instance.passedoutYear,
   'work_mode': instance.workMode,
   'job_type': instance.jobType,
-  'location': instance.location,
-  'number_of_openings': instance.numberOfOpenings,
-  'department': instance.department,
-  'additional_instructions': instance.additionalInstructions,
+  'package': instance.package,
 };
 
-_$GeneratedJDImpl _$$GeneratedJDImplFromJson(Map<String, dynamic> json) =>
-    _$GeneratedJDImpl(
-      id: json['id'] as String,
-      jobTitle: json['job_title'] as String,
-      generatedContent: GeneratedContent.fromJson(
-        json['generated_content'] as Map<String, dynamic>,
-      ),
-    );
-
-Map<String, dynamic> _$$GeneratedJDImplToJson(_$GeneratedJDImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'job_title': instance.jobTitle,
-      'generated_content': instance.generatedContent,
-    };
-
-_$GeneratedContentImpl _$$GeneratedContentImplFromJson(
+_$JobParameterUpdateImpl _$$JobParameterUpdateImplFromJson(
   Map<String, dynamic> json,
-) => _$GeneratedContentImpl(
-  jobSummary: json['job_summary'] as String,
-  responsibilities: (json['responsibilities'] as List<dynamic>)
-      .map((e) => e as String)
-      .toList(),
-  requiredSkills: (json['required_skills'] as List<dynamic>)
-      .map((e) => e as String)
-      .toList(),
-  requiredQualifications: (json['required_qualifications'] as List<dynamic>)
-      .map((e) => e as String)
-      .toList(),
-  preferredQualifications: (json['preferred_qualifications'] as List<dynamic>)
-      .map((e) => e as String)
-      .toList(),
-  experience: json['experience'] as String,
-  salary: json['salary'] as String,
-  workMode: json['work_mode'] as String,
-  jobType: json['job_type'] as String,
-  location: json['location'] as String,
-  benefits:
-      (json['benefits'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-      const [],
-  equalOpportunityStatement:
-      json['equal_opportunity_statement'] as String? ?? '',
+) => _$JobParameterUpdateImpl(
+  jobTitle: json['job_title'] as String?,
+  requiredSkills: json['required_skills'] as String?,
+  educationQualification: json['education_qualification'] as String?,
+  experience: json['experience'] as String?,
+  location: json['location'] as String?,
+  passedoutYear: (json['passedout_year'] as num?)?.toInt(),
+  workMode: json['work_mode'] as String?,
+  jobType: json['job_type'] as String?,
+  package: json['package'] as String?,
 );
 
-Map<String, dynamic> _$$GeneratedContentImplToJson(
-  _$GeneratedContentImpl instance,
+Map<String, dynamic> _$$JobParameterUpdateImplToJson(
+  _$JobParameterUpdateImpl instance,
 ) => <String, dynamic>{
-  'job_summary': instance.jobSummary,
-  'responsibilities': instance.responsibilities,
+  'job_title': instance.jobTitle,
   'required_skills': instance.requiredSkills,
-  'required_qualifications': instance.requiredQualifications,
-  'preferred_qualifications': instance.preferredQualifications,
+  'education_qualification': instance.educationQualification,
   'experience': instance.experience,
-  'salary': instance.salary,
+  'location': instance.location,
+  'passedout_year': instance.passedoutYear,
   'work_mode': instance.workMode,
   'job_type': instance.jobType,
-  'location': instance.location,
-  'benefits': instance.benefits,
-  'equal_opportunity_statement': instance.equalOpportunityStatement,
+  'package': instance.package,
 };
+
+_$JobParameterResponseImpl _$$JobParameterResponseImplFromJson(
+  Map<String, dynamic> json,
+) => _$JobParameterResponseImpl(
+  jobId: (json['job_id'] as num).toInt(),
+  recruiterId: (json['recruiter_id'] as num).toInt(),
+  jobTitle: json['job_title'] as String,
+  requiredSkills: json['required_skills'] as String,
+  educationQualification: json['education_qualification'] as String,
+  experience: json['experience'] as String,
+  location: json['location'] as String,
+  passedoutYear: (json['passedout_year'] as num?)?.toInt(),
+  workMode: json['work_mode'] as String,
+  jobType: json['job_type'] as String,
+  package: json['package'] as String?,
+);
+
+Map<String, dynamic> _$$JobParameterResponseImplToJson(
+  _$JobParameterResponseImpl instance,
+) => <String, dynamic>{
+  'job_id': instance.jobId,
+  'recruiter_id': instance.recruiterId,
+  'job_title': instance.jobTitle,
+  'required_skills': instance.requiredSkills,
+  'education_qualification': instance.educationQualification,
+  'experience': instance.experience,
+  'location': instance.location,
+  'passedout_year': instance.passedoutYear,
+  'work_mode': instance.workMode,
+  'job_type': instance.jobType,
+  'package': instance.package,
+};
+
+_$JobDescriptionResponseImpl _$$JobDescriptionResponseImplFromJson(
+  Map<String, dynamic> json,
+) => _$JobDescriptionResponseImpl(
+  jdId: (json['jd_id'] as num).toInt(),
+  jobId: (json['job_id'] as num).toInt(),
+  versionNumber: (json['version_number'] as num).toInt(),
+  generatedJd: json['generated_jd'] as String,
+  updatedJd: json['updated_jd'] as String?,
+  isPublished: json['is_published'] as bool,
+  createdAt: DateTime.parse(json['created_at'] as String),
+  updatedAt: DateTime.parse(json['updated_at'] as String),
+  publishedAt: json['published_at'] == null
+      ? null
+      : DateTime.parse(json['published_at'] as String),
+);
+
+Map<String, dynamic> _$$JobDescriptionResponseImplToJson(
+  _$JobDescriptionResponseImpl instance,
+) => <String, dynamic>{
+  'jd_id': instance.jdId,
+  'job_id': instance.jobId,
+  'version_number': instance.versionNumber,
+  'generated_jd': instance.generatedJd,
+  'updated_jd': instance.updatedJd,
+  'is_published': instance.isPublished,
+  'created_at': instance.createdAt.toIso8601String(),
+  'updated_at': instance.updatedAt.toIso8601String(),
+  'published_at': instance.publishedAt?.toIso8601String(),
+};
+
+_$JobDescriptionUpdateImpl _$$JobDescriptionUpdateImplFromJson(
+  Map<String, dynamic> json,
+) => _$JobDescriptionUpdateImpl(updatedJd: json['updated_jd'] as String);
+
+Map<String, dynamic> _$$JobDescriptionUpdateImplToJson(
+  _$JobDescriptionUpdateImpl instance,
+) => <String, dynamic>{'updated_jd': instance.updatedJd};

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class ProfileFormScreen extends StatefulWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'candidate_provider.dart';
+
+class ProfileFormScreen extends ConsumerStatefulWidget {
   const ProfileFormScreen({super.key});
 
   @override
-  State<ProfileFormScreen> createState() => _ProfileFormScreenState();
+  ConsumerState<ProfileFormScreen> createState() => _ProfileFormScreenState();
 }
 
-class _ProfileFormScreenState extends State<ProfileFormScreen> {
+class _ProfileFormScreenState extends ConsumerState<ProfileFormScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final _skillsController = TextEditingController();
@@ -33,7 +36,12 @@ class _ProfileFormScreenState extends State<ProfileFormScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Profile saved successfully! (Mocked)'), backgroundColor: Colors.green),
       );
-      context.pop();
+      ref.read(profileCompletedProvider.notifier).state = true;
+      if (context.canPop()) {
+        context.pop();
+      } else {
+        context.go('/home');
+      }
     }
   }
 
