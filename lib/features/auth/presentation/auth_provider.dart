@@ -33,10 +33,10 @@ class Auth extends _$Auth {
     });
   }
 
-  Future<void> register(String name, String email, String password, String role) async {
+  Future<void> register(String name, String email, String password, String mobileNumber, String role) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
-      await ref.read(authRepositoryProvider).register(name, email, password, role);
+      await ref.read(authRepositoryProvider).register(name, email, password, mobileNumber, role);
       final response = await ref.read(authRepositoryProvider).login(email, password, role);
       await ref.read(secureStorageProvider).saveToken(response.accessToken);
       await ref.read(secureStorageProvider).saveRole(role);

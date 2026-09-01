@@ -35,13 +35,9 @@ GoRouter router(RouterRef ref) {
       final isLogin = state.matchedLocation == '/login';
       final isRegister = state.matchedLocation == '/register';
 
-      if (isLoading) {
-        return '/splash';
-      }
-
-      if (!isAuthenticated) {
+      if (!isAuthenticated && !isLoading) {
         if (!isLogin && !isRegister) return '/login';
-      } else {
+      } else if (isAuthenticated) {
         final user = authState.valueOrNull;
         if (isSplash || isLogin || isRegister) {
           if (user?.role == 'candidate' && !isProfileComplete) {

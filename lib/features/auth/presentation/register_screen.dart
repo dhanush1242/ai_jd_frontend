@@ -13,6 +13,7 @@ class RegisterScreen extends ConsumerStatefulWidget {
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _mobileController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String _selectedRole = 'recruiter';
@@ -21,6 +22,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
+    _mobileController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -31,6 +33,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         _nameController.text,
         _emailController.text,
         _passwordController.text,
+        _mobileController.text,
         _selectedRole,
       );
     }
@@ -45,6 +48,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(next.error.toString()), backgroundColor: Colors.redAccent),
         );
+      } else if (next is AsyncData && next.value != null && previous != null && previous.isLoading) {
+        if (ModalRoute.of(context)?.isCurrent == true) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Registration successful!'), backgroundColor: Colors.green),
+          );
+        }
       }
     });
 
@@ -109,6 +118,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           prefixIcon: Icon(Icons.email_outlined),
                         ),
                         validator: (value) => value == null || value.isEmpty ? 'Enter email' : null,
+                      ),
+                      const SizedBox(height: 16),
+                      TextFormField(
+                        controller: _mobileController,
+                        decoration: const InputDecoration(
+                          labelText: 'Mobile Number',
+                          prefixIcon: Icon(Icons.phone_outlined),
+                        ),
+                        keyboardType: TextInputType.phone,
+                        validator: (value) => value == null || value.isEmpty ? 'Enter mobile number' : null,
                       ),
                       const SizedBox(height: 16),
                       TextFormField(

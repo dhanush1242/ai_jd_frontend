@@ -16,46 +16,60 @@ class AuthRepository {
   AuthRepository(this._dio);
 
   Future<LoginResponse> login(String email, String password, String role) async {
-    final path = role == 'recruiter' ? '/recruiters/login' : '/candidates/login';
-    final requestData = role == 'recruiter' 
-        ? {'organisation_email': email, 'password': password}
-        : {'email': email, 'password': password};
-
-    final response = await _dio.post(path, data: requestData);
-    
-    final data = Map<String, dynamic>.from(response.data);
-    data['expires_in'] = data['expires_in'] ?? 3600; // Mock expires_in as it is missing from OpenAPI spec
-    return LoginResponse.fromJson(data);
+    try {
+      final path = role == 'recruiter' ? '/recruiters/login' : '/candidates/login';
+      final response = await _dio.post(path, data: {
+        if (role == 'recruiter') 'organisation_email': email else 'email': email,
+        'password': password,
+      });
+      final data = Map<String, dynamic>.from(response.data as Map<String, dynamic>);
+      data['expires_in'] = data['expires_in'] ?? 3600; // Mock expires_in as it is missing from OpenAPI spec
+      return LoginResponse.fromJson(data);
+    } on DioException catch (e) {
+      final message = e.response?.data['detail'] ?? e.message;
+      throw Exception(message);
+    }
   }
 
-  Future<void> register(String name, String email, String password, String role) async {
-    final path = role == 'recruiter' ? '/recruiters/register' : '/candidates/register';
-    final requestData = role == 'recruiter'
-        ? {'name': name, 'organisation_email': email, 'password': password, 'mobile_number': '1234567890'} // Dummy mobile
-        : {'name': name, 'email': email, 'password': password, 'mobile_number': '1234567890'};
-
-    await _dio.post(path, data: requestData);
+  Future<void> register(String name, String email, String password, String mobileNumber, String role) async {
+    try {
+      final path = role == 'recruiter' ? '/recruiters/register' : '/candidates/register';
+      await _dio.post(path, data: {
+        'name': name,
+        if (role == 'recruiter') 'organisation_email': email else 'email': email,
+        'password': password,
+        'mobile_number': mobileNumber,
+      });
+    } on DioException catch (e) {
+      final message = e.response?.data['detail'] ?? e.message;
+      throw Exception(message);
+    }
   }
 
   Future<User> getCurrentUser(String role) async {
-    final path = role == 'recruiter' ? '/recruiters/me' : '/candidates/me';
-    final response = await _dio.get(path);
-    
-    final data = response.data as Map<String, dynamic>;
-    if (role == 'recruiter') {
-      return User(
-        id: data['recruiter_id'].toString(),
-        email: data['organisation_email'] ?? '',
-        name: data['name'] ?? '',
-        role: role,
-      );
-    } else {
-      return User(
-        id: data['candidate_id'].toString(),
-        email: data['email'] ?? '',
-        name: data['name'] ?? '',
-        role: role,
-      );
+    try {
+      final path = role == 'recruiter' ? '/recruiters/me' : '/candidates/me';
+      final response = await _dio.get(path);
+      
+      final data = response.data as Map<String, dynamic>;
+      if (role == 'recruiter') {
+        return User(
+          id: data['recruiter_id'].toString(),
+          email: data['organisation_email'] ?? '',
+          name: data['name'] ?? '',
+          role: role,
+        );
+      } else {
+        return User(
+          id: data['candidate_id'].toString(),
+          email: data['email'] ?? '',
+          name: data['name'] ?? '',
+          role: role,
+        );
+      }
+    } on DioException catch (e) {
+      final message = e.response?.data['detail'] ?? e.message;
+      throw Exception(message);
     }
   }
 }
