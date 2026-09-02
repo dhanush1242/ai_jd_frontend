@@ -48,7 +48,7 @@ class AuthRepository {
 
   Future<User> getCurrentUser(String role) async {
     try {
-      final path = role == 'recruiter' ? '/recruiters/me' : '/candidates/me';
+      final path = role == 'recruiter' ? '/recruiters/profile' : '/candidates/profile';
       final response = await _dio.get(path);
       
       final data = response.data as Map<String, dynamic>;
