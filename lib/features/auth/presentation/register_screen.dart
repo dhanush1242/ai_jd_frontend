@@ -32,6 +32,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       ref.read(authProvider.notifier).register(
         _nameController.text,
         _emailController.text,
+        _mobileController.text,
         _passwordController.text,
         _mobileController.text,
         _selectedRole,

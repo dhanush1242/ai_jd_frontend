@@ -11,6 +11,7 @@ SecureStorage secureStorage(SecureStorageRef ref) {
 class SecureStorage {
   final _storage = const FlutterSecureStorage();
   static const _tokenKey = 'jwt_access_token';
+  static const _roleKey = 'user_role';
 
   Future<void> saveToken(String token) async {
     await _storage.write(key: _tokenKey, value: token);
@@ -25,14 +26,14 @@ class SecureStorage {
   }
 
   Future<void> saveRole(String role) async {
-    await _storage.write(key: 'user_role', value: role);
+    await _storage.write(key: _roleKey, value: role);
   }
 
   Future<String?> getRole() async {
-    return await _storage.read(key: 'user_role');
+    return await _storage.read(key: _roleKey);
   }
 
   Future<void> deleteRole() async {
-    await _storage.delete(key: 'user_role');
+    await _storage.delete(key: _roleKey);
   }
 }

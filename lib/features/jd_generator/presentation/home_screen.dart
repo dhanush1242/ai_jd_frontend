@@ -2,475 +2,422 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../auth/presentation/auth_provider.dart';
-import 'jd_provider.dart';
 import '../../candidate/presentation/candidate_provider.dart';
+import '../../candidate/presentation/candidate_jobs_provider.dart';
 
-class HomeScreen extends ConsumerStatefulWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  ConsumerState<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends ConsumerState<HomeScreen> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(authProvider).valueOrNull;
     final isCandidate = user?.role == 'candidate';
 
     return Scaffold(
+      backgroundColor: const Color(0xFFF8FAFC),
       appBar: AppBar(
-        title: Text(isCandidate ? 'Candidate Dashboard' : 'Recruiter Dashboard', style: const TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Colors.white,
-        foregroundColor: const Color(0xFF6200EA),
-        elevation: 1,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              ref.read(authProvider.notifier).logout();
-            },
-          ),
-        ],
-      ),
-      floatingActionButton: isCandidate ? null : FloatingActionButton.extended(
-        onPressed: () {
-          context.push('/jd/create');
-        },
-        backgroundColor: const Color(0xFF00E5FF),
-        foregroundColor: Colors.black87,
-        icon: const Icon(Icons.add),
-        label: const Text('Generate New JD', style: TextStyle(fontWeight: FontWeight.bold)),
-      ),
-      body: isCandidate ? _buildCandidateBody() : _buildRecruiterBody(),
-    );
-  }
-
-  Widget _buildCandidateBody() {
-    final isProfileComplete = ref.watch(profileCompletedProvider);
-
-    return Center(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-        child: Container(
-          constraints: const BoxConstraints(maxWidth: 900),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Premium Welcome Header
-              Container(
-                padding: const EdgeInsets.all(32),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF6200EA), Color(0xFF00E5FF)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF6200EA).withOpacity(0.3),
-                      blurRadius: 20,
-                      offset: const Offset(0, 10),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const CircleAvatar(
-                        radius: 46,
-                        backgroundColor: Color(0xFF1F2937),
-                        foregroundColor: Colors.white,
-                        child: Icon(Icons.person, size: 48),
-                      ),
-                    ),
-                    const SizedBox(width: 32),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Welcome back, Candidate!',
-                            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: -0.5),
-                          ),
-                          const SizedBox(height: 8),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  isProfileComplete ? Icons.check_circle : Icons.warning_amber_rounded,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  isProfileComplete ? 'Profile Status: 100% Complete' : 'Profile Status: Incomplete',
-                                  style: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 40),
-              
-              // Action Buttons
-              Row(
-                children: [
-                  if (!isProfileComplete)
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: () => context.push('/candidate/profile'),
-                        icon: const Icon(Icons.edit_document),
-                        label: const Text('Complete Your Profile to Apply'),
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 24),
-                          textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    )
-                  else ...[
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.search),
-                        label: const Text('Search & Apply for Jobs'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF00E5FF),
-                          foregroundColor: const Color(0xFF1F2937),
-                          padding: const EdgeInsets.symmetric(vertical: 24),
-                          textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: () => context.push('/candidate/profile'),
-                        icon: const Icon(Icons.edit),
-                        label: const Text('Edit Profile'),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(0xFF6200EA),
-                          padding: const EdgeInsets.symmetric(vertical: 24),
-                          side: const BorderSide(color: Color(0xFF6200EA), width: 2),
-                          textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        ),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-              const SizedBox(height: 48),
-              
-              // Applications Section
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Recent Applications', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF1F2937))),
-                  TextButton(onPressed: () {}, child: const Text('View All', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
-                ],
-              ),
-              const SizedBox(height: 24),
-              
-              if (!isProfileComplete)
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(48.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(24),
-                    border: Border.all(color: const Color(0xFFE5E7EB)),
-                  ),
-                  child: Column(
-                    children: [
-                      Icon(Icons.lock_outline, size: 64, color: Colors.grey.shade400),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'Unlock Job Applications',
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF374151)),
-                      ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        'Complete your profile to start tracking your job applications here.',
-                        style: TextStyle(color: Colors.grey, fontSize: 16),
-                      ),
-                    ],
-                  ),
-                )
-              else ...[
-                _ApplicationCard(jobTitle: 'Flutter Developer', company: 'TechCorp', status: 'Under Review', statusColor: Colors.blue),
-                _ApplicationCard(jobTitle: 'Senior Frontend Engineer', company: 'Innovate AI', status: 'Applied', statusColor: Colors.orange),
-                _ApplicationCard(jobTitle: 'Mobile App Developer', company: 'Startup Inc', status: 'Interviewing', statusColor: Colors.green),
-              ],
-            ],
-          ),
+        elevation: 0,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(isCandidate ? 'Candidate Dashboard' : 'Recruiter Dashboard', style: const TextStyle(color: Color(0xFF1E293B), fontSize: 20, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 4),
+            const Text('Track your job search and manage your applications', style: TextStyle(color: Colors.grey, fontSize: 12)),
+          ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildRecruiterBody() {
-    final historyAsync = ref.watch(jdHistoryProvider);
-
-    return historyAsync.when(
-      data: (jds) {
-        return Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 1000),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Recruiter Analytics', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Color(0xFF1F2937))),
-                  const SizedBox(height: 24),
-                  Row(
-                    children: [
-                      Expanded(child: _StatCard(title: 'Total JDs Generated', value: '${jds.length}', icon: Icons.description)),
-                      const SizedBox(width: 16),
-                      Expanded(child: _StatCard(title: 'Total Applicants', value: '${jds.length * 12}', icon: Icons.people)),
-                      const SizedBox(width: 16),
-                      const Expanded(child: _StatCard(title: 'Active Jobs', value: '3', icon: Icons.work_outline)),
-                    ],
-                  ),
-                  const SizedBox(height: 48),
-                  const Text('Generated Job Descriptions', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF1F2937))),
-                  const SizedBox(height: 24),
-                  if (jds.isEmpty)
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(48.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(color: const Color(0xFFE5E7EB)),
-                      ),
-                      child: Column(
-                        children: [
-                          Icon(Icons.description_outlined, size: 64, color: Colors.grey.shade300),
-                          const SizedBox(height: 16),
-                          const Text('No Job Descriptions generated yet.', style: TextStyle(color: Colors.grey, fontSize: 18)),
-                        ],
-                      ),
-                    )
-                  else
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: jds.length,
-                      itemBuilder: (context, index) {
-                        final jd = jds[index];
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 16),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 10, offset: const Offset(0, 4)),
-                            ],
-                            border: Border.all(color: Colors.grey.withOpacity(0.1)),
-                          ),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(16),
-                              onTap: () {},
-                              hoverColor: Colors.grey.withOpacity(0.02),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(color: const Color(0xFFF3F4F6), borderRadius: BorderRadius.circular(12)),
-                                      child: const Icon(Icons.description, color: Color(0xFF6200EA), size: 28),
-                                    ),
-                                    const SizedBox(width: 24),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(jd.jobTitle, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color(0xFF1F2937))),
-                                          const SizedBox(height: 6),
-                                          Row(
-                                            children: [
-                                              const Icon(Icons.location_on, size: 16, color: Colors.grey),
-                                              const SizedBox(width: 4),
-                                              Text(jd.location, style: const TextStyle(color: Colors.grey, fontSize: 14)),
-                                              const SizedBox(width: 16),
-                                              const Icon(Icons.work, size: 16, color: Colors.grey),
-                                              const SizedBox(width: 4),
-                                              Text(jd.workMode, style: const TextStyle(color: Colors.grey, fontSize: 14)),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const Icon(Icons.chevron_right, color: Colors.grey),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                ],
-              ),
+        actions: [
+          Container(
+            width: 300,
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF1F5F9),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: const Row(
+              children: [
+                Icon(Icons.search, color: Colors.grey, size: 20),
+                SizedBox(width: 8),
+                Expanded(child: TextField(decoration: InputDecoration(border: InputBorder.none, hintText: 'Search jobs, skills, companies...', hintStyle: TextStyle(fontSize: 14)))),
+              ],
             ),
           ),
-        );
-      },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (err, stack) => Center(child: Text('Failed to load history: $err')),
+          const SizedBox(width: 16),
+          IconButton(icon: const Icon(Icons.notifications_none, color: Colors.grey), onPressed: () {}),
+          const SizedBox(width: 16),
+          const CircleAvatar(radius: 16, backgroundColor: Color(0xFF6D28D9), child: Icon(Icons.person, size: 20, color: Colors.white)),
+          const SizedBox(width: 24),
+        ],
+      ),
+      body: isCandidate ? _buildCandidateDashboard(context, ref) : _buildRecruiterDashboard(context, ref),
     );
   }
-}
 
-class _ApplicationCard extends StatelessWidget {
-  final String jobTitle;
-  final String company;
-  final String status;
-  final Color statusColor;
+  Widget _buildCandidateDashboard(BuildContext context, WidgetRef ref) {
+    final applicationsAsync = ref.watch(candidateApplicationsProvider);
+    final bookmarksAsync = ref.watch(candidateBookmarksProvider);
+    final profileCompletedAsync = ref.watch(profileCompletedProvider);
+    
+    final apps = applicationsAsync.valueOrNull ?? [];
+    final underReview = apps.where((a) => a.status == 'Under Review' || a.status == 'Screening').length;
+    final interviews = apps.where((a) => a.status == 'Interview').length;
+    final savedJobsCount = bookmarksAsync.valueOrNull?.length ?? 0;
+    final isProfileComplete = profileCompletedAsync.valueOrNull ?? false;
 
-  const _ApplicationCard({required this.jobTitle, required this.company, required this.status, required this.statusColor});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-        border: Border.all(color: Colors.grey.withOpacity(0.1)),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: () {},
-          hoverColor: Colors.grey.withOpacity(0.02),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Banner
+          Container(
+            padding: const EdgeInsets.all(32),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF5F3FF), // Light purple
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: const Color(0xFFEDE9FE)),
+            ),
             child: Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF3F4F6),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(Icons.work_outline, color: Color(0xFF6200EA), size: 28),
+                  padding: const EdgeInsets.all(16),
+                  decoration: const BoxDecoration(color: Color(0xFF6D28D9), shape: BoxShape.circle),
+                  child: const Text('👋', style: TextStyle(fontSize: 32)),
                 ),
                 const SizedBox(width: 24),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(jobTitle, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color(0xFF1F2937))),
-                      const SizedBox(height: 4),
-                      Text(company, style: const TextStyle(color: Colors.grey, fontSize: 15)),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: statusColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: statusColor.withOpacity(0.2)),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 8,
-                        height: 8,
-                        decoration: BoxDecoration(shape: BoxShape.circle, color: statusColor),
+                      RichText(
+                        text: const TextSpan(
+                          style: TextStyle(fontSize: 24, color: Color(0xFF1E293B), fontWeight: FontWeight.w600),
+                          children: [
+                            TextSpan(text: 'Good morning, '),
+                            TextSpan(text: 'Candidate', style: TextStyle(color: Color(0xFF6D28D9))),
+                          ],
+                        ),
                       ),
-                      const SizedBox(width: 8),
-                      Text(status, style: TextStyle(color: statusColor, fontWeight: FontWeight.bold, fontSize: 14)),
+                      const SizedBox(height: 8),
+                      const Text('Find your next opportunity and track your applications.', style: TextStyle(color: Color(0xFF475569))),
                     ],
                   ),
                 ),
-                const SizedBox(width: 16),
-                const Icon(Icons.chevron_right, color: Colors.grey),
+                // Illustration placeholder
+                const Icon(Icons.work_outline, size: 80, color: Color(0xFFC4B5FD)),
               ],
             ),
           ),
-        ),
+          
+          const SizedBox(height: 32),
+          
+          // Stats Row
+          Row(
+            children: [
+              Expanded(child: _StatCard(icon: Icons.description_outlined, iconColor: const Color(0xFF8B5CF6), iconBg: const Color(0xFFF5F3FF), title: 'Applications', count: apps.length.toString(), subtitle: 'Total applied')),
+              const SizedBox(width: 16),
+              Expanded(child: _StatCard(icon: Icons.access_time, iconColor: const Color(0xFF3B82F6), iconBg: const Color(0xFFEFF6FF), title: 'Under Review', count: underReview.toString(), subtitle: 'In progress')),
+              const SizedBox(width: 16),
+              Expanded(child: _StatCard(icon: Icons.calendar_today, iconColor: const Color(0xFF10B981), iconBg: const Color(0xFFECFDF5), title: 'Interviews', count: interviews.toString(), subtitle: 'Scheduled')),
+              const SizedBox(width: 16),
+              Expanded(child: _StatCard(icon: Icons.bookmark_outline, iconColor: const Color(0xFFF59E0B), iconBg: const Color(0xFFFFFBEB), title: 'Saved Jobs', count: savedJobsCount.toString(), subtitle: 'Jobs saved')),
+            ],
+          ),
+          
+          const SizedBox(height: 32),
+          
+          // Bottom Row
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Application Activity
+              Expanded(
+                flex: 3,
+                child: Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.grey.withOpacity(0.1))),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(Icons.auto_awesome, color: Color(0xFF6D28D9)),
+                              const SizedBox(width: 8),
+                              const Text('Application Activity', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          TextButton(onPressed: () => context.go('/candidate/jobs'), child: const Text('View all', style: TextStyle(color: Color(0xFF6D28D9)))),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      if (apps.isEmpty)
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 32),
+                          child: Center(child: Text('No application activity yet.', style: TextStyle(color: Colors.grey))),
+                        )
+                      else
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: apps.length > 3 ? 3 : apps.length,
+                          itemBuilder: (context, index) {
+                            final app = apps[index];
+                            Color statusColor = const Color(0xFF10B981);
+                            IconData statusIcon = Icons.check_circle;
+                            if (app.status == 'Under Review') {
+                              statusColor = const Color(0xFF3B82F6);
+                              statusIcon = Icons.access_time;
+                            } else if (app.status == 'Interview') {
+                              statusColor = const Color(0xFF8B5CF6);
+                              statusIcon = Icons.calendar_today;
+                            }
+                            
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 24.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(color: statusColor, shape: BoxShape.circle),
+                                    child: Icon(statusIcon, color: Colors.white, size: 20),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(app.status, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                                        const SizedBox(height: 4),
+                                        Text('${app.jobTitle} at ${app.location}', style: TextStyle(color: Colors.grey[600], fontSize: 14)),
+                                      ],
+                                    ),
+                                  ),
+                                  Text(app.createdAt.split('T').first, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 32),
+              
+              // Profile Strength
+              Expanded(
+                flex: 2,
+                child: Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.grey.withOpacity(0.1))),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(Icons.track_changes, color: Color(0xFF6D28D9)),
+                              const SizedBox(width: 8),
+                              const Text('Profile Strength', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Text(isProfileComplete ? '100%' : '50%', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF6D28D9))),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      LinearProgressIndicator(
+                        value: isProfileComplete ? 1.0 : 0.5,
+                        backgroundColor: const Color(0xFFF1F5F9),
+                        valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF8B5CF6)),
+                        minHeight: 8,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(isProfileComplete ? 'Great job! Your profile looks strong.' : 'Complete your profile to stand out to recruiters.', style: TextStyle(color: Colors.grey[600])),
+                      const SizedBox(height: 24),
+                      if (!isProfileComplete)
+                        TextButton(
+                          onPressed: () => context.go('/candidate/profile'),
+                          style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: const Size(0, 0), tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                          child: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text('Complete profile', style: TextStyle(color: Color(0xFF6D28D9), fontWeight: FontWeight.bold)),
+                              SizedBox(width: 4),
+                              Icon(Icons.arrow_forward, size: 16, color: Color(0xFF6D28D9)),
+                            ],
+                          ),
+                        )
+                      else
+                        TextButton(
+                          onPressed: () => context.go('/candidate/view_profile'),
+                          style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: const Size(0, 0), tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                          child: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text('View profile', style: TextStyle(color: Color(0xFF6D28D9), fontWeight: FontWeight.bold)),
+                              SizedBox(width: 4),
+                              Icon(Icons.arrow_forward, size: 16, color: Color(0xFF6D28D9)),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecruiterDashboard(BuildContext context, WidgetRef ref) {
+    // Assuming you have a provider for recruiter jobs
+    // final jobsAsync = ref.watch(recruiterJobsProvider);
+    // For now we just mock the numbers or leave them static until wired up
+    
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Banner
+          Container(
+            padding: const EdgeInsets.all(32),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF5F3FF),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: const Color(0xFFEDE9FE)),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: const BoxDecoration(color: Color(0xFF6D28D9), shape: BoxShape.circle),
+                  child: const Text('👋', style: TextStyle(fontSize: 32)),
+                ),
+                const SizedBox(width: 24),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RichText(
+                        text: const TextSpan(
+                          style: TextStyle(fontSize: 24, color: Color(0xFF1E293B), fontWeight: FontWeight.w600),
+                          children: [
+                            TextSpan(text: 'Welcome back, '),
+                            TextSpan(text: 'Recruiter', style: TextStyle(color: Color(0xFF6D28D9))),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text('Here is what is happening with your job postings today.', style: TextStyle(color: Color(0xFF475569))),
+                    ],
+                  ),
+                ),
+                const Icon(Icons.analytics_outlined, size: 80, color: Color(0xFFC4B5FD)),
+              ],
+            ),
+          ),
+          
+          const SizedBox(height: 32),
+          
+          // Stats Row
+          Row(
+            children: [
+              Expanded(child: _StatCard(icon: Icons.work_outline, iconColor: const Color(0xFF8B5CF6), iconBg: const Color(0xFFF5F3FF), title: 'Total Jobs', count: '12', subtitle: 'Created so far')),
+              const SizedBox(width: 16),
+              Expanded(child: _StatCard(icon: Icons.publish, iconColor: const Color(0xFF10B981), iconBg: const Color(0xFFECFDF5), title: 'Active Postings', count: '5', subtitle: 'Currently published')),
+              const SizedBox(width: 16),
+              Expanded(child: _StatCard(icon: Icons.people_outline, iconColor: const Color(0xFF3B82F6), iconBg: const Color(0xFFEFF6FF), title: 'Total Applications', count: '148', subtitle: 'Across all jobs')),
+              const SizedBox(width: 16),
+              Expanded(child: _StatCard(icon: Icons.fiber_new_outlined, iconColor: const Color(0xFFF59E0B), iconBg: const Color(0xFFFFFBEB), title: 'New Candidates', count: '24', subtitle: 'This week')),
+            ],
+          ),
+          
+          const SizedBox(height: 32),
+          
+          // Recent Activity Area
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.grey.withOpacity(0.1))),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.history, color: Color(0xFF6D28D9)),
+                        const SizedBox(width: 8),
+                        const Text('Recent Activity', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                    TextButton(onPressed: () {}, child: const Text('View all', style: TextStyle(color: Color(0xFF6D28D9)))),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                const Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 32),
+                    child: Text('Check your job postings for recent applications.', style: TextStyle(color: Colors.grey)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
 class _StatCard extends StatelessWidget {
-  final String title;
-  final String value;
   final IconData icon;
+  final Color iconColor;
+  final Color iconBg;
+  final String title;
+  final String count;
+  final String subtitle;
 
-  const _StatCard({required this.title, required this.value, required this.icon});
+  const _StatCard({required this.icon, required this.iconColor, required this.iconBg, required this.title, required this.count, required this.subtitle});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Colors.white, Color(0xFFF9FAFB)],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            blurRadius: 15,
-            offset: const Offset(0, 8),
-          ),
-        ],
-        border: Border.all(color: const Color(0xFFE5E7EB)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: const Color(0xFF6200EA).withOpacity(0.1),
-                shape: BoxShape.circle,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.grey.withOpacity(0.1))),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: iconBg, shape: BoxShape.circle), child: Icon(icon, color: iconColor, size: 24)),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title, style: const TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500)),
+                    Text(count, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF1E293B))),
+                  ],
+                ),
               ),
-              child: Icon(icon, size: 36, color: const Color(0xFF6200EA)),
-            ),
-            const SizedBox(height: 24),
-            Text(value, style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Color(0xFF1F2937), letterSpacing: -1)),
-            const SizedBox(height: 8),
-            Text(title, style: const TextStyle(fontSize: 15, color: Color(0xFF6B7280), fontWeight: FontWeight.w600), textAlign: TextAlign.center),
-          ],
-        ),
+              const Icon(Icons.chevron_right, color: Colors.grey),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text(subtitle, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+        ],
       ),
     );
   }

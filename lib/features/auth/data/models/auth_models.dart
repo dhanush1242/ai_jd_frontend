@@ -10,6 +10,7 @@ class User with _$User {
     required String email,
     required String name,
     required String role,
+    @JsonKey(name: 'mobile_number') String? mobileNumber,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -20,7 +21,6 @@ class LoginResponse with _$LoginResponse {
   const factory LoginResponse({
     @JsonKey(name: 'access_token') required String accessToken,
     @JsonKey(name: 'token_type') required String tokenType,
-    @JsonKey(name: 'expires_in') required int expiresIn,
   }) = _LoginResponse;
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) => _$LoginResponseFromJson(json);

@@ -21,6 +21,18 @@ class JobParameterCreate with _$JobParameterCreate {
 }
 
 @freezed
+class GeneratedJD with _$GeneratedJD {
+  const factory GeneratedJD({
+    @JsonKey(name: 'jd_id') required int jdId,
+    @JsonKey(name: 'job_id') required int jobId,
+    @JsonKey(name: 'version_number') required int versionNumber,
+    @JsonKey(name: 'generated_jd') required String generatedJd,
+    @JsonKey(name: 'updated_jd') String? updatedJd,
+    @JsonKey(name: 'is_published') required bool isPublished,
+    @JsonKey(name: 'created_at') required String createdAt,
+    @JsonKey(name: 'updated_at') required String updatedAt,
+    @JsonKey(name: 'published_at') String? publishedAt,
+  }) = _GeneratedJD;
 class JobParameterUpdate with _$JobParameterUpdate {
   const factory JobParameterUpdate({
     @JsonKey(name: 'job_title') String? jobTitle,

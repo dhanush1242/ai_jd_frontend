@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:go_router/go_router.dart';
 import 'jd_provider.dart';
 
@@ -39,57 +40,37 @@ class JdResultScreen extends ConsumerWidget {
             context.pop(); // Go back to history/form
           },
         ),
+        actions: [
+          TextButton.icon(
+            onPressed: () {},
+            icon: const Icon(Icons.check, color: Colors.green),
+            label: const Text('Publish JD', style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
+          ),
+          const SizedBox(width: 16),
+        ],
       ),
+      backgroundColor: const Color(0xFFF8FAFC),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Container(
-            constraints: const BoxConstraints(maxWidth: 800),
+            constraints: const BoxConstraints(maxWidth: 900),
             child: Card(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              elevation: 4,
               child: Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Version ${jd.versionNumber}',
-                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: const Color(0xFF6200EA),
-                            ),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            ElevatedButton.icon(
-                              onPressed: () {
-                                ref.read(jdGeneratorProvider.notifier).regenerate(jd.jobId);
-                              },
-                              icon: const Icon(Icons.refresh, size: 18),
-                              label: const Text('Regenerate'),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF00E5FF),
-                                foregroundColor: Colors.black87,
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            IconButton(icon: const Icon(Icons.copy), onPressed: () {}),
-                            IconButton(icon: const Icon(Icons.download), onPressed: () {}),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const Divider(height: 32),
-                    SelectableText(
-                      jd.generatedJd, 
-                      style: const TextStyle(height: 1.5, fontSize: 16),
-                    ),
-                  ],
+                padding: const EdgeInsets.all(48.0),
+                child: MarkdownBody(
+                  data: jd.generatedJd,
+                  selectable: true,
+                  styleSheet: MarkdownStyleSheet(
+                    h1: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Color(0xFF1E293B)),
+                    h2: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF1E293B)),
+                    h3: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF1E293B)),
+                    p: const TextStyle(fontSize: 16, color: Color(0xFF475569), height: 1.6),
+                    listBullet: const TextStyle(fontSize: 16, color: Color(0xFF475569)),
+                    strong: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF1E293B)),
+                  ),
                 ),
               ),
             ),

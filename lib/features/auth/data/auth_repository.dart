@@ -1,75 +1,65 @@
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../core/network/api_client.dart';
+import '../../../core/storage/secure_storage.dart';
 import 'models/auth_models.dart';
 
 part 'auth_repository.g.dart';
 
 @riverpod
 AuthRepository authRepository(AuthRepositoryRef ref) {
-  return AuthRepository(ref.watch(apiClientProvider));
+  return AuthRepository(ref.watch(apiClientProvider), ref.watch(secureStorageProvider));
 }
 
 class AuthRepository {
   final Dio _dio;
+  final SecureStorage _secureStorage;
 
-  AuthRepository(this._dio);
+  AuthRepository(this._dio, this._secureStorage);
 
   Future<LoginResponse> login(String email, String password, String role) async {
-    try {
-      final path = role == 'recruiter' ? '/recruiters/login' : '/candidates/login';
-      final response = await _dio.post(path, data: {
-        if (role == 'recruiter') 'organisation_email': email else 'email': email,
-        'password': password,
-      });
-      final data = Map<String, dynamic>.from(response.data as Map<String, dynamic>);
-      data['expires_in'] = data['expires_in'] ?? 3600; // Mock expires_in as it is missing from OpenAPI spec
-      return LoginResponse.fromJson(data);
-    } on DioException catch (e) {
-      final message = e.response?.data['detail'] ?? e.message;
-      throw Exception(message);
-    }
+    final data = role == 'recruiter' 
+        ? {'organisation_email': email, 'password': password}
+        : {'email': email, 'password': password};
+        
+    final response = await _dio.post('/${role}s/login', data: data);
+    
+    return LoginResponse.fromJson(response.data as Map<String, dynamic>);
   }
 
-  Future<void> register(String name, String email, String password, String mobileNumber, String role) async {
-    try {
-      final path = role == 'recruiter' ? '/recruiters/register' : '/candidates/register';
-      await _dio.post(path, data: {
-        'name': name,
-        if (role == 'recruiter') 'organisation_email': email else 'email': email,
-        'password': password,
-        'mobile_number': mobileNumber,
-      });
-    } on DioException catch (e) {
-      final message = e.response?.data['detail'] ?? e.message;
-      throw Exception(message);
-    }
+  Future<void> register(String name, String email, String mobileNumber, String password, String role) async {
+    final data = role == 'recruiter'
+        ? {
+            'name': name,
+            'organisation_email': email,
+            'password': password,
+            'mobile_number': mobileNumber,
+          }
+        : {
+            'name': name,
+            'email': email,
+            'password': password,
+            'mobile_number': mobileNumber,
+          };
+          
+    await _dio.post('/${role}s/register', data: data);
   }
 
-  Future<User> getCurrentUser(String role) async {
-    try {
-      final path = role == 'recruiter' ? '/recruiters/profile' : '/candidates/profile';
-      final response = await _dio.get(path);
-      
-      final data = response.data as Map<String, dynamic>;
-      if (role == 'recruiter') {
-        return User(
-          id: data['recruiter_id'].toString(),
-          email: data['organisation_email'] ?? '',
-          name: data['name'] ?? '',
-          role: role,
-        );
-      } else {
-        return User(
-          id: data['candidate_id'].toString(),
-          email: data['email'] ?? '',
-          name: data['name'] ?? '',
-          role: role,
-        );
-      }
-    } on DioException catch (e) {
-      final message = e.response?.data['detail'] ?? e.message;
-      throw Exception(message);
-    }
+  Future<User> getCurrentUser() async {
+    final role = await _secureStorage.getRole();
+    if (role == null) throw Exception('Role not found');
+    
+    final response = await _dio.get('/${role}s/profile');
+    
+    // The response data is CandidateResponse or RecruiterResponse
+    final data = response.data as Map<String, dynamic>;
+    
+    return User(
+      id: data['candidate_id']?.toString() ?? data['recruiter_id']?.toString() ?? '',
+      email: data['email'] ?? data['organisation_email'] ?? '',
+      name: data['name'] ?? '',
+      role: role,
+      mobileNumber: data['mobile_number']?.toString(),
+    );
   }
 }

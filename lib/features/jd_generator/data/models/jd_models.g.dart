@@ -34,6 +34,31 @@ Map<String, dynamic> _$$JobParameterCreateImplToJson(
   'package': instance.package,
 };
 
+_$GeneratedJDImpl _$$GeneratedJDImplFromJson(Map<String, dynamic> json) =>
+    _$GeneratedJDImpl(
+      jdId: (json['jd_id'] as num).toInt(),
+      jobId: (json['job_id'] as num).toInt(),
+      versionNumber: (json['version_number'] as num).toInt(),
+      generatedJd: json['generated_jd'] as String,
+      updatedJd: json['updated_jd'] as String?,
+      isPublished: json['is_published'] as bool,
+      createdAt: json['created_at'] as String,
+      updatedAt: json['updated_at'] as String,
+      publishedAt: json['published_at'] as String?,
+    );
+
+Map<String, dynamic> _$$GeneratedJDImplToJson(_$GeneratedJDImpl instance) =>
+    <String, dynamic>{
+      'jd_id': instance.jdId,
+      'job_id': instance.jobId,
+      'version_number': instance.versionNumber,
+      'generated_jd': instance.generatedJd,
+      'updated_jd': instance.updatedJd,
+      'is_published': instance.isPublished,
+      'created_at': instance.createdAt,
+      'updated_at': instance.updatedAt,
+      'published_at': instance.publishedAt,
+    };
 _$JobParameterUpdateImpl _$$JobParameterUpdateImplFromJson(
   Map<String, dynamic> json,
 ) => _$JobParameterUpdateImpl(

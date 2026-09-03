@@ -29,18 +29,19 @@ class Auth extends _$Auth {
       final response = await ref.read(authRepositoryProvider).login(email, password, role);
       await ref.read(secureStorageProvider).saveToken(response.accessToken);
       await ref.read(secureStorageProvider).saveRole(role);
-      return await ref.read(authRepositoryProvider).getCurrentUser(role);
+      return await ref.read(authRepositoryProvider).getCurrentUser();
     });
   }
 
-  Future<void> register(String name, String email, String password, String mobileNumber, String role) async {
+  Future<void> register(String name, String email, String mobileNumber, String password, String role) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
-      await ref.read(authRepositoryProvider).register(name, email, password, mobileNumber, role);
+      await ref.read(authRepositoryProvider).register(name, email, mobileNumber, password, role);
+      // Auto-login after registration
       final response = await ref.read(authRepositoryProvider).login(email, password, role);
       await ref.read(secureStorageProvider).saveToken(response.accessToken);
       await ref.read(secureStorageProvider).saveRole(role);
-      return await ref.read(authRepositoryProvider).getCurrentUser(role);
+      return await ref.read(authRepositoryProvider).getCurrentUser();
     });
   }
 

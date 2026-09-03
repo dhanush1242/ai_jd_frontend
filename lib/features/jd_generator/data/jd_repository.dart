@@ -1,7 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../core/network/api_client.dart';
+import '../../auth/data/models/auth_models.dart';
+import '../../candidate/data/models/candidate_models.dart';
 import 'models/jd_models.dart';
+import 'models/recruiter_models.dart';
 
 part 'jd_repository.g.dart';
 
@@ -15,52 +18,51 @@ class JdRepository {
 
   JdRepository(this._dio);
 
-  Future<List<JobParameterResponse>> getJobs() async {
-    final response = await _dio.get('/jobs');
-    return (response.data as List).map((e) => JobParameterResponse.fromJson(e)).toList();
+  Future<GeneratedJD> generateJd(JobDescriptionCreate jdCreate) async {
+    // 1. Create the job parameters first
+    final payload = {
+      'job_title': jdCreate.jobTitle,
+      'required_skills': jdCreate.skills.join(', '),
+      'education_qualification': jdCreate.educationQualifications,
+      'experience': jdCreate.experienceRequired,
+      'location': jdCreate.location,
+      'work_mode': jdCreate.workMode,
+      'job_type': jdCreate.jobType,
+      'package': jdCreate.salary,
+    };
+    final jobResponse = await _dio.post('/jobs', data: payload);
+    final jobId = jobResponse.data['job_id'];
+
+    // 2. Trigger generation
+    final jdResponse = await _dio.post('/jobs/$jobId/generate-jd');
+    return GeneratedJD.fromJson(jdResponse.data);
   }
 
-  Future<JobParameterResponse> createJob(JobParameterCreate jobCreate) async {
-    final response = await _dio.post('/jobs', data: jobCreate.toJson());
-    return JobParameterResponse.fromJson(response.data as Map<String, dynamic>);
-  }
-
-  Future<JobParameterResponse> getJob(int jobId) async {
-    final response = await _dio.get('/jobs/$jobId');
-    return JobParameterResponse.fromJson(response.data as Map<String, dynamic>);
-  }
-
-  Future<JobParameterResponse> updateJob(int jobId, JobParameterUpdate jobUpdate) async {
-    final response = await _dio.put('/jobs/$jobId', data: jobUpdate.toJson());
-    return JobParameterResponse.fromJson(response.data as Map<String, dynamic>);
-  }
-
-  Future<void> deleteJob(int jobId) async {
-    await _dio.delete('/jobs/$jobId');
-  }
-
-  Future<JobDescriptionResponse> generateJd(int jobId) async {
-    final response = await _dio.post('/jobs/$jobId/generate-jd');
-    return JobDescriptionResponse.fromJson(response.data as Map<String, dynamic>);
-  }
-
-  Future<JobDescriptionResponse> regenerateJd(int jobId) async {
-    final response = await _dio.post('/jobs/$jobId/regenerate-jd');
-    return JobDescriptionResponse.fromJson(response.data as Map<String, dynamic>);
-  }
-
-  Future<List<JobDescriptionResponse>> getJdVersions(int jobId) async {
+  Future<List<GeneratedJD>> getJobVersions(int jobId) async {
     final response = await _dio.get('/jobs/$jobId/versions');
-    return (response.data as List).map((e) => JobDescriptionResponse.fromJson(e)).toList();
+    return (response.data as List).map((e) => GeneratedJD.fromJson(e)).toList();
   }
 
-  Future<JobDescriptionResponse> updateJdVersion(int jobId, int versionId, JobDescriptionUpdate updateData) async {
-    final response = await _dio.put('/jobs/$jobId/versions/$versionId', data: updateData.toJson());
-    return JobDescriptionResponse.fromJson(response.data as Map<String, dynamic>);
+  Future<List<CandidateJob>> getJobs() async {
+    final response = await _dio.get('/jobs');
+    return (response.data as List).map((e) => CandidateJob.fromJson(e)).toList();
   }
 
-  Future<JobDescriptionResponse> publishJdVersion(int jobId, int versionId) async {
-    final response = await _dio.post('/jobs/$jobId/versions/$versionId/publish');
-    return JobDescriptionResponse.fromJson(response.data as Map<String, dynamic>);
+  Future<List<RecruiterApplication>> getApplicationsForJob(int jobId) async {
+    final response = await _dio.get('/recruiters/jobs/$jobId/applications');
+    return (response.data as List).map((e) => RecruiterApplication.fromJson(e)).toList();
+  }
+
+  Future<void> updateApplicationStatus(int applicationId, String status) async {
+    await _dio.put('/recruiters/applications/$applicationId/status', data: {'status': status});
+  }
+
+  Future<void> addApplicationNote(int applicationId, String note) async {
+    await _dio.post('/recruiters/applications/$applicationId/notes', data: {'note': note});
+  }
+
+  Future<List<ApplicationNote>> getApplicationNotes(int applicationId) async {
+    final response = await _dio.get('/recruiters/applications/$applicationId/notes');
+    return (response.data as List).map((e) => ApplicationNote.fromJson(e)).toList();
   }
 }
