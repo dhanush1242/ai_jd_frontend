@@ -25,30 +25,16 @@ class JobDescriptionCreate with _$JobDescriptionCreate {
 @freezed
 class GeneratedJD with _$GeneratedJD {
   const factory GeneratedJD({
-    required String id,
-    @JsonKey(name: 'job_title') required String jobTitle,
-    @JsonKey(name: 'generated_content') required GeneratedContent generatedContent,
+    @JsonKey(name: 'jd_id') required int jdId,
+    @JsonKey(name: 'job_id') required int jobId,
+    @JsonKey(name: 'version_number') required int versionNumber,
+    @JsonKey(name: 'generated_jd') required String generatedJd,
+    @JsonKey(name: 'updated_jd') String? updatedJd,
+    @JsonKey(name: 'is_published') required bool isPublished,
+    @JsonKey(name: 'created_at') required String createdAt,
+    @JsonKey(name: 'updated_at') required String updatedAt,
+    @JsonKey(name: 'published_at') String? publishedAt,
   }) = _GeneratedJD;
 
   factory GeneratedJD.fromJson(Map<String, dynamic> json) => _$GeneratedJDFromJson(json);
-}
-
-@freezed
-class GeneratedContent with _$GeneratedContent {
-  const factory GeneratedContent({
-    @JsonKey(name: 'job_summary') required String jobSummary,
-    required List<String> responsibilities,
-    @JsonKey(name: 'required_skills') required List<String> requiredSkills,
-    @JsonKey(name: 'required_qualifications') required List<String> requiredQualifications,
-    @JsonKey(name: 'preferred_qualifications') required List<String> preferredQualifications,
-    required String experience,
-    required String salary,
-    @JsonKey(name: 'work_mode') required String workMode,
-    @JsonKey(name: 'job_type') required String jobType,
-    required String location,
-    @Default([]) List<String> benefits,
-    @JsonKey(name: 'equal_opportunity_statement') @Default('') String equalOpportunityStatement,
-  }) = _GeneratedContent;
-
-  factory GeneratedContent.fromJson(Map<String, dynamic> json) => _$GeneratedContentFromJson(json);
 }

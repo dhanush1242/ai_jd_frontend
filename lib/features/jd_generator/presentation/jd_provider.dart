@@ -1,22 +1,11 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../data/jd_repository.dart';
 import '../data/models/jd_models.dart';
+import '../data/models/recruiter_models.dart';
+import '../../candidate/data/models/candidate_models.dart';
 
 part 'jd_provider.g.dart';
-
-@riverpod
-class JdHistory extends _$JdHistory {
-  @override
-  FutureOr<List<GeneratedJD>> build() async {
-    // FAKE HISTORY
-    return [];
-  }
-
-  Future<void> refreshHistory() async {
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() async => []);
-  }
-}
 
 @riverpod
 class JdGenerator extends _$JdGenerator {
@@ -28,28 +17,23 @@ class JdGenerator extends _$JdGenerator {
   Future<void> generate(JobDescriptionCreate createParams) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
-      await Future.delayed(const Duration(seconds: 2));
-      final fakeJD = GeneratedJD(
-        id: 'fake_123',
-        jobTitle: createParams.jobTitle,
-        generatedContent: GeneratedContent(
-          jobSummary: 'This is a mocked job summary for ${createParams.jobTitle}.',
-          responsibilities: ['Responsibility 1', 'Responsibility 2'],
-          requiredSkills: createParams.skills,
-          requiredQualifications: [createParams.educationQualifications],
-          preferredQualifications: ['Extra cool skill'],
-          experience: createParams.experienceRequired,
-          salary: createParams.salary,
-          workMode: createParams.workMode,
-          jobType: createParams.jobType,
-          location: createParams.location,
-        )
-      );
-      return fakeJD;
+      return ref.read(jdRepositoryProvider).generateJd(createParams);
     });
   }
   
   void clear() {
     state = const AsyncValue.data(null);
   }
+
+  void setJd(GeneratedJD jd) {
+    state = AsyncValue.data(jd);
+  }
 }
+
+final recruiterJobsProvider = FutureProvider<List<CandidateJob>>((ref) async {
+  return ref.watch(jdRepositoryProvider).getJobs();
+});
+
+final recruiterApplicationsProvider = FutureProvider.family<List<RecruiterApplication>, int>((ref, jobId) async {
+  return ref.watch(jdRepositoryProvider).getApplicationsForJob(jobId);
+});

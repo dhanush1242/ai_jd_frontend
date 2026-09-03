@@ -1,67 +1,65 @@
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../core/network/api_client.dart';
+import '../../../core/storage/secure_storage.dart';
 import 'models/auth_models.dart';
 
 part 'auth_repository.g.dart';
 
 @riverpod
 AuthRepository authRepository(AuthRepositoryRef ref) {
-  return AuthRepository(ref.watch(apiClientProvider));
+  return AuthRepository(ref.watch(apiClientProvider), ref.watch(secureStorageProvider));
 }
 
 class AuthRepository {
   final Dio _dio;
+  final SecureStorage _secureStorage;
 
-  AuthRepository(this._dio);
+  AuthRepository(this._dio, this._secureStorage);
 
   Future<LoginResponse> login(String email, String password, String role) async {
-    final response = await _dio.post('/auth/$role/login', data: {
-      'email': email,
-      'password': password,
-    });
+    final data = role == 'recruiter' 
+        ? {'organisation_email': email, 'password': password}
+        : {'email': email, 'password': password};
+        
+    final response = await _dio.post('/${role}s/login', data: data);
     
-    final apiResponse = ApiResponse<LoginResponse>.fromJson(
-      response.data, 
-      (json) => LoginResponse.fromJson(json as Map<String, dynamic>)
-    );
-    
-    if (apiResponse.success && apiResponse.data != null) {
-      return apiResponse.data!;
-    } else {
-      throw Exception(apiResponse.message);
-    }
+    return LoginResponse.fromJson(response.data as Map<String, dynamic>);
   }
 
-  Future<void> register(String name, String email, String password, String role) async {
-    final response = await _dio.post('/auth/$role/register', data: {
-      'name': name,
-      'email': email,
-      'password': password,
-    });
-
-    final apiResponse = ApiResponse<dynamic>.fromJson(
-      response.data, 
-      (json) => null
-    );
-
-    if (!apiResponse.success) {
-      throw Exception(apiResponse.message);
-    }
+  Future<void> register(String name, String email, String mobileNumber, String password, String role) async {
+    final data = role == 'recruiter'
+        ? {
+            'name': name,
+            'organisation_email': email,
+            'password': password,
+            'mobile_number': mobileNumber,
+          }
+        : {
+            'name': name,
+            'email': email,
+            'password': password,
+            'mobile_number': mobileNumber,
+          };
+          
+    await _dio.post('/${role}s/register', data: data);
   }
 
   Future<User> getCurrentUser() async {
-    final response = await _dio.get('/users/me');
+    final role = await _secureStorage.getRole();
+    if (role == null) throw Exception('Role not found');
     
-    final apiResponse = ApiResponse<User>.fromJson(
-      response.data, 
-      (json) => User.fromJson(json as Map<String, dynamic>)
+    final response = await _dio.get('/${role}s/profile');
+    
+    // The response data is CandidateResponse or RecruiterResponse
+    final data = response.data as Map<String, dynamic>;
+    
+    return User(
+      id: data['candidate_id']?.toString() ?? data['recruiter_id']?.toString() ?? '',
+      email: data['email'] ?? data['organisation_email'] ?? '',
+      name: data['name'] ?? '',
+      role: role,
+      mobileNumber: data['mobile_number']?.toString(),
     );
-
-    if (apiResponse.success && apiResponse.data != null) {
-      return apiResponse.data!;
-    } else {
-      throw Exception(apiResponse.message);
-    }
   }
 }

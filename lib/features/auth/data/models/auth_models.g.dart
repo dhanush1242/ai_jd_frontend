@@ -11,6 +11,7 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
   email: json['email'] as String,
   name: json['name'] as String,
   role: json['role'] as String,
+  mobileNumber: json['mobile_number'] as String?,
 );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
@@ -19,20 +20,19 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'email': instance.email,
       'name': instance.name,
       'role': instance.role,
+      'mobile_number': instance.mobileNumber,
     };
 
 _$LoginResponseImpl _$$LoginResponseImplFromJson(Map<String, dynamic> json) =>
     _$LoginResponseImpl(
       accessToken: json['access_token'] as String,
       tokenType: json['token_type'] as String,
-      expiresIn: (json['expires_in'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$LoginResponseImplToJson(_$LoginResponseImpl instance) =>
     <String, dynamic>{
       'access_token': instance.accessToken,
       'token_type': instance.tokenType,
-      'expires_in': instance.expiresIn,
     };
 
 _$ApiResponseImpl<T> _$$ApiResponseImplFromJson<T>(

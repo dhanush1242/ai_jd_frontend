@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:go_router/go_router.dart';
 
-class ProfileFormScreen extends StatefulWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'candidate_provider.dart';
+
+class ProfileFormScreen extends ConsumerStatefulWidget {
   const ProfileFormScreen({super.key});
 
   @override
-  State<ProfileFormScreen> createState() => _ProfileFormScreenState();
+  ConsumerState<ProfileFormScreen> createState() => _ProfileFormScreenState();
 }
 
-class _ProfileFormScreenState extends State<ProfileFormScreen> {
+class _ProfileFormScreenState extends ConsumerState<ProfileFormScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final _skillsController = TextEditingController();
@@ -16,8 +21,63 @@ class _ProfileFormScreenState extends State<ProfileFormScreen> {
   final _locationController = TextEditingController();
   final _experienceController = TextEditingController();
 
-  String _workMode = 'HYBRID';
-  String _jobType = 'FULL_TIME';
+  String _workMode = 'ANY';
+  String _jobType = 'ANY';
+
+  PlatformFile? _profilePicture;
+  PlatformFile? _resume;
+  
+  String? _existingProfilePic;
+  String? _existingResume;
+
+  @override
+  void initState() {
+    super.initState();
+    // Delay to let riverpod initialize
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadDetails();
+    });
+  }
+
+  Future<void> _loadDetails() async {
+    final details = await ref.read(candidateDetailsProvider.future);
+    if (details != null) {
+      if (mounted) {
+        setState(() {
+          _skillsController.text = details.skills ?? '';
+          _educationController.text = details.educationQualification ?? '';
+          _locationController.text = details.preferredWorkLocation ?? '';
+          _experienceController.text = details.experience ?? '';
+          if (['ANY', 'REMOTE', 'HYBRID', 'ONSITE'].contains(details.preferredWorkMode)) {
+            _workMode = details.preferredWorkMode!;
+          }
+          if (['ANY', 'FULL_TIME', 'PART_TIME', 'CONTRACT', 'INTERNSHIP', 'FREELANCE'].contains(details.preferredJobType)) {
+            _jobType = details.preferredJobType!;
+          }
+          _existingProfilePic = details.profilePicture;
+          _existingResume = details.resume;
+        });
+      }
+    }
+  }
+
+  Future<void> _pickProfilePicture() async {
+    final result = await FilePicker.pickFiles(type: FileType.image, withData: true);
+    if (result != null) {
+      setState(() {
+        _profilePicture = result.files.first;
+      });
+    }
+  }
+
+  Future<void> _pickResume() async {
+    final result = await FilePicker.pickFiles(type: FileType.custom, allowedExtensions: ['pdf'], withData: true);
+    if (result != null) {
+      setState(() {
+        _resume = result.files.first;
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -28,12 +88,28 @@ class _ProfileFormScreenState extends State<ProfileFormScreen> {
     super.dispose();
   }
 
-  void _saveProfile() {
+  void _saveProfile() async {
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profile saved successfully! (Mocked)'), backgroundColor: Colors.green),
+      await ref.read(candidateControllerProvider.notifier).saveProfile(
+        skills: _skillsController.text,
+        education: _educationController.text,
+        location: _locationController.text,
+        experience: _experienceController.text,
+        workMode: _workMode,
+        jobType: _jobType,
+        profilePicture: _profilePicture,
+        resume: _resume,
       );
-      context.pop();
+      
+      // Refresh details
+      ref.invalidate(candidateDetailsProvider);
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Profile saved successfully!'), backgroundColor: Colors.green),
+        );
+        context.pop();
+      }
     }
   }
 
@@ -65,16 +141,20 @@ class _ProfileFormScreenState extends State<ProfileFormScreen> {
                           Expanded(
                             child: _UploadButton(
                               icon: Icons.person_outline,
-                              label: 'Upload Profile Photo',
-                              onPressed: () {},
+                              label: _profilePicture != null 
+                                  ? _profilePicture!.name 
+                                  : (_existingProfilePic != null ? 'Profile Photo Attached' : 'Upload Profile Photo'),
+                              onPressed: _pickProfilePicture,
                             ),
                           ),
                           const SizedBox(width: 16),
                           Expanded(
                             child: _UploadButton(
                               icon: Icons.upload_file,
-                              label: 'Upload Resume (PDF)',
-                              onPressed: () {},
+                              label: _resume != null 
+                                  ? _resume!.name 
+                                  : (_existingResume != null ? 'Resume Attached' : 'Upload Resume (PDF)'),
+                              onPressed: _pickResume,
                             ),
                           ),
                         ],
@@ -119,7 +199,7 @@ class _ProfileFormScreenState extends State<ProfileFormScreen> {
                             child: DropdownButtonFormField<String>(
                               value: _workMode,
                               decoration: const InputDecoration(labelText: 'Interested Work Mode *', prefixIcon: Icon(Icons.computer)),
-                              items: ['REMOTE', 'HYBRID', 'ONSITE'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+                              items: ['ANY', 'REMOTE', 'HYBRID', 'ONSITE'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
                               onChanged: (v) => setState(() => _workMode = v!),
                             ),
                           ),
@@ -128,7 +208,7 @@ class _ProfileFormScreenState extends State<ProfileFormScreen> {
                             child: DropdownButtonFormField<String>(
                               value: _jobType,
                               decoration: const InputDecoration(labelText: 'Job Type *', prefixIcon: Icon(Icons.access_time)),
-                              items: ['FULL_TIME', 'PART_TIME', 'CONTRACT', 'INTERNSHIP', 'FREELANCE'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+                              items: ['ANY', 'FULL_TIME', 'PART_TIME', 'CONTRACT', 'INTERNSHIP', 'FREELANCE'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
                               onChanged: (v) => setState(() => _jobType = v!),
                             ),
                           ),
@@ -137,10 +217,17 @@ class _ProfileFormScreenState extends State<ProfileFormScreen> {
                       const SizedBox(height: 32),
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton.icon(
-                          onPressed: _saveProfile,
-                          icon: const Icon(Icons.save),
-                          label: const Text('Save Profile'),
+                        child: Consumer(
+                          builder: (context, ref, child) {
+                            final state = ref.watch(candidateControllerProvider);
+                            return ElevatedButton.icon(
+                              onPressed: state.isLoading ? null : _saveProfile,
+                              icon: state.isLoading 
+                                  ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                                  : const Icon(Icons.save),
+                              label: Text(state.isLoading ? 'Saving...' : 'Save Profile'),
+                            );
+                          }
                         ),
                       ),
                     ],
@@ -178,7 +265,7 @@ class _UploadButton extends StatelessWidget {
           children: [
             Icon(icon, size: 40, color: const Color(0xFF6200EA)),
             const SizedBox(height: 12),
-            Text(label, style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF374151))),
+            Text(label, style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF374151)), overflow: TextOverflow.ellipsis, maxLines: 1),
           ],
         ),
       ),

@@ -40,61 +40,26 @@ Map<String, dynamic> _$$JobDescriptionCreateImplToJson(
 
 _$GeneratedJDImpl _$$GeneratedJDImplFromJson(Map<String, dynamic> json) =>
     _$GeneratedJDImpl(
-      id: json['id'] as String,
-      jobTitle: json['job_title'] as String,
-      generatedContent: GeneratedContent.fromJson(
-        json['generated_content'] as Map<String, dynamic>,
-      ),
+      jdId: (json['jd_id'] as num).toInt(),
+      jobId: (json['job_id'] as num).toInt(),
+      versionNumber: (json['version_number'] as num).toInt(),
+      generatedJd: json['generated_jd'] as String,
+      updatedJd: json['updated_jd'] as String?,
+      isPublished: json['is_published'] as bool,
+      createdAt: json['created_at'] as String,
+      updatedAt: json['updated_at'] as String,
+      publishedAt: json['published_at'] as String?,
     );
 
 Map<String, dynamic> _$$GeneratedJDImplToJson(_$GeneratedJDImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'job_title': instance.jobTitle,
-      'generated_content': instance.generatedContent,
+      'jd_id': instance.jdId,
+      'job_id': instance.jobId,
+      'version_number': instance.versionNumber,
+      'generated_jd': instance.generatedJd,
+      'updated_jd': instance.updatedJd,
+      'is_published': instance.isPublished,
+      'created_at': instance.createdAt,
+      'updated_at': instance.updatedAt,
+      'published_at': instance.publishedAt,
     };
-
-_$GeneratedContentImpl _$$GeneratedContentImplFromJson(
-  Map<String, dynamic> json,
-) => _$GeneratedContentImpl(
-  jobSummary: json['job_summary'] as String,
-  responsibilities: (json['responsibilities'] as List<dynamic>)
-      .map((e) => e as String)
-      .toList(),
-  requiredSkills: (json['required_skills'] as List<dynamic>)
-      .map((e) => e as String)
-      .toList(),
-  requiredQualifications: (json['required_qualifications'] as List<dynamic>)
-      .map((e) => e as String)
-      .toList(),
-  preferredQualifications: (json['preferred_qualifications'] as List<dynamic>)
-      .map((e) => e as String)
-      .toList(),
-  experience: json['experience'] as String,
-  salary: json['salary'] as String,
-  workMode: json['work_mode'] as String,
-  jobType: json['job_type'] as String,
-  location: json['location'] as String,
-  benefits:
-      (json['benefits'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-      const [],
-  equalOpportunityStatement:
-      json['equal_opportunity_statement'] as String? ?? '',
-);
-
-Map<String, dynamic> _$$GeneratedContentImplToJson(
-  _$GeneratedContentImpl instance,
-) => <String, dynamic>{
-  'job_summary': instance.jobSummary,
-  'responsibilities': instance.responsibilities,
-  'required_skills': instance.requiredSkills,
-  'required_qualifications': instance.requiredQualifications,
-  'preferred_qualifications': instance.preferredQualifications,
-  'experience': instance.experience,
-  'salary': instance.salary,
-  'work_mode': instance.workMode,
-  'job_type': instance.jobType,
-  'location': instance.location,
-  'benefits': instance.benefits,
-  'equal_opportunity_statement': instance.equalOpportunityStatement,
-};

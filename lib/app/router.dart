@@ -9,7 +9,15 @@ import '../features/auth/presentation/register_screen.dart';
 import '../features/jd_generator/presentation/home_screen.dart';
 import '../features/jd_generator/presentation/jd_form_screen.dart';
 import '../features/jd_generator/presentation/jd_result_screen.dart';
+import '../features/jd_generator/presentation/recruiter_jobs_screen.dart';
+import '../features/jd_generator/presentation/applicants_screen.dart';
+import '../features/jd_generator/presentation/recruiter_settings_screen.dart';
 import '../features/candidate/presentation/profile_form_screen.dart';
+import '../features/candidate/presentation/profile_view_screen.dart';
+import '../features/candidate/presentation/my_jobs_screen.dart';
+import '../features/candidate/presentation/saved_jobs_screen.dart';
+import '../features/candidate/presentation/settings_screen.dart';
+import 'dashboard_layout.dart';
 
 part 'router.g.dart';
 
@@ -57,21 +65,59 @@ GoRouter router(RouterRef ref) {
         path: '/register',
         builder: (context, state) => const RegisterScreen(),
       ),
-      GoRoute(
-        path: '/home',
-        builder: (context, state) => const HomeScreen(),
-      ),
-      GoRoute(
-        path: '/jd/create',
-        builder: (context, state) => const JdFormScreen(),
-      ),
-      GoRoute(
-        path: '/jd/result',
-        builder: (context, state) => const JdResultScreen(),
-      ),
-      GoRoute(
-        path: '/candidate/profile',
-        builder: (context, state) => const ProfileFormScreen(),
+      ShellRoute(
+        builder: (context, state, child) {
+          return DashboardLayout(child: child);
+        },
+        routes: [
+          GoRoute(
+            path: '/home',
+            builder: (context, state) => const HomeScreen(),
+          ),
+          GoRoute(
+            path: '/jd/create',
+            builder: (context, state) => const JdFormScreen(),
+          ),
+          GoRoute(
+            path: '/recruiter/jobs',
+            builder: (context, state) => const RecruiterJobsScreen(),
+          ),
+          GoRoute(
+            path: '/recruiter/jobs/:id/applicants',
+            builder: (context, state) {
+              final jobId = int.parse(state.pathParameters['id']!);
+              return ApplicantsScreen(jobId: jobId);
+            },
+          ),
+          GoRoute(
+            path: '/recruiter/settings',
+            builder: (context, state) => const RecruiterSettingsScreen(),
+          ),
+          GoRoute(
+            path: '/jd/result',
+            builder: (context, state) => const JdResultScreen(),
+          ),
+          GoRoute(
+            path: '/candidate/profile',
+            builder: (context, state) => const ProfileFormScreen(),
+          ),
+          GoRoute(
+            path: '/candidate/view_profile',
+            builder: (context, state) => const ProfileViewScreen(),
+          ),
+          GoRoute(
+            path: '/candidate/jobs',
+            builder: (context, state) => const MyJobsScreen(),
+          ),
+          GoRoute(
+            path: '/candidate/saved',
+            builder: (context, state) => const SavedJobsScreen(),
+          ),
+          GoRoute(
+            path: '/settings',
+            builder: (context, state) => const SettingsScreen(),
+          ),
+        ],
       ),
     ],
   );
