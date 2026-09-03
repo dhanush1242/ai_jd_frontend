@@ -6,7 +6,7 @@ part of 'jd_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$jdGeneratorHash() => r'e9dc5f02da4b4199dcb88a58274069b20476ff04';
+String _$jdGeneratorHash() => r'e576718796fc249c48604d227cf5bb4f2db2553e';
 
 /// See also [JdGenerator].
 @ProviderFor(JdGenerator)

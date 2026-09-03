@@ -59,6 +59,7 @@ Map<String, dynamic> _$$GeneratedJDImplToJson(_$GeneratedJDImpl instance) =>
       'updated_at': instance.updatedAt,
       'published_at': instance.publishedAt,
     };
+
 _$JobParameterUpdateImpl _$$JobParameterUpdateImplFromJson(
   Map<String, dynamic> json,
 ) => _$JobParameterUpdateImpl(

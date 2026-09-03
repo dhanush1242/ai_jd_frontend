@@ -33,6 +33,11 @@ class GeneratedJD with _$GeneratedJD {
     @JsonKey(name: 'updated_at') required String updatedAt,
     @JsonKey(name: 'published_at') String? publishedAt,
   }) = _GeneratedJD;
+
+  factory GeneratedJD.fromJson(Map<String, dynamic> json) => _$GeneratedJDFromJson(json);
+}
+
+@freezed
 class JobParameterUpdate with _$JobParameterUpdate {
   const factory JobParameterUpdate({
     @JsonKey(name: 'job_title') String? jobTitle,
