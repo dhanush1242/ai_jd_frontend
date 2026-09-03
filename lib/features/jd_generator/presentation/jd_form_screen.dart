@@ -43,20 +43,16 @@ class _JdFormScreenState extends ConsumerState<JdFormScreen> {
 
   void _generate() {
     if (_formKey.currentState!.validate()) {
-      final skillsList = _skillsController.text.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
-
-      final createParams = JobDescriptionCreate(
+      final createParams = JobParameterCreate(
         jobTitle: _titleController.text,
-        skills: skillsList,
-        experienceRequired: _experienceController.text,
-        educationQualifications: _educationController.text,
-        salary: _salaryController.text,
+        requiredSkills: _skillsController.text,
+        experience: _experienceController.text,
+        educationQualification: _educationController.text,
+        package: _salaryController.text,
         workMode: _workMode,
         jobType: _jobType,
         location: _locationController.text,
-        numberOfOpenings: int.tryParse(_openingsController.text),
-        department: _departmentController.text.isEmpty ? null : _departmentController.text,
-        additionalInstructions: _instructionsController.text.isEmpty ? null : _instructionsController.text,
+        passedoutYear: int.tryParse(_openingsController.text),
       );
 
       ref.read(jdGeneratorProvider.notifier).generate(createParams);
@@ -184,17 +180,11 @@ class _JdFormScreenState extends ConsumerState<JdFormScreen> {
                           Expanded(
                             child: TextFormField(
                               controller: _openingsController,
-                              decoration: const InputDecoration(labelText: 'Openings', prefixIcon: Icon(Icons.group_add_outlined)),
+                              decoration: const InputDecoration(labelText: 'Passed out year', prefixIcon: Icon(Icons.calendar_today)),
                               keyboardType: TextInputType.number,
                             ),
                           ),
                         ],
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _instructionsController,
-                        maxLines: 3,
-                        decoration: const InputDecoration(labelText: 'Additional AI Instructions', alignLabelWithHint: true),
                       ),
                       const SizedBox(height: 32),
                       SizedBox(

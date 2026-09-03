@@ -42,6 +42,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(next.error.toString()), backgroundColor: Colors.redAccent),
         );
+      } else if (next is AsyncData && next.value != null && previous != null && previous.isLoading) {
+        if (ModalRoute.of(context)?.isCurrent == true) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Login successful!'), backgroundColor: Colors.green),
+          );
+        }
       }
     });
 

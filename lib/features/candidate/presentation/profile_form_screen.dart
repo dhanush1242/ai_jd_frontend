@@ -6,6 +6,10 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'candidate_provider.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'candidate_provider.dart';
+import '../../auth/presentation/auth_provider.dart';
+
 class ProfileFormScreen extends ConsumerStatefulWidget {
   const ProfileFormScreen({super.key});
 
@@ -120,6 +124,15 @@ class _ProfileFormScreenState extends ConsumerState<ProfileFormScreen> {
         title: const Text('Complete Your Profile'),
         backgroundColor: Colors.white,
         foregroundColor: const Color(0xFF6200EA),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Logout',
+            onPressed: () {
+              ref.read(authProvider.notifier).logout();
+            },
+          ),
+        ],
       ),
       body: Center(
         child: SingleChildScrollView(

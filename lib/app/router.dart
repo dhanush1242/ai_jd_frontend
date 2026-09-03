@@ -18,6 +18,7 @@ import '../features/candidate/presentation/my_jobs_screen.dart';
 import '../features/candidate/presentation/saved_jobs_screen.dart';
 import '../features/candidate/presentation/settings_screen.dart';
 import 'dashboard_layout.dart';
+import '../features/candidate/presentation/candidate_provider.dart';
 
 part 'router.g.dart';
 
@@ -26,9 +27,11 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => const Scaffold(body: Center(child: CircularProgressIndicator()));
 }
+
 @riverpod
 GoRouter router(RouterRef ref) {
   final authState = ref.watch(authProvider);
+  final isProfileComplete = ref.watch(profileCompletedProvider);
 
   return GoRouter(
     initialLocation: '/splash',
@@ -40,14 +43,16 @@ GoRouter router(RouterRef ref) {
       final isLogin = state.matchedLocation == '/login';
       final isRegister = state.matchedLocation == '/register';
 
-      if (isLoading) {
-        return '/splash';
-      }
-
-      if (!isAuthenticated) {
+      if (!isAuthenticated && !isLoading) {
         if (!isLogin && !isRegister) return '/login';
-      } else {
-        if (isSplash || isLogin || isRegister) return '/home';
+      } else if (isAuthenticated) {
+        final user = authState.valueOrNull;
+        if (isSplash || isLogin || isRegister) {
+          if (user?.role == 'candidate' && !isProfileComplete) {
+            return '/candidate/profile';
+          }
+          return '/home';
+        }
       }
 
       return null;

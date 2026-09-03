@@ -10,11 +10,13 @@ class Auth extends _$Auth {
   @override
   FutureOr<User?> build() async {
     final token = await ref.read(secureStorageProvider).getToken();
-    if (token != null) {
+    final role = await ref.read(secureStorageProvider).getRole();
+    if (token != null && role != null) {
       try {
-        return await ref.read(authRepositoryProvider).getCurrentUser();
+        return await ref.read(authRepositoryProvider).getCurrentUser(role);
       } catch (e) {
         await ref.read(secureStorageProvider).deleteToken();
+        await ref.read(secureStorageProvider).deleteRole();
         return null;
       }
     }

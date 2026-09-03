@@ -10,11 +10,11 @@ part 'jd_provider.g.dart';
 @riverpod
 class JdGenerator extends _$JdGenerator {
   @override
-  FutureOr<GeneratedJD?> build() {
+  FutureOr<JobDescriptionResponse?> build() {
     return null;
   }
 
-  Future<void> generate(JobDescriptionCreate createParams) async {
+  Future<void> generate(JobParameterCreate createParams) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       return ref.read(jdRepositoryProvider).generateJd(createParams);

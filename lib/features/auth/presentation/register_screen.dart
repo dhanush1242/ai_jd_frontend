@@ -34,6 +34,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         _emailController.text,
         _mobileController.text,
         _passwordController.text,
+        _mobileController.text,
         _selectedRole,
       );
     }
@@ -48,6 +49,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(next.error.toString()), backgroundColor: Colors.redAccent),
         );
+      } else if (next is AsyncData && next.value != null && previous != null && previous.isLoading) {
+        if (ModalRoute.of(context)?.isCurrent == true) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Registration successful!'), backgroundColor: Colors.green),
+          );
+        }
       }
     });
 
