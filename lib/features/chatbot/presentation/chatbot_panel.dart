@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'chat_provider.dart';
+
 class ChatMessage {
   final String text;
   final bool isBot;
@@ -8,7 +11,7 @@ class ChatMessage {
   ChatMessage({required this.text, required this.isBot, this.options});
 }
 
-class ChatbotPanel extends StatefulWidget {
+class ChatbotPanel extends ConsumerStatefulWidget {
   final VoidCallback onClose;
   final bool isFullScreen;
   final VoidCallback onToggleFullScreen;
@@ -21,33 +24,16 @@ class ChatbotPanel extends StatefulWidget {
   });
 
   @override
-  State<ChatbotPanel> createState() => _ChatbotPanelState();
+  ConsumerState<ChatbotPanel> createState() => _ChatbotPanelState();
 }
 
-class _ChatbotPanelState extends State<ChatbotPanel> {
-  final List<ChatMessage> messages = [
-    ChatMessage(text: 'Nice!', isBot: true),
-    ChatMessage(
-      text: 'What is your role at Acme Corp?',
-      isBot: true,
-      options: ['Marketing', 'Sales', 'Support'],
-    ),
-    ChatMessage(text: 'Sales', isBot: false),
-    ChatMessage(
-      text: 'Our tool is great for sales teams of all sizes! How many people are on yours?',
-      isBot: true,
-    ),
-    ChatMessage(text: 'About 130 right now!', isBot: false),
-  ];
-
+class _ChatbotPanelState extends ConsumerState<ChatbotPanel> {
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
   void _sendMessage(String text) {
     if (text.trim().isEmpty) return;
-    setState(() {
-      messages.add(ChatMessage(text: text, isBot: false));
-    });
+    ref.read(chatProvider.notifier).sendMessage(text);
     _controller.clear();
     _scrollToBottom();
   }
@@ -67,6 +53,7 @@ class _ChatbotPanelState extends State<ChatbotPanel> {
   @override
   Widget build(BuildContext context) {
     final themeColor = const Color(0xFFB55DF5); // Purple
+    final messages = ref.watch(chatProvider);
 
     return Container(
       width: widget.isFullScreen ? double.infinity : 350,

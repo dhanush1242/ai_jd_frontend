@@ -49,7 +49,7 @@ class AuthRepository {
     final role = await _secureStorage.getRole();
     if (role == null) throw Exception('Role not found');
     
-    final response = await _dio.get('/${role}s/profile');
+    final response = await _dio.get('/${role}s/me');
     
     // The response data is CandidateResponse or RecruiterResponse
     final data = response.data as Map<String, dynamic>;

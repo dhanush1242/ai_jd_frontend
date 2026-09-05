@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../data/models/jd_models.dart';
 import 'jd_provider.dart';
+import '../../../core/widgets/logout_button.dart';
 
 class JdFormScreen extends ConsumerStatefulWidget {
   const JdFormScreen({super.key});
@@ -76,6 +77,10 @@ class _JdFormScreenState extends ConsumerState<JdFormScreen> {
         title: const Text('Generate Job Description'),
         backgroundColor: Colors.white,
         foregroundColor: const Color(0xFF6200EA),
+        actions: const [
+          AppLogoutButton(),
+          SizedBox(width: 16),
+        ],
       ),
       body: Center(
         child: SingleChildScrollView(

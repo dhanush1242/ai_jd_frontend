@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../auth/presentation/auth_provider.dart';
 import 'candidate_provider.dart';
+import '../../../core/widgets/logout_button.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -35,7 +36,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           IconButton(icon: const Icon(Icons.notifications_none, color: Colors.grey), onPressed: () {}),
           const SizedBox(width: 16),
           const CircleAvatar(radius: 16, backgroundColor: Color(0xFF6D28D9), child: Icon(Icons.person, size: 20, color: Colors.white)),
-          const SizedBox(width: 24),
+          const SizedBox(width: 8),
+          const AppLogoutButton(),
+          const SizedBox(width: 16),
         ],
       ),
       body: Padding(
@@ -71,6 +74,41 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               child: SingleChildScrollView(
                 child: detailsAsync.when(
                   data: (details) {
+                    if (_selectedTab == 'Danger Zone') {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Danger Zone', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.redAccent)),
+                          const SizedBox(height: 4),
+                          const Text('Manage critical actions for your session.', style: TextStyle(color: Colors.grey, fontSize: 13)),
+                          const SizedBox(height: 24),
+                          Container(
+                            padding: const EdgeInsets.all(24),
+                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.redAccent.withOpacity(0.2))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Sign Out', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                                    SizedBox(height: 4),
+                                    Text('Sign out of your candidate account on this browser.', style: TextStyle(color: Colors.grey, fontSize: 13)),
+                                  ],
+                                ),
+                                ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, foregroundColor: Colors.white),
+                                  onPressed: () => confirmAndLogout(context, ref),
+                                  icon: const Icon(Icons.logout_rounded, size: 18),
+                                  label: const Text('Log Out'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+
                     if (_selectedTab != 'Account') {
                       return Center(child: Text('$_selectedTab settings coming soon!', style: const TextStyle(fontSize: 18, color: Colors.grey)));
                     }

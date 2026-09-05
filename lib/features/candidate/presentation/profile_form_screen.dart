@@ -9,6 +9,7 @@ import 'candidate_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'candidate_provider.dart';
 import '../../auth/presentation/auth_provider.dart';
+import '../../../core/widgets/logout_button.dart';
 
 class ProfileFormScreen extends ConsumerStatefulWidget {
   const ProfileFormScreen({super.key});
@@ -105,14 +106,29 @@ class _ProfileFormScreenState extends ConsumerState<ProfileFormScreen> {
         resume: _resume,
       );
       
-      // Refresh details
+      final state = ref.read(candidateControllerProvider);
+      if (state.hasError) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to save profile: ${state.error}'), backgroundColor: Colors.red),
+          );
+        }
+        return;
+      }
+
+      // Refresh details and await fresh state
       ref.invalidate(candidateDetailsProvider);
+      await ref.read(candidateDetailsProvider.future);
       
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Profile saved successfully!'), backgroundColor: Colors.green),
         );
-        context.pop();
+        if (context.canPop()) {
+          context.pop();
+        } else {
+          context.go('/home');
+        }
       }
     }
   }
@@ -124,14 +140,9 @@ class _ProfileFormScreenState extends ConsumerState<ProfileFormScreen> {
         title: const Text('Complete Your Profile'),
         backgroundColor: Colors.white,
         foregroundColor: const Color(0xFF6200EA),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            tooltip: 'Logout',
-            onPressed: () {
-              ref.read(authProvider.notifier).logout();
-            },
-          ),
+        actions: const [
+          AppLogoutButton(color: Color(0xFF6200EA)),
+          SizedBox(width: 16),
         ],
       ),
       body: Center(

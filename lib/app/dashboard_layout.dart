@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/auth/presentation/auth_provider.dart';
+import '../core/widgets/logout_button.dart';
 
 import '../features/chatbot/presentation/draggable_chatbot.dart';
 
@@ -61,6 +62,13 @@ class DashboardLayout extends ConsumerWidget {
                   ),
                 if (isCandidate)
                   _NavItem(
+                    icon: Icons.search,
+                    label: 'Explore Jobs',
+                    isSelected: currentPath == '/candidate/explore',
+                    onTap: () => context.go('/candidate/explore'),
+                  ),
+                if (isCandidate)
+                  _NavItem(
                     icon: Icons.work_outline,
                     label: 'My Jobs',
                     isSelected: currentPath == '/candidate/jobs',
@@ -93,12 +101,70 @@ class DashboardLayout extends ConsumerWidget {
                   isSelected: currentPath == (isCandidate ? '/settings' : '/recruiter/settings'),
                   onTap: () => context.go(isCandidate ? '/settings' : '/recruiter/settings'),
                 ),
+                _NavItem(
+                  icon: Icons.logout_rounded,
+                  label: 'Logout',
+                  isSelected: false,
+                  iconColor: Colors.redAccent.shade100,
+                  textColor: Colors.redAccent.shade100,
+                  onTap: () => confirmAndLogout(context, ref),
+                ),
                 
                 const Spacer(),
                 
+                // User info card with quick logout
+                if (user != null)
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.06),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.white.withOpacity(0.1)),
+                    ),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 16,
+                          backgroundColor: const Color(0xFF6D28D9),
+                          child: Text(
+                            user.name.isNotEmpty ? user.name[0].toUpperCase() : 'U',
+                            style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                user.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                isCandidate ? 'Candidate' : 'Recruiter',
+                                style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 11),
+                              ),
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.logout_rounded, size: 18, color: Colors.redAccent),
+                          tooltip: 'Logout',
+                          onPressed: () => confirmAndLogout(context, ref),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                        ),
+                      ],
+                    ),
+                  ),
+                
                 // Need Help Card
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.05),
@@ -160,12 +226,16 @@ class _NavItem extends StatelessWidget {
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
+  final Color? iconColor;
+  final Color? textColor;
 
   const _NavItem({
     required this.icon,
     required this.label,
     required this.isSelected,
     required this.onTap,
+    this.iconColor,
+    this.textColor,
   });
 
   @override
@@ -183,12 +253,12 @@ class _NavItem extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(icon, color: isSelected ? Colors.white : Colors.white.withOpacity(0.5), size: 22),
+              Icon(icon, color: iconColor ?? (isSelected ? Colors.white : Colors.white.withOpacity(0.5)), size: 22),
               const SizedBox(width: 16),
               Text(
                 label,
                 style: TextStyle(
-                  color: isSelected ? Colors.white : Colors.white.withOpacity(0.7),
+                  color: textColor ?? (isSelected ? Colors.white : Colors.white.withOpacity(0.7)),
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 ),
               ),
