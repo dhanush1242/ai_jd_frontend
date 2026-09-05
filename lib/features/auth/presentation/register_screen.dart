@@ -34,7 +34,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         _emailController.text,
         _mobileController.text,
         _passwordController.text,
-        _mobileController.text,
         _selectedRole,
       );
     }

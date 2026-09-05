@@ -2,8 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import '../data/candidate_repository.dart';
 import '../data/models/candidate_models.dart';
+import '../../auth/presentation/auth_provider.dart';
 
 final candidateDetailsProvider = FutureProvider<CandidateDetails?>((ref) async {
+  final authUser = ref.watch(authProvider).valueOrNull;
+  if (authUser == null || authUser.role != 'candidate') {
+    return null;
+  }
   return ref.watch(candidateRepositoryProvider).getDetails();
 });
 

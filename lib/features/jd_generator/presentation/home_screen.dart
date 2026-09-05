@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import '../../auth/presentation/auth_provider.dart';
 import '../../candidate/presentation/candidate_provider.dart';
 import '../../candidate/presentation/candidate_jobs_provider.dart';
+import '../presentation/jd_provider.dart';
+import '../../../core/widgets/logout_button.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -43,11 +45,32 @@ class HomeScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 8),
+          IconButton(
+            icon: const Icon(Icons.refresh, color: Colors.grey),
+            tooltip: 'Refresh',
+            onPressed: () {
+              if (isCandidate) {
+                ref.invalidate(candidateApplicationsProvider);
+                ref.invalidate(candidateBookmarksProvider);
+                ref.invalidate(candidateDetailsProvider);
+                ref.invalidate(candidateJobsProvider);
+              } else {
+                ref.invalidate(recruiterJobsProvider);
+                ref.invalidate(recruiterStatsProvider);
+                ref.invalidate(recruiterAllApplicationsProvider);
+              }
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Dashboard refreshed!'), duration: Duration(seconds: 1)),
+              );
+            },
+          ),
           IconButton(icon: const Icon(Icons.notifications_none, color: Colors.grey), onPressed: () {}),
           const SizedBox(width: 16),
           const CircleAvatar(radius: 16, backgroundColor: Color(0xFF6D28D9), child: Icon(Icons.person, size: 20, color: Colors.white)),
-          const SizedBox(width: 24),
+          const SizedBox(width: 8),
+          const AppLogoutButton(),
+          const SizedBox(width: 16),
         ],
       ),
       body: isCandidate ? _buildCandidateDashboard(context, ref) : _buildRecruiterDashboard(context, ref),
@@ -60,8 +83,11 @@ class HomeScreen extends ConsumerWidget {
     final profileCompletedAsync = ref.watch(profileCompletedProvider);
     
     final apps = applicationsAsync.valueOrNull ?? [];
-    final underReview = apps.where((a) => a.status == 'Under Review' || a.status == 'Screening').length;
-    final interviews = apps.where((a) => a.status == 'Interview').length;
+    final underReview = apps.where((a) {
+      final s = a.status.toLowerCase().trim();
+      return s == 'under review' || s == 'under_review' || s == 'screening';
+    }).length;
+    final interviews = apps.where((a) => a.status.toLowerCase().trim() == 'interview').length;
     final savedJobsCount = bookmarksAsync.valueOrNull?.length ?? 0;
     final isProfileComplete = profileCompletedAsync.valueOrNull ?? false;
 
@@ -143,11 +169,11 @@ class HomeScreen extends ConsumerWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
+                          const Row(
                             children: [
-                              const Icon(Icons.auto_awesome, color: Color(0xFF6D28D9)),
-                              const SizedBox(width: 8),
-                              const Text('Application Activity', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                              Icon(Icons.auto_awesome, color: Color(0xFF6D28D9)),
+                              SizedBox(width: 8),
+                              Text('Application Activity', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                             ],
                           ),
                           TextButton(onPressed: () => context.go('/candidate/jobs'), child: const Text('View all', style: TextStyle(color: Color(0xFF6D28D9)))),
@@ -221,11 +247,11 @@ class HomeScreen extends ConsumerWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
+                          const Row(
                             children: [
-                              const Icon(Icons.track_changes, color: Color(0xFF6D28D9)),
-                              const SizedBox(width: 8),
-                              const Text('Profile Strength', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                              Icon(Icons.track_changes, color: Color(0xFF6D28D9)),
+                              SizedBox(width: 8),
+                              Text('Profile Strength', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                             ],
                           ),
                           Text(isProfileComplete ? '100%' : '50%', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF6D28D9))),
@@ -280,10 +306,9 @@ class HomeScreen extends ConsumerWidget {
   }
 
   Widget _buildRecruiterDashboard(BuildContext context, WidgetRef ref) {
-    // Assuming you have a provider for recruiter jobs
-    // final jobsAsync = ref.watch(recruiterJobsProvider);
-    // For now we just mock the numbers or leave them static until wired up
-    
+    final statsAsync = ref.watch(recruiterStatsProvider);
+    final user = ref.watch(authProvider).valueOrNull;
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(32),
       child: Column(
@@ -310,11 +335,11 @@ class HomeScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       RichText(
-                        text: const TextSpan(
-                          style: TextStyle(fontSize: 24, color: Color(0xFF1E293B), fontWeight: FontWeight.w600),
+                        text: TextSpan(
+                          style: const TextStyle(fontSize: 24, color: Color(0xFF1E293B), fontWeight: FontWeight.w600),
                           children: [
-                            TextSpan(text: 'Welcome back, '),
-                            TextSpan(text: 'Recruiter', style: TextStyle(color: Color(0xFF6D28D9))),
+                            const TextSpan(text: 'Welcome back, '),
+                            TextSpan(text: user?.name.isNotEmpty == true ? user!.name : 'Recruiter', style: const TextStyle(color: Color(0xFF6D28D9))),
                           ],
                         ),
                       ),
@@ -331,16 +356,60 @@ class HomeScreen extends ConsumerWidget {
           const SizedBox(height: 32),
           
           // Stats Row
-          Row(
-            children: [
-              Expanded(child: _StatCard(icon: Icons.work_outline, iconColor: const Color(0xFF8B5CF6), iconBg: const Color(0xFFF5F3FF), title: 'Total Jobs', count: '12', subtitle: 'Created so far')),
-              const SizedBox(width: 16),
-              Expanded(child: _StatCard(icon: Icons.publish, iconColor: const Color(0xFF10B981), iconBg: const Color(0xFFECFDF5), title: 'Active Postings', count: '5', subtitle: 'Currently published')),
-              const SizedBox(width: 16),
-              Expanded(child: _StatCard(icon: Icons.people_outline, iconColor: const Color(0xFF3B82F6), iconBg: const Color(0xFFEFF6FF), title: 'Total Applications', count: '148', subtitle: 'Across all jobs')),
-              const SizedBox(width: 16),
-              Expanded(child: _StatCard(icon: Icons.fiber_new_outlined, iconColor: const Color(0xFFF59E0B), iconBg: const Color(0xFFFFFBEB), title: 'New Candidates', count: '24', subtitle: 'This week')),
-            ],
+          statsAsync.when(
+            data: (stats) => Row(
+              children: [
+                Expanded(
+                  child: _StatCard(
+                    icon: Icons.work_outline,
+                    iconColor: const Color(0xFF8B5CF6),
+                    iconBg: const Color(0xFFF5F3FF),
+                    title: 'Total Jobs',
+                    count: '${stats.totalJobs}',
+                    subtitle: 'Created so far',
+                    onTap: () => context.go('/recruiter/jobs?tab=All'),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: _StatCard(
+                    icon: Icons.publish,
+                    iconColor: const Color(0xFF10B981),
+                    iconBg: const Color(0xFFECFDF5),
+                    title: 'Active Postings',
+                    count: '${stats.activePostings}',
+                    subtitle: 'Currently published',
+                    onTap: () => context.go('/recruiter/jobs?tab=Published'),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: _StatCard(
+                    icon: Icons.people_outline,
+                    iconColor: const Color(0xFF3B82F6),
+                    iconBg: const Color(0xFFEFF6FF),
+                    title: 'Total Applications',
+                    count: '${stats.totalApplications}',
+                    subtitle: 'Across all jobs',
+                    onTap: () => context.go('/recruiter/applications'),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: _StatCard(
+                    icon: Icons.fiber_new_outlined,
+                    iconColor: const Color(0xFFF59E0B),
+                    iconBg: const Color(0xFFFFFBEB),
+                    title: 'New Candidates',
+                    count: '${stats.newCandidates}',
+                    subtitle: 'This week',
+                    onTap: () => context.go('/recruiter/applications?tab=new'),
+                  ),
+                ),
+              ],
+            ),
+            loading: () => const Center(child: Padding(padding: EdgeInsets.all(32), child: CircularProgressIndicator())),
+            error: (e, _) => Center(child: Text('Error loading stats: $e')),
           ),
           
           const SizedBox(height: 32),
@@ -355,21 +424,31 @@ class HomeScreen extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
+                    const Row(
                       children: [
-                        const Icon(Icons.history, color: Color(0xFF6D28D9)),
-                        const SizedBox(width: 8),
-                        const Text('Recent Activity', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                        Icon(Icons.history, color: Color(0xFF6D28D9)),
+                        SizedBox(width: 8),
+                        Text('Recent Activity', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       ],
                     ),
-                    TextButton(onPressed: () {}, child: const Text('View all', style: TextStyle(color: Color(0xFF6D28D9)))),
+                    TextButton(onPressed: () => context.go('/recruiter/jobs'), child: const Text('View all jobs', style: TextStyle(color: Color(0xFF6D28D9)))),
                   ],
                 ),
                 const SizedBox(height: 24),
-                const Center(
+                Center(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 32),
-                    child: Text('Check your job postings for recent applications.', style: TextStyle(color: Colors.grey)),
+                    padding: const EdgeInsets.symmetric(vertical: 24),
+                    child: Column(
+                      children: [
+                        const Text('Check your job postings for recent applications and status changes.', style: TextStyle(color: Colors.grey)),
+                        const SizedBox(height: 16),
+                        OutlinedButton.icon(
+                          onPressed: () => context.go('/recruiter/jobs'),
+                          icon: const Icon(Icons.work_outline, size: 16),
+                          label: const Text('Go to My JDs'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -388,36 +467,49 @@ class _StatCard extends StatelessWidget {
   final String title;
   final String count;
   final String subtitle;
+  final VoidCallback? onTap;
 
-  const _StatCard({required this.icon, required this.iconColor, required this.iconBg, required this.title, required this.count, required this.subtitle});
+  const _StatCard({
+    required this.icon,
+    required this.iconColor,
+    required this.iconBg,
+    required this.title,
+    required this.count,
+    required this.subtitle,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.grey.withOpacity(0.1))),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: iconBg, shape: BoxShape.circle), child: Icon(icon, color: iconColor, size: 24)),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title, style: const TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500)),
-                    Text(count, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF1E293B))),
-                  ],
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.grey.withOpacity(0.1))),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: iconBg, shape: BoxShape.circle), child: Icon(icon, color: iconColor, size: 24)),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title, style: const TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500)),
+                      Text(count, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF1E293B))),
+                    ],
+                  ),
                 ),
-              ),
-              const Icon(Icons.chevron_right, color: Colors.grey),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Text(subtitle, style: const TextStyle(color: Colors.grey, fontSize: 12)),
-        ],
+                const Icon(Icons.chevron_right, color: Colors.grey),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(subtitle, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+          ],
+        ),
       ),
     );
   }

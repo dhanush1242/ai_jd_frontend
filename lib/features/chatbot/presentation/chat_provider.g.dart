@@ -1,29 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'jd_provider.dart';
+part of 'chat_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$jdGeneratorHash() => r'8169dc898463418bf442fc3b06f165f3d4ae50f1';
+String _$chatHash() => r'c494248f1e785b124ee08deb201576772ed38753';
 
-/// See also [JdGenerator].
-@ProviderFor(JdGenerator)
-final jdGeneratorProvider =
-    AutoDisposeAsyncNotifierProvider<
-      JdGenerator,
-      JobDescriptionResponse?
-    >.internal(
-      JdGenerator.new,
-      name: r'jdGeneratorProvider',
+/// See also [Chat].
+@ProviderFor(Chat)
+final chatProvider =
+    AutoDisposeNotifierProvider<Chat, List<ChatMessage>>.internal(
+      Chat.new,
+      name: r'chatProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$jdGeneratorHash,
+          : _$chatHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$JdGenerator = AutoDisposeAsyncNotifier<JobDescriptionResponse?>;
+typedef _$Chat = AutoDisposeNotifier<List<ChatMessage>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

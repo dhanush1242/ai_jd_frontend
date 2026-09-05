@@ -12,11 +12,13 @@ import '../features/jd_generator/presentation/jd_result_screen.dart';
 import '../features/jd_generator/presentation/recruiter_jobs_screen.dart';
 import '../features/jd_generator/presentation/applicants_screen.dart';
 import '../features/jd_generator/presentation/recruiter_settings_screen.dart';
+import '../features/jd_generator/data/models/jd_models.dart';
 import '../features/candidate/presentation/profile_form_screen.dart';
 import '../features/candidate/presentation/profile_view_screen.dart';
 import '../features/candidate/presentation/my_jobs_screen.dart';
 import '../features/candidate/presentation/saved_jobs_screen.dart';
 import '../features/candidate/presentation/settings_screen.dart';
+import '../features/candidate/presentation/explore_jobs_screen.dart';
 import 'dashboard_layout.dart';
 import '../features/candidate/presentation/candidate_provider.dart';
 
@@ -37,22 +39,26 @@ GoRouter router(RouterRef ref) {
     initialLocation: '/splash',
     redirect: (context, state) {
       final isLoading = authState.isLoading;
-      final isAuthenticated = authState.valueOrNull != null;
+      final user = authState.valueOrNull;
+      final path = state.uri.path;
 
-      final isSplash = state.matchedLocation == '/splash';
-      final isLogin = state.matchedLocation == '/login';
-      final isRegister = state.matchedLocation == '/register';
+      if (isLoading) return null; // Wait on splash
 
-      if (!isAuthenticated && !isLoading) {
-        if (!isLogin && !isRegister) return '/login';
-      } else if (isAuthenticated) {
-        final user = authState.valueOrNull;
-        if (isSplash || isLogin || isRegister) {
-          if (user?.role == 'candidate' && !isProfileComplete) {
-            return '/candidate/profile';
-          }
-          return '/home';
+      if (user == null) {
+        if (path == '/login' || path == '/register') return null;
+        return '/login';
+      }
+
+      // If user is candidate, enforce profile completion
+      if (user.role == 'candidate') {
+        final profileLoaded = isProfileComplete.hasValue;
+        if (profileLoaded && !isProfileComplete.value!) {
+          if (path != '/candidate/profile') return '/candidate/profile';
         }
+      }
+
+      if (path == '/splash' || path == '/login' || path == '/register') {
+        return '/home';
       }
 
       return null;
@@ -71,9 +77,7 @@ GoRouter router(RouterRef ref) {
         builder: (context, state) => const RegisterScreen(),
       ),
       ShellRoute(
-        builder: (context, state, child) {
-          return DashboardLayout(child: child);
-        },
+        builder: (context, state, child) => DashboardLayout(child: child),
         routes: [
           GoRoute(
             path: '/home',
@@ -85,13 +89,24 @@ GoRouter router(RouterRef ref) {
           ),
           GoRoute(
             path: '/recruiter/jobs',
-            builder: (context, state) => const RecruiterJobsScreen(),
+            builder: (context, state) {
+              final tab = state.uri.queryParameters['tab'];
+              return RecruiterJobsScreen(initialTab: tab);
+            },
+          ),
+          GoRoute(
+            path: '/recruiter/applications',
+            builder: (context, state) {
+              final tab = state.uri.queryParameters['tab'];
+              return ApplicantsScreen(jobId: 0, initialTab: tab);
+            },
           ),
           GoRoute(
             path: '/recruiter/jobs/:id/applicants',
             builder: (context, state) {
               final jobId = int.parse(state.pathParameters['id']!);
-              return ApplicantsScreen(jobId: jobId);
+              final tab = state.uri.queryParameters['tab'];
+              return ApplicantsScreen(jobId: jobId, initialTab: tab);
             },
           ),
           GoRoute(
@@ -100,7 +115,10 @@ GoRouter router(RouterRef ref) {
           ),
           GoRoute(
             path: '/jd/result',
-            builder: (context, state) => const JdResultScreen(),
+            builder: (context, state) {
+              final jd = state.extra as JobDescriptionResponse?;
+              return JdResultScreen(initialJd: jd);
+            },
           ),
           GoRoute(
             path: '/candidate/profile',
@@ -109,6 +127,10 @@ GoRouter router(RouterRef ref) {
           GoRoute(
             path: '/candidate/view_profile',
             builder: (context, state) => const ProfileViewScreen(),
+          ),
+          GoRoute(
+            path: '/candidate/explore',
+            builder: (context, state) => const ExploreJobsScreen(),
           ),
           GoRoute(
             path: '/candidate/jobs',

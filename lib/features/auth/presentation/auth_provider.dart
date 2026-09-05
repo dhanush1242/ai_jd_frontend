@@ -13,7 +13,7 @@ class Auth extends _$Auth {
     final role = await ref.read(secureStorageProvider).getRole();
     if (token != null && role != null) {
       try {
-        return await ref.read(authRepositoryProvider).getCurrentUser(role);
+        return await ref.read(authRepositoryProvider).getCurrentUser();
       } catch (e) {
         await ref.read(secureStorageProvider).deleteToken();
         await ref.read(secureStorageProvider).deleteRole();

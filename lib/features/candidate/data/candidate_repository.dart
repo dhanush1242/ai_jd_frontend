@@ -22,7 +22,7 @@ class CandidateRepository {
       final response = await _dio.get('/candidates/details');
       return CandidateDetails.fromJson(response.data as Map<String, dynamic>);
     } on DioException catch (e) {
-      if (e.response?.statusCode == 404 || e.response?.statusCode == 400) {
+      if (e.response?.statusCode == 404 || e.response?.statusCode == 400 || e.response?.statusCode == 401) {
         return null;
       }
       rethrow;
@@ -83,7 +83,11 @@ class CandidateRepository {
       }
 
       final formData = FormData.fromMap(formDataMap);
-      await _dio.put('/candidates/details', data: formData);
+      await _dio.put(
+        '/candidates/details',
+        data: formData,
+        options: Options(contentType: 'multipart/form-data'),
+      );
     }
   }
 
@@ -92,13 +96,33 @@ class CandidateRepository {
     return (response.data as List).map((e) => CandidateApplication.fromJson(e)).toList();
   }
 
-  Future<List<CandidateJob>> getJobs() async {
-    final response = await _dio.get('/candidates/jobs');
+  Future<List<CandidateJob>> getJobs({String? skills, String? location, String? experience}) async {
+    final queryParams = <String, dynamic>{};
+    if (skills != null && skills.trim().isNotEmpty) queryParams['skills'] = skills.trim();
+    if (location != null && location.trim().isNotEmpty) queryParams['location'] = location.trim();
+    if (experience != null && experience.trim().isNotEmpty) queryParams['experience'] = experience.trim();
+
+    final response = await _dio.get(
+      '/candidates/jobs',
+      queryParameters: queryParams.isNotEmpty ? queryParams : null,
+    );
     return (response.data as List).map((e) => CandidateJob.fromJson(e)).toList();
   }
 
   Future<List<Bookmark>> getBookmarks() async {
     final response = await _dio.get('/candidates/bookmarks');
     return (response.data as List).map((e) => Bookmark.fromJson(e)).toList();
+  }
+
+  Future<void> applyForJob(int jobId) async {
+    await _dio.post('/candidates/jobs/$jobId/apply');
+  }
+
+  Future<void> bookmarkJob(int jobId) async {
+    await _dio.post('/candidates/jobs/$jobId/bookmark');
+  }
+
+  Future<void> removeBookmark(int jobId) async {
+    await _dio.delete('/candidates/jobs/$jobId/bookmark');
   }
 }
