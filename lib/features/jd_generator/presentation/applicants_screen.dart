@@ -91,6 +91,16 @@ class _ApplicantsScreenState extends ConsumerState<ApplicantsScreen> {
     );
   }
 
+  String? _getFullUrl(String? path) {
+    if (path == null || path.isEmpty) return null;
+    if (path.startsWith('http://') || path.startsWith('https://')) {
+      return path;
+    }
+    final cleanPath = path.replaceAll(r'\', '/');
+    final formatted = cleanPath.startsWith('/') ? cleanPath.substring(1) : cleanPath;
+    return 'http://127.0.0.1:8000/$formatted';
+  }
+
   @override
   Widget build(BuildContext context) {
     final isAllApplications = widget.jobId <= 0;
@@ -288,27 +298,33 @@ class _ApplicantsScreenState extends ConsumerState<ApplicantsScreen> {
                                       const SizedBox(height: 16),
                                       Row(
                                         children: [
-                                          OutlinedButton.icon(
-                                            onPressed: () async {
-                                              try {
-                                                final resumeUrl = await ref.read(jdRepositoryProvider).getApplicationResume(app.applicationId);
-                                                if (resumeUrl.isNotEmpty) {
-                                                  final Uri url = Uri.parse(resumeUrl);
-                                                  if (await canLaunchUrl(url)) {
-                                                    await launchUrl(url);
-                                                  } else {
-                                                    if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Could not open resume.')));
-                                                  }
-                                                } else {
-                                                  if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No resume available.')));
-                                                }
-                                              } catch (e) {
-                                                if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
-                                              }
-                                            },
-                                            icon: const Icon(Icons.description_outlined, size: 16),
-                                            label: const Text('Resume'),
-                                          ),
+                                           OutlinedButton.icon(
+                                             onPressed: () async {
+                                               try {
+                                                 final fullUrl = _getFullUrl(app.resumeUrl);
+                                                 if (fullUrl != null && fullUrl.isNotEmpty) {
+                                                   final Uri url = Uri.parse(fullUrl);
+                                                   if (await canLaunchUrl(url)) {
+                                                     await launchUrl(url);
+                                                     return;
+                                                   }
+                                                 }
+                                                 if (context.mounted) {
+                                                   ScaffoldMessenger.of(context).showSnackBar(
+                                                     const SnackBar(content: Text('No resume available or could not open file.')),
+                                                   );
+                                                 }
+                                               } catch (e) {
+                                                 if (context.mounted) {
+                                                   ScaffoldMessenger.of(context).showSnackBar(
+                                                     SnackBar(content: Text('Error opening resume: $e')),
+                                                   );
+                                                 }
+                                               }
+                                             },
+                                             icon: const Icon(Icons.description_outlined, size: 16),
+                                             label: const Text('Resume'),
+                                           ),
                                           const SizedBox(width: 8),
                                           OutlinedButton.icon(
                                             onPressed: () => _showNotesDialog(app.applicationId, app.candidateName),

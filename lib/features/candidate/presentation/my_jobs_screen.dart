@@ -6,14 +6,31 @@ import '../../../core/widgets/logout_button.dart';
 import 'widgets/job_details_dialog.dart';
 
 class MyJobsScreen extends ConsumerStatefulWidget {
-  const MyJobsScreen({super.key});
+  final String? initialTab;
+  const MyJobsScreen({super.key, this.initialTab});
 
   @override
   ConsumerState<MyJobsScreen> createState() => _MyJobsScreenState();
 }
 
 class _MyJobsScreenState extends ConsumerState<MyJobsScreen> {
-  String _selectedTab = 'All';
+  late String _selectedTab;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedTab = widget.initialTab ?? 'All';
+  }
+
+  @override
+  void didUpdateWidget(covariant MyJobsScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialTab != null && widget.initialTab != oldWidget.initialTab) {
+      setState(() {
+        _selectedTab = widget.initialTab!;
+      });
+    }
+  }
 
   Future<void> _viewJobDetails(CandidateApplication app) async {
     try {
