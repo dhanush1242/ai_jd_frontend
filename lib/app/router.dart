@@ -134,7 +134,10 @@ GoRouter router(RouterRef ref) {
           ),
           GoRoute(
             path: '/candidate/jobs',
-            builder: (context, state) => const MyJobsScreen(),
+            builder: (context, state) {
+              final tab = state.uri.queryParameters['tab'];
+              return MyJobsScreen(initialTab: tab);
+            },
           ),
           GoRoute(
             path: '/candidate/saved',

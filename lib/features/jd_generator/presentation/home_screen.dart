@@ -141,13 +141,53 @@ class HomeScreen extends ConsumerWidget {
           // Stats Row
           Row(
             children: [
-              Expanded(child: _StatCard(icon: Icons.description_outlined, iconColor: const Color(0xFF8B5CF6), iconBg: const Color(0xFFF5F3FF), title: 'Applications', count: apps.length.toString(), subtitle: 'Total applied')),
+              Expanded(
+                child: _StatCard(
+                  icon: Icons.description_outlined,
+                  iconColor: const Color(0xFF8B5CF6),
+                  iconBg: const Color(0xFFF5F3FF),
+                  title: 'Applications',
+                  count: apps.length.toString(),
+                  subtitle: 'Total applied',
+                  onTap: () => context.go('/candidate/jobs?tab=All'),
+                ),
+              ),
               const SizedBox(width: 16),
-              Expanded(child: _StatCard(icon: Icons.access_time, iconColor: const Color(0xFF3B82F6), iconBg: const Color(0xFFEFF6FF), title: 'Under Review', count: underReview.toString(), subtitle: 'In progress')),
+              Expanded(
+                child: _StatCard(
+                  icon: Icons.access_time,
+                  iconColor: const Color(0xFF3B82F6),
+                  iconBg: const Color(0xFFEFF6FF),
+                  title: 'Under Review',
+                  count: underReview.toString(),
+                  subtitle: 'In progress',
+                  onTap: () => context.go('/candidate/jobs?tab=Under Review'),
+                ),
+              ),
               const SizedBox(width: 16),
-              Expanded(child: _StatCard(icon: Icons.calendar_today, iconColor: const Color(0xFF10B981), iconBg: const Color(0xFFECFDF5), title: 'Interviews', count: interviews.toString(), subtitle: 'Scheduled')),
+              Expanded(
+                child: _StatCard(
+                  icon: Icons.calendar_today,
+                  iconColor: const Color(0xFF10B981),
+                  iconBg: const Color(0xFFECFDF5),
+                  title: 'Interviews',
+                  count: interviews.toString(),
+                  subtitle: 'Scheduled',
+                  onTap: () => context.go('/candidate/jobs?tab=Interview'),
+                ),
+              ),
               const SizedBox(width: 16),
-              Expanded(child: _StatCard(icon: Icons.bookmark_outline, iconColor: const Color(0xFFF59E0B), iconBg: const Color(0xFFFFFBEB), title: 'Saved Jobs', count: savedJobsCount.toString(), subtitle: 'Jobs saved')),
+              Expanded(
+                child: _StatCard(
+                  icon: Icons.bookmark_outline,
+                  iconColor: const Color(0xFFF59E0B),
+                  iconBg: const Color(0xFFFFFBEB),
+                  title: 'Saved Jobs',
+                  count: savedJobsCount.toString(),
+                  subtitle: 'Jobs saved',
+                  onTap: () => context.go('/candidate/saved'),
+                ),
+              ),
             ],
           ),
           

@@ -108,8 +108,6 @@ class JdRepository {
   }
 
   Future<String> getApplicationResume(int applicationId) async {
-    // Assuming the API returns a URL or file path. If it returns binary, this needs to be adjusted.
-    final response = await _dio.get('/recruiters/applications/$applicationId/resume');
-    return response.data['resume_url'] ?? '';
+    return 'http://127.0.0.1:8000/api/recruiters/applications/$applicationId/resume';
   }
 }

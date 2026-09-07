@@ -10,9 +10,11 @@ class ProfileViewScreen extends ConsumerWidget {
   const ProfileViewScreen({super.key});
 
   String? _getFullUrl(String? path) {
-    if (path == null) return null;
+    if (path == null || path.isEmpty) return null;
     if (path.startsWith('http')) return path;
-    return 'http://127.0.0.1:8000/$path';
+    final cleanPath = path.replaceAll(r'\', '/');
+    final formatted = cleanPath.startsWith('/') ? cleanPath.substring(1) : cleanPath;
+    return 'http://127.0.0.1:8000/$formatted';
   }
 
   Future<void> _launchUrl(String? urlString) async {
